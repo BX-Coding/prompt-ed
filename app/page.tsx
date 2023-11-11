@@ -8,7 +8,7 @@ import Image from "next/image"
 export default function Home() {
   return (
     <main className="flex h-screen flex-col items-center justify-center p-24 bg-primary">
-      <h1 className="text-4xl font-bold mb-10">Let's build something awesome!</h1>
+      <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
       <div className="flex flex-row items-center justify-center bg-background rounded-xl drop-shadow-md px-5">
         <Image
           className="animate-bounce"
