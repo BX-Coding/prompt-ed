@@ -4,8 +4,8 @@
  
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #BDD3DE;
+    --background: #F0F0DF;
+    --foreground: #2B3A42;
   
     --card: #ffffff;
     --card-foreground: #BDD3DE;
@@ -28,8 +28,8 @@
     --destructive: #ff6c47;
     --destructive-foreground: #2B3A42;
   
-    --border: #e9ebf6;
-    --input: #e9ebf6;
+    --border: #BDD3DE;
+    --input: #BDD3DE;
     --ring: #BDD3DE;
   
     --radius: 0.5rem;
