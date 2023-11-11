@@ -4,8 +4,21 @@ import { PromptBox } from "@/components/prompt-box"
 import { Button } from "@/components/ui/button"
 import { LightningBoltIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
+import React, { useEffect, useState } from 'react';
+import { generateImage } from '../utils/openai';
 
 export default function Home() {
+
+  const [ dataInfo, setDataInfo ] = useState({
+    status: "Loading",
+    data: null,
+    error: null
+  });
+
+  //useEffect(() => {
+  //  generateImage('a turtle').then((result : string) => {console.log(result)})
+  //}, [])
+
   return (
     <main className="flex h-screen flex-col items-center justify-center p-24 bg-primary">
       <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
