@@ -34,4 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-local/prompt-ed-key.env
+prompt-ed-key.env
+process.env
+.env
