@@ -10,6 +10,13 @@ import { BuildableState, usePromptEditorState } from '@/store/editorStore'
 import { DragableInput } from './dragable-input'
 import { DragableTag } from './dragable-tag'
 import { useHasHydrated } from "@/hooks/useHasHydrated"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+import { BuildableContextMenu } from './buildable-context-menu'
 
 type PromptBoxProps = {
     className?: string
@@ -38,21 +45,23 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
       (buildableComponent: BuildableState, index: number) => {
         const value = buildableComponent.value
         return (
-          <Buildable
-            key={buildableComponent.id}
-            index={index}
-            id={buildableComponent.id}
-            type={BuildableTypes.FREE_INPUT}
-            moveCard={moveBuildable}
-          > 
-            {buildableComponent.type == BuildableTypes.FREE_INPUT ? 
-            <DragableInput onChange={(value: string) => {
-              updateBuildable(buildableComponent.id, value)
-            }} initialValue={value}/> : 
-            <DragableTag onChange={(value: string) => {
-              updateBuildable(buildableComponent.id, value)
-            }} placeholder="Select" selectOptions={buildableComponent.options?.map(option => option.value) ?? []}/>}
-          </Buildable>
+          <BuildableContextMenu id={buildableComponent.id}>
+            <Buildable
+              key={buildableComponent.id}
+              index={index}
+              id={buildableComponent.id}
+              type={BuildableTypes.FREE_INPUT}
+              moveCard={moveBuildable}
+            > 
+              {buildableComponent.type == BuildableTypes.FREE_INPUT ? 
+              <DragableInput onChange={(value: string) => {
+                updateBuildable(buildableComponent.id, value)
+              }} initialValue={value}/> : 
+              <DragableTag onChange={(value: string) => {
+                updateBuildable(buildableComponent.id, value)
+              }} initialValue={buildableComponent.value} selectOptions={buildableComponent.options?.map(option => option.value) ?? []}/>}
+            </Buildable>
+          </BuildableContextMenu>
         )
       },
       [],

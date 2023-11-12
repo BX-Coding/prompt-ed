@@ -1,7 +1,6 @@
-// Configured Drag and drop wrapper
 import type { Identifier, XYCoord } from 'dnd-core'
 import type { FC } from 'react'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 export type BuildableType = 'free_input' | 'tag'
@@ -100,9 +99,12 @@ export const Buildable: FC<BuildableProps> = ({ id, type, index, moveCard, child
 
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
+  
+
   return (
+  <>
     <div ref={ref} style={{ opacity }} data-handler-id={handlerId}>
       {children}
     </div>
-  )
+  </>)
 }
