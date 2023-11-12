@@ -6,14 +6,9 @@ import React, { useCallback, useState } from 'react'
 
 import { Buildable, BuildableType, BuildableTypes } from './buildable'
 
-export interface BuildableElement {
-  id: number
-  component: React.ReactNode
-}
-
-export interface PromtBoxState {
-  buildables: BuildableElement[]
-}
+import { BuildableState, usePromptEditorState } from '@/store/editorStore'
+import { DragableInput } from './dragable-input'
+import { DragableTag } from './dragable-tag'
 
 type PromptBoxProps = {
     className?: string
@@ -22,32 +17,23 @@ type PromptBoxProps = {
 
 
 export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
-    //Validate children prop
-    const childrenArray = React.Children.toArray(children)
-
-    // Convert children to buildables
-    const [buildables, setBuildables] = useState<BuildableElement[]>(
-        childrenArray.map((child, index) => {
-            return {
-                id: index,
-                component: child,
-            }
-        }
-    ))
+    const buildables = usePromptEditorState((state) => state.buildables)
+    const setBuildables = usePromptEditorState((state) => state.setBuildables)
+    const updateBuildable = usePromptEditorState((state) => state.updateBuildable)
 
     const moveBuildable = useCallback((dragIndex: number, hoverIndex: number) => {
-      setBuildables((prevBuildables: BuildableElement[]) =>
+      setBuildables((prevBuildables: BuildableState[]) =>
         update(prevBuildables, {
           $splice: [
             [dragIndex, 1],
-            [hoverIndex, 0, prevBuildables[dragIndex] as BuildableElement],
+            [hoverIndex, 0, prevBuildables[dragIndex] as BuildableState],
           ],
         }),
       )
     }, [])
 
     const renderBuildable = useCallback(
-      (buildableComponent: BuildableElement, index: number) => {
+      (buildableComponent: BuildableState, index: number) => {
         return (
           <Buildable
             key={buildableComponent.id}
@@ -56,7 +42,9 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
             type={BuildableTypes.FREE_INPUT}
             moveCard={moveBuildable}
           > 
-            {buildableComponent.component}
+            <DragableInput onChange={(value: string) => {
+              updateBuildable(buildableComponent.id, value)
+            }}/>
           </Buildable>
         )
       },
