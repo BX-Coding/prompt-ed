@@ -9,10 +9,11 @@ import Image from "next/image"
 import axios from "axios";
 import { useState } from "react"
 import { ImageCard } from "@/components/image-card"
+import { useLocalUrls } from "@/hooks/useLocalUrls"
 
 export default function Home() {
 
-  const [responseUrls, setResponseUrls] = useState<string[]>([])
+  const { urlsFromLocalStorage, addNewUrl } = useLocalUrls([])
   const [responseLoading, setResponseLoading] = useState(false)
 
   const firebaseFunctionUrl = "https://generateimage-ksagj5rnfq-uc.a.run.app"
@@ -28,7 +29,7 @@ export default function Home() {
     setResponseLoading(true)
     const prompt = "A cute cat"
     const urls = await generateImage(prompt)
-    setResponseUrls([...responseUrls, ...urls])
+    urls.forEach((url: string) => addNewUrl(url, prompt))
     setResponseLoading(false)
   }
 
@@ -53,10 +54,8 @@ export default function Home() {
         </Button>
       </div>
       <div className="flex flex-row space-x-5 m-5">
-        <ImageCard key={0} imageUrl={"https://oaidalleapiprodscus.blob.core.windows.net/private/org-vmWUuH2VT9PwlmTJgSb6LY5F/user-AUuZqw7qXoUB9SOuGx55mEe2/img-PzCp88pSxXionPwfCarayBam.png?st=2023-11-11T23%3A56%3A36Z&se=2023-11-12T01%3A56%3A36Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-11-11T17%3A31%3A56Z&ske=2023-11-12T17%3A31%3A56Z&sks=b&skv=2021-08-06&sig=bGQA7k5hKrWSl%2BqhttNShzBOkMwCXA7qYcYN7n/ykwo%3D"} promptTitle="A cute cat" />
-        <ImageCard key={1} imageUrl={"https://oaidalleapiprodscus.blob.core.windows.net/private/org-vmWUuH2VT9PwlmTJgSb6LY5F/user-AUuZqw7qXoUB9SOuGx55mEe2/img-PzCp88pSxXionPwfCarayBam.png?st=2023-11-11T23%3A56%3A36Z&se=2023-11-12T01%3A56%3A36Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-11-11T17%3A31%3A56Z&ske=2023-11-12T17%3A31%3A56Z&sks=b&skv=2021-08-06&sig=bGQA7k5hKrWSl%2BqhttNShzBOkMwCXA7qYcYN7n/ykwo%3D"} promptTitle="A cute cat" />
-        {responseUrls.map((url, i) => (
-          <ImageCard key={i} imageUrl={url} promptTitle="A cute cat" />
+        {urlsFromLocalStorage.map((url, i) => (
+          <ImageCard key={i} imageUrl={url.url} promptTitle={url.prompt} />
         ))}
       </div>
     </main>
