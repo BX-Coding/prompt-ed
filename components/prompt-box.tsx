@@ -9,6 +9,7 @@ import { Buildable, BuildableType, BuildableTypes } from './buildable'
 import { BuildableState, usePromptEditorState } from '@/store/editorStore'
 import { DragableInput } from './dragable-input'
 import { DragableTag } from './dragable-tag'
+import { useHasHydrated } from "@/hooks/useHasHydrated"
 
 type PromptBoxProps = {
     className?: string
@@ -17,7 +18,8 @@ type PromptBoxProps = {
 
 
 export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
-    const buildables = usePromptEditorState((state) => state.buildables)
+    const buildablesZustand = usePromptEditorState((state) => state.buildables)
+    const buildables = useHasHydrated() ? buildablesZustand : []
     const setBuildables = usePromptEditorState((state) => state.setBuildables)
     const updateBuildable = usePromptEditorState((state) => state.updateBuildable)
 
@@ -34,6 +36,7 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
 
     const renderBuildable = useCallback(
       (buildableComponent: BuildableState, index: number) => {
+        const value = buildableComponent.value
         return (
           <Buildable
             key={buildableComponent.id}
@@ -44,7 +47,7 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
           > 
             <DragableInput onChange={(value: string) => {
               updateBuildable(buildableComponent.id, value)
-            }}/>
+            }} initialValue={value}/>
           </Buildable>
         )
       },

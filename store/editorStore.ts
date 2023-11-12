@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 import type {} from '@redux-devtools/extension' // required for devtools typing
 import { BuildableType } from '@/components/buildable'
 
@@ -29,6 +29,7 @@ export const usePromptEditorState = create<PromptEditorState>()(
       }),
       {
         name: 'prompt-editor',
+        storage: createJSONStorage(() => localStorage),
       }
     )
   )
