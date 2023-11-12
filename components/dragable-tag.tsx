@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, use, useEffect, useState } from "react"
 import {
     Select,
     SelectContent,
@@ -10,12 +10,12 @@ import {
 import { DragHandleDots2Icon } from '@radix-ui/react-icons'
 
 type DragableTagProps = {
-    placeholder?: string
+    initialValue?: string
     selectOptions: string[]
     onChange?: (value: string) => void
 }
 
-export const DragableTag: FC<DragableTagProps> = ({ onChange, placeholder, selectOptions }) => {
+export const DragableTag: FC<DragableTagProps> = ({ onChange, initialValue, selectOptions }) => {
     const size = 20
 
     const handleChange = (value: string) => {
@@ -27,7 +27,7 @@ export const DragableTag: FC<DragableTagProps> = ({ onChange, placeholder, selec
         <DragHandleDots2Icon className="cursor-move text-secondary-foreground" style={{height:size, width:size}}/>
         <Select onValueChange={handleChange}>
             <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
+                <SelectValue placeholder={initialValue} />
             </SelectTrigger>
             <SelectContent>
                 {selectOptions.map((option, index) => {

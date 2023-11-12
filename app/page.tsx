@@ -15,11 +15,16 @@ import { usePromptEditorState } from "@/store/editorStore"
 import { BuildableTypes } from "@/components/buildable"
 import { usePrompt } from "@/hooks/usePrompt"
 import { BuildableMenu } from "@/components/buildable-menu"
+import { useHasHydrated } from "@/hooks/useHasHydrated"
 
 export default function Home() {
 
   const { urlsFromLocalStorage, addNewUrl } = useLocalUrls([])
   const [responseLoading, setResponseLoading] = useState(false)
+  const hasHydated = useHasHydrated();
+  const buildables = usePromptEditorState((state) => state.buildables)
+  const emptyPrompt = !hasHydated || buildables.length == 0
+  
 
   const { constructPrompt } = usePrompt()
 
@@ -44,17 +49,17 @@ export default function Home() {
     <main className="flex h-screen flex-col items-center justify-center p-24 bg-primary">
       <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
       <div className="flex flex-row items-center space-x-2">
-        <BuildableMenu/>
-        <div className="flex flex-row items-center justify-center bg-background rounded-xl drop-shadow-md px-5">
-          <PromptBox className="space-x-1 p-5">
-            <DragableInput/>
-            <DragableTag placeholder="Select a tag" selectOptions={["Option 1", "Option 2", "Option 3"]}/>
-          </PromptBox>
+        <div className="flex flex-col items-center justify-center">
+          <BuildableMenu/>
+          { emptyPrompt && <h4 className="text-xl font-bold mt-2 text-muted italic">Click to start!</h4>}
+        </div>
+        {!emptyPrompt && <div className="flex flex-row items-center justify-center bg-background rounded-xl drop-shadow-md px-5">
+          <PromptBox className="space-x-1 p-5"/>
           <Button variant="accent" onClick={onGenerateClick} disabled={responseLoading}>
             <LightningBoltIcon/>
             Generate
           </Button>
-        </div>
+        </div>}
       </div>
       <div className="flex flex-row space-x-5 m-5">
         {urlsFromLocalStorage.map((url, i) => (
