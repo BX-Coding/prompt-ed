@@ -45,9 +45,13 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
             type={BuildableTypes.FREE_INPUT}
             moveCard={moveBuildable}
           > 
+            {buildableComponent.type == BuildableTypes.FREE_INPUT ? 
             <DragableInput onChange={(value: string) => {
               updateBuildable(buildableComponent.id, value)
-            }} initialValue={value}/>
+            }} initialValue={value}/> : 
+            <DragableTag onChange={(value: string) => {
+              updateBuildable(buildableComponent.id, value)
+            }} placeholder="Select" selectOptions={buildableComponent.options?.map(option => option.value) ?? []}/>}
           </Buildable>
         )
       },

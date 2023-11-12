@@ -7,11 +7,16 @@ export type BuildableState = {
     id: string,
     type: BuildableType,
     value: string,
+    options?: BuildableTagOption[],
+}
+
+type BuildableTagOption = {
+    [key: string]: string,
 }
 
 interface PromptEditorState {
     buildables: BuildableState[],
-    addBuildable: (buildableType: BuildableType, value: string) => void,
+    addBuildable: (buildableType: BuildableType, value: string, options?: BuildableTagOption[]) => void,
     removeBuildable: (buildableId: string) => void,
     updateBuildable: (buildableId: string, value: string) => void,
     setBuildables: (setBuildables: (prevBuildables: BuildableState[]) => BuildableState[]) => void,
@@ -22,7 +27,7 @@ export const usePromptEditorState = create<PromptEditorState>()(
     persist(
       (set) => ({
         buildables: [],
-        addBuildable: (buildableType: BuildableType, value: string) => set(state => ({ buildables: [...state.buildables, { id: `${buildableType}-${state.buildables.length}`, type: buildableType, value }] })),
+        addBuildable: (buildableType: BuildableType, value: string, options?: BuildableTagOption[]) => set(state => ({ buildables: [...state.buildables, { id: Math.random().toString(36).substring(7), type: buildableType, value, options }] })),
         removeBuildable: (buildableId: string) => set(state => ({ buildables: state.buildables.filter(buildable => buildable.id !== buildableId) })),
         updateBuildable: (buildableId: string, value: string) => set(state => ({ buildables: state.buildables.map(buildable => buildable.id === buildableId ? { ...buildable, value } : buildable) })),
         setBuildables: (setBuildables: (prevBuildables: BuildableState[]) => BuildableState[]) => set(state => ({ buildables: setBuildables(state.buildables) })),
