@@ -10,7 +10,7 @@ export type BuildableState = {
     options?: BuildableTagOption[],
 }
 
-type BuildableTagOption = {
+export type BuildableTagOption = {
     [key: string]: string,
 }
 
