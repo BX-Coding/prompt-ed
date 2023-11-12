@@ -14,6 +14,7 @@ import { useLocalUrls } from "@/hooks/useLocalUrls";
 import { usePromptEditorState } from "@/store/editorStore";
 import { BuildableTypes } from "@/components/buildable";
 import { usePrompt } from "@/hooks/usePrompt";
+import { BuildableMenu } from "@/components/buildable-menu";
 import {
   Sheet,
   SheetContent,
@@ -27,11 +28,8 @@ import { LessonMenu } from "@/components/lesson-menu";
 export default function Home() {
   const [responseUrls, setResponseUrls] = useState<string[]>([]);
   const [responseLoading, setResponseLoading] = useState(false);
-
   const { urlsFromLocalStorage, addNewUrl } = useLocalUrls([]);
-  const [responseLoading, setResponseLoading] = useState(false);
 
-  const addBuildable = usePromptEditorState((state) => state.addBuildable);
   const { constructPrompt } = usePrompt();
 
   const firebaseFunctionUrl = "https://generateimage-ksagj5rnfq-uc.a.run.app";
@@ -50,6 +48,8 @@ export default function Home() {
     setResponseUrls([...responseUrls, ...urls]);
     setResponseLoading(false);
   };
+
+  lessonIndex = 
 
   return (
     <main className="flex h-screen flex-col items-stretch justify-start bg-primary">
@@ -99,22 +99,8 @@ export default function Home() {
             {"Let's Build Something Awesome!"}
           </h1>
           <div className="flex flex-row items-center space-x-2">
-            <Button
-              variant={"accent"}
-              onClick={() => {
-                addBuildable(BuildableTypes.FREE_INPUT, "hello");
-              }}
-            >
-              <PlusIcon />
-            </Button>
+            <BuildableMenu />
             <div className="flex flex-row items-center justify-center bg-background rounded-xl drop-shadow-md px-5">
-              <Image
-                className="animate-bounce"
-                src="/logo.svg"
-                alt="Logo"
-                width={50}
-                height={50}
-              />
               <PromptBox className="space-x-1 p-5">
                 <DragableInput />
                 <DragableTag
