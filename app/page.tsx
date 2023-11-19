@@ -54,7 +54,7 @@ export default function Home() {
     <main className="flex h-screen flex-row items-center justify-stretch p-2 bg-primary">
       <CurriculumScreen/>
       <div className="flex flex-col w-2/3 items-center flex-grow pl-12">
-        <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
+        <h1 className="text-4xl font-bold mb-10">{"Let's build some prompts!"}</h1>
         <div className="flex flex-row items-center space-x-2">
           <div className="flex flex-col items-center justify-center">
             <BuildableMenu/>
