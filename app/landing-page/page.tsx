@@ -3,7 +3,7 @@
 import { DragableInput } from "@/components/dragable-input"
 import { DragableTag } from "@/components/dragable-tag"
 import { PromptBox } from "@/components/prompt-box"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { LightningBoltIcon } from "@radix-ui/react-icons"
 import { PlusIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
@@ -20,9 +20,6 @@ import { ContentSection } from "@/components/content-section"
 import { CurriculumScreen } from "@/components/curriculum-screen"
 import { LoginButton } from "@/components/login-button"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import "./background.scss"
 
 export default function Home() {
 
@@ -57,41 +54,33 @@ export default function Home() {
 
   return (
     <>
-    <div className="gradient-background">
+    {/* // <main className="flex h-screen flex-row items-center justify-stretch p-2 bg-primary"> */}
+      {/* <CurriculumScreen/> */}
       <BrowserRouter>
-      <main className="flex h-screen flex-row items-center justify-center p-2">
-        <div>
-        <div className="flex-col items-center">
-        <div className="items-center mb-40">
-        <h1 className="text-4xl text-center font-bold mb-10">Welcome to Prompt-Ed &#128396;</h1>
-        <br/>
-        <h3 className="text-xl text-center font-bold mt-2 text-muted">Generative AI for Kids</h3>
-        </div>
-        <div className="relative">
-        <Link
-            href="/login"
-            className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute left-10"
-            )}
-            >
-            Login
-        </Link>
-        <Link
-            href="/create-account"
-            className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute right-10"
-            )}
-            >
-            Sign Up
-        </Link>
-        </div>
-        </div>
-        </div>
-        </main>
+        <LoginButton/>
       </BrowserRouter>
-      </div>
+    {/* <div className="flex flex-col w-2/3 items-center flex-grow pl-12">
+        <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
+        <div className="flex flex-row items-center space-x-2">
+          <div className="flex flex-col items-center justify-center">
+            <BuildableMenu/>
+            { emptyPrompt && <h4 className="text-xl font-bold mt-2 text-muted italic">Click to start!</h4>}
+          </div>
+          {!emptyPrompt && <div className="flex flex-row items-center justify-center bg-background rounded-xl drop-shadow-md px-5">
+            <PromptBox className="space-x-1 p-5"/>
+            <Button variant="accent" onClick={onGenerateClick} disabled={responseLoading}>
+              <LightningBoltIcon/>
+              Generate
+            </Button>
+          </div>}
+        </div>
+        <div className="flex flex-row space-x-5 m-5">
+          {urlsFromLocalStorage.map((url, i) => (
+            <ImageCard key={i} imageUrl={url.url} promptTitle={url.prompt} />
+          ))}
+        </div>
+      </div> */}
+    {/* // </main> */}
     </>
   )
 }

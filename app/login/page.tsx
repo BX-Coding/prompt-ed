@@ -33,7 +33,7 @@ export default function Home() {
             <p>
               Struggling with logging in? {" "}
               <Link
-                href="/terms"
+                href="/password-reset"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Reset Password
