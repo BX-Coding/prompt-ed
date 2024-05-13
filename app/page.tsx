@@ -18,6 +18,8 @@ import { BuildableMenu } from "@/components/buildable-menu"
 import { useHasHydrated } from "@/hooks/useHasHydrated"
 import { ContentSection } from "@/components/content-section"
 import { CurriculumScreen } from "@/components/curriculum-screen"
+import { LoginButton } from "@/components/login-button"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 export default function Home() {
 
@@ -51,9 +53,13 @@ export default function Home() {
   }
 
   return (
-    <main className="flex h-screen flex-row items-center justify-stretch p-2 bg-primary">
-      <CurriculumScreen/>
-      <div className="flex flex-col w-2/3 items-center flex-grow pl-12">
+    <>
+    {/* // <main className="flex h-screen flex-row items-center justify-stretch p-2 bg-primary"> */}
+      {/* <CurriculumScreen/> */}
+      <BrowserRouter>
+        <LoginButton/>
+      </BrowserRouter>
+    {/* <div className="flex flex-col w-2/3 items-center flex-grow pl-12">
         <h1 className="text-4xl font-bold mb-10">{"Let's build something awesome!"}</h1>
         <div className="flex flex-row items-center space-x-2">
           <div className="flex flex-col items-center justify-center">
@@ -73,7 +79,8 @@ export default function Home() {
             <ImageCard key={i} imageUrl={url.url} promptTitle={url.prompt} />
           ))}
         </div>
-      </div>
-    </main>
+      </div> */}
+    {/* // </main> */}
+    </>
   )
 }
