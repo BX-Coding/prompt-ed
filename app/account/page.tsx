@@ -2,7 +2,7 @@
 
 import { NavBar } from "@/components/navbar"
 import { getAuth, onAuthStateChanged} from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { UpdatePassword } from "@/components/update-password-form";
 import { AlertDelete } from "@/components/alert-delete";
@@ -11,10 +11,14 @@ export default function Home() {
   const [email, setEmail] = useState('');
 
   const auth = getAuth();
-  if (localStorage.getItem("logged_in") === "0") {
-    return (
-      <p>Access Denied</p>
-    );
+  if (auth.currentUser === null) {
+    setTimeout(() => {
+      if (auth.currentUser === null) {
+        return (
+          <p>Access Denied</p>
+        );
+      }
+    }, 3000)
   }
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -24,12 +28,10 @@ export default function Home() {
       if (user.email != null) {
         setEmail(user.email);
       }
-      localStorage.setItem("logged_in", "1");
       // ...
     } else {
       // User is signed out
       // ...
-      localStorage.setItem("logged_in", "0");
     }
   });
 
