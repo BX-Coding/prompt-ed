@@ -51,7 +51,7 @@ export default function Home() {
         <div>
         <div className="flex-col items-center">
         <div className="items-center mb-40">
-        <h1 className="text-4xl text-center font-bold mb-10">Welcome to Prompt-Ed &#128396;</h1>
+        <h1 className="text-6xl text-center font-bold mb-12">Prompt-Ed &#128396;</h1>
         <br/>
         <h3 className="text-xl text-center font-bold mt-2 text-muted">Generative AI for Kids</h3>
         </div>
