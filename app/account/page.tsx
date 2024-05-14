@@ -1,22 +1,14 @@
 "use client"
 
 import { NavBar } from "@/components/navbar"
-import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
-import { createContext, useContext, useState } from "react";
-import { toast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { getAuth, onAuthStateChanged} from "firebase/auth";
+import { useState } from "react";
 import React from "react";
-import { Icons } from "@/components/icons";
 import { UpdatePassword } from "@/components/update-password-form";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
-import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog";
 import { AlertDelete } from "@/components/alert-delete";
 export default function Home() {
 
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [password, setPassword] = useState('');
 
   const auth = getAuth();
   if (localStorage.getItem("logged_in") === "0") {
