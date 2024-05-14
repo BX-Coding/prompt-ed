@@ -47,21 +47,22 @@ export default function Home() {
       <p>Access Denied</p>
     );
   } else {
-  return (
-    <>
-      <div className="flex mb-2 justify-between">
-        <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
-        <NavBar/>
+    return (
+      <>
+        <div className="flex mb-2 justify-between">
+          <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
+          <NavBar/>
+        </div>
+        <div className="flex flex-col items-center">
+        <h1 className="text-4xl text-center font-bold mt-10 mb-10">Account Information</h1>
+        <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-10 text-muted">Email: {email}</h3>
+        <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-2 text-muted">Update Password:</h3>
+        <UpdatePassword />
+        <div className="mt-20">
+          <AlertDelete />
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-      <h1 className="text-4xl text-center font-bold mt-10 mb-10">Account Information</h1>
-      <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-10 text-muted">Email: {email}</h3>
-      <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-2 text-muted">Update Password:</h3>
-      <UpdatePassword />
-      <div className="mt-20">
-        <AlertDelete />
-      </div>
-    </div>
-    </>
-  )}
+      </>
+    );
+  }
 }

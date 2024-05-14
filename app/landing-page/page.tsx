@@ -26,12 +26,13 @@ export default function Home() {
       <p>Access Denied</p>
     );
   } else {
-  return (
-    <>
-      <div className="flex mb-2 justify-between">
-        <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
-        <NavBar/>
-      </div>
-    </>
-  )}
+    return (
+      <>
+        <div className="flex mb-2 justify-between">
+          <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
+          <NavBar/>
+        </div>
+      </>
+    );
+  }
 }
