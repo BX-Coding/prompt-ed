@@ -50,13 +50,25 @@ export default function Home() {
       <main className="flex h-screen flex-row items-center justify-center p-2">
         <div>
         <div className="flex-col items-center">
-        <div className="items-center mb-40">
-        <h1 className="text-6xl text-center font-bold mb-12">Prompt-Ed &#128396;</h1>
+        <div className="items-center">
+        <h1 className="text-6xl text-center font-bold mb-6">Prompt-Ed &#128396;</h1>
         <br/>
-        <h3 className="text-xl text-center font-bold mt-2 text-muted">Generative AI for Kids</h3>
+        <h3 className="text-xl text-center font-bold mt-2 mb-20 text-muted">Generative AI for Kids</h3>
         </div>
         <div className="relative">
-        <Link
+        <Button asChild className={cn(
+                buttonVariants({ variant: "outline", size:"xl"}),
+                "absolute left-5"
+            )}>
+            <Link href="/login">Login</Link>
+        </Button>
+        <Button asChild className={cn(
+                buttonVariants({ variant: "outline", size:"xl" }),
+                "absolute right-5"
+            )}>
+            <Link href="/create-account">Sign-Up</Link>
+        </Button>
+        {/* <Link
             href="/login"
             className={cn(
                 buttonVariants({ variant: "outline" }),
@@ -64,8 +76,8 @@ export default function Home() {
             )}
             >
             Login
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
             href="/create-account"
             className={cn(
                 buttonVariants({ variant: "outline" }),
@@ -73,7 +85,7 @@ export default function Home() {
             )}
             >
             Sign Up
-        </Link>
+        </Link> */}
         </div>
         </div>
         </div>
