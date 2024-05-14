@@ -11,37 +11,17 @@ export default function Home() {
   const [email, setEmail] = useState('');
 
   const auth = getAuth();
-  let user = "0";
-  async function CheckLogin() {
-    if (auth.currentUser === null) {
-      setTimeout(() => {
-        if (auth.currentUser === null) {
-          user = "0";
-        } else {
-          user = "1";
-        }
-      }, 3000)
-    } else {
-      user = "1";
-    }
-  }
-  CheckLogin();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
-      if (user.email != null) {
+  const [logIn, setLogIn] = useState(false);
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.email !== null) {
         setEmail(user.email);
       }
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+      if (user && !logIn) {
+        setLogIn(true);
+      }
+    });
 
-  if (user === "0") {
+  if (!logIn) {
     return (
       <p>Access Denied</p>
     );

@@ -1,26 +1,19 @@
 "use client"
 
 import { NavBar } from "@/components/navbar"
-import { getAuth } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { useState } from "react";
 export default function Home() {
 
   const auth = getAuth();
-  let user = "0";
-  async function CheckLogin() {
-    if (auth.currentUser === null) {
-      setTimeout(() => {
-        if (auth.currentUser === null) {
-          user = "0";
-        } else {
-          user = "1";
-        }
-      }, 3000)
-    } else {
-      user = "1";
-    }
-  }
-  CheckLogin();
-  if (user === "0") {
+  const [logIn, setLogIn] = useState(false);
+    onAuthStateChanged(auth, (user) => {
+      if (user && !logIn) {
+        setLogIn(true);
+      }
+    });
+
+  if (!logIn) {
     return (
       <p>Access Denied</p>
     );
