@@ -1,9 +1,7 @@
 "use client"
 
 import { NavBar } from "@/components/navbar"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useEffect } from "react";
-
+import { getAuth } from "firebase/auth"
 export default function Home() {
 
   const auth = getAuth();

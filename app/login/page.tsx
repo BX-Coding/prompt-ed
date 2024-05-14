@@ -3,9 +3,6 @@ import Link from "next/link"
 import { LoginForm } from "../../components/login-form"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "../firebase"
-import { useEffect } from "react"
 
 export default function Home() {
 
