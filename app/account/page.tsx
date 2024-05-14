@@ -11,15 +11,21 @@ export default function Home() {
   const [email, setEmail] = useState('');
 
   const auth = getAuth();
-  if (auth.currentUser === null) {
-    setTimeout(() => {
-      if (auth.currentUser === null) {
-        return (
-          <p>Access Denied</p>
-        );
-      }
-    }, 3000)
+  let user = "0";
+  async function CheckLogin() {
+    if (auth.currentUser === null) {
+      setTimeout(() => {
+        if (auth.currentUser === null) {
+          user = "0";
+        } else {
+          user = "1";
+        }
+      }, 3000)
+    } else {
+      user = "1";
+    }
   }
+  CheckLogin();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -35,6 +41,12 @@ export default function Home() {
     }
   });
 
+  if (user === "0") {
+    console.log("inside")
+    return (
+      <p>Access Denied</p>
+    );
+  } else {
   return (
     <>
       <div className="flex mb-2 justify-between">
@@ -51,5 +63,5 @@ export default function Home() {
       </div>
     </div>
     </>
-  )
+  )}
 }
