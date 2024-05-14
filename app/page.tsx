@@ -7,7 +7,6 @@ import { useLocalUrls } from "@/hooks/useLocalUrls"
 import { usePromptEditorState } from "@/store/editorStore"
 import { usePrompt } from "@/hooks/usePrompt"
 import { useHasHydrated } from "@/hooks/useHasHydrated"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import "./background.scss"
@@ -44,54 +43,30 @@ export default function Home() {
   }
 
   return (
-    <>
     <div className="gradient-background">
-      <BrowserRouter>
       <main className="flex h-screen flex-row items-center justify-center p-2">
-        <div>
-        <div className="flex-col items-center">
-        <div className="items-center">
-        <h1 className="text-6xl text-center font-bold mb-6">Prompt-Ed &#128396;</h1>
-        <br/>
-        <h3 className="text-xl text-center font-bold mt-2 mb-20 text-muted">Generative AI for Kids</h3>
-        </div>
-        <div className="relative">
-        <Button asChild className={cn(
-                buttonVariants({ variant: "outline", size:"xl"}),
-                "absolute left-5"
-            )}>
-            <Link href="/login">Login</Link>
-        </Button>
-        <Button asChild className={cn(
-                buttonVariants({ variant: "outline", size:"xl" }),
-                "absolute right-5"
-            )}>
-            <Link href="/create-account">Sign-Up</Link>
-        </Button>
-        {/* <Link
-            href="/login"
-            className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute left-10"
-            )}
-            >
-            Login
-        </Link> */}
-        {/* <Link
-            href="/create-account"
-            className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute right-10"
-            )}
-            >
-            Sign Up
-        </Link> */}
-        </div>
-        </div>
-        </div>
+          <div className="flex-col items-center">
+            <div className="items-center">
+              <h1 className="text-6xl text-center font-bold mb-6">Prompt-Ed &#128396;</h1>
+              <br/>
+              <h3 className="text-xl text-center font-bold mt-2 mb-20 text-muted">Generative AI for Kids</h3>
+            </div>
+            <div className="relative">
+              <Button asChild className={cn(
+                      buttonVariants({ variant: "outline", size:"xl"}),
+                      "absolute left-5"
+                  )}>
+                  <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild className={cn(
+                      buttonVariants({ variant: "outline", size:"xl" }),
+                      "absolute right-5"
+                  )}>
+                  <Link href="/create-account">Sign-Up</Link>
+              </Button>
+            </div>
+          </div>
         </main>
-      </BrowserRouter>
       </div>
-    </>
   )
 }

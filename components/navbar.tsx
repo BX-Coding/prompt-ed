@@ -2,22 +2,18 @@
 
 import * as React from "react"
 
-import {FC, useState} from 'react';
+import { FC } from 'react';
 import {
     NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
     navigationMenuTriggerStyle,
   } from "@/components/ui/navigation-menu"
 import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
   
 
 
@@ -26,13 +22,11 @@ interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface ResetFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const NavBar: FC = ({}) => {
-
-    const navigate = useNavigate();
+    const router = useRouter();
     const handleLogOut = () => {
         signOut(auth).then(() => {
           // Sign-out successful.
-              navigate("/");
-              navigate(0);
+              router.push("/");
               console.log("Signed out successfully")
           }).catch((error) => {
           // An error happened.

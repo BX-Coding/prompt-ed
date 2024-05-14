@@ -8,22 +8,23 @@ import { Icons } from "@/components/icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword  } from 'firebase/auth'
 import { auth } from '../app/firebase'
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from 'next/navigation'
+
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface ResetFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const { toast } = useToast()
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
   async function onSubmitCreate(event: React.SyntheticEvent) {
     event.preventDefault()
@@ -31,9 +32,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
-      console.log(user);
-      navigate("/login");
-      navigate(0);
+      router.push("/login");
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -102,11 +101,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 }
 
 export function LoginForm({ className, ...props }: LoginFormProps) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { toast } = useToast()
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const { toast } = useToast();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
@@ -114,9 +113,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
     await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
-      console.log(user);
-      navigate("/landing-page");
-      navigate(0);
+      router.push("/landing-page");
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -183,18 +180,17 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 }
 
 export function ResetForm({ className, ...props }: ResetFormProps) {
-  const [email, setEmail] = useState('')
-  const { toast } = useToast()
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [email, setEmail] = useState('');
+  const { toast } = useToast();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
     setIsLoading(true)
 
     await sendPasswordResetEmail(auth, email).then(() => {
-      navigate("/login");
-      navigate(0);
+      router.push("/login");
       setIsLoading(false);
       toast({
         title: "Email Sent!",
@@ -247,4 +243,4 @@ export function ResetForm({ className, ...props }: ResetFormProps) {
       <Toaster />
     </>
   )
-              }
+}
