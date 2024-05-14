@@ -21,7 +21,6 @@ export default function Home() {
   }
   CheckLogin();
   if (user === "0") {
-    console.log("inside")
     return (
       <p>Access Denied</p>
     );
