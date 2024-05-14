@@ -2,7 +2,7 @@
 
 import { NavBar } from "@/components/navbar"
 import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ import { UpdatePassword } from "@/components/update-password-form";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog";
 import { AlertDelete } from "@/components/alert-delete";
-
 export default function Home() {
 
   const [email, setEmail] = useState('');
@@ -20,7 +19,7 @@ export default function Home() {
   const [password, setPassword] = useState('');
 
   const auth = getAuth();
-  if (auth.currentUser === null) {
+  if (localStorage.getItem("logged_in") === "0") {
     return (
       <p>Access Denied</p>
     );
@@ -33,10 +32,12 @@ export default function Home() {
       if (user.email != null) {
         setEmail(user.email);
       }
+      localStorage.setItem("logged_in", "1");
       // ...
     } else {
       // User is signed out
       // ...
+      localStorage.setItem("logged_in", "0");
     }
   });
 
