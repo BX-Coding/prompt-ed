@@ -67,7 +67,7 @@ export const ImageGeneration: React.FC = ({}) => {
         const collectionPath = auth.currentUser?.uid +"/images"
         const today = new Date();
         const dateStr = today.getMonth() + "/" + today.getDate() + " at " + today.getTime();
-        const imageRef = ref(storage, collectionPath)
+        const imageRef = ref(storage, collectionPath + "/" + dateStr + ".jpg");
         uploadBytes(imageRef, blob).then((snapshot) => {
             console.log('Uploaded a blob or file!');
           });
