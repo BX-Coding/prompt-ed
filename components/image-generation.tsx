@@ -14,18 +14,17 @@ import { Toaster } from "@/components/ui/toaster"
 import { toast, useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
 import { usePrompt } from "@/hooks/usePrompt"
-import { doc, setDoc } from "firebase/firestore"; 
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"; 
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import axios from "axios";
-import { ref, uploadBytes } from "firebase/storage";
 
 export const ImageGeneration: React.FC = ({}) => {
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [prompt, setPrompt] = useState('');
     const [imageURL, setImageURL] = useState('');
-    const { constructPrompt } = usePrompt();
+    //NEED TO CHANGE THIS ONCE API KEY AVAILABLE
     const firebaseFunctionUrl = "https://generateimage-ksagj5rnfq-uc.a.run.app";
     const router = useRouter();
-    const auth = getAuth();
 
 
     const generateImage = async (prompt: string) => {
@@ -58,19 +57,20 @@ export const ImageGeneration: React.FC = ({}) => {
         }).then((response) => response.blob())
         .then((blob) => {
             // Create a URL for the Blob
-            saveToFirebase(blob);
+            const today = new Date();
+            saveToFirebase(blob, today);
         });
         console.log("save image");
     }
 
-    async function saveToFirebase(blob: Blob) {
-        const collectionPath = auth.currentUser?.uid +"/images"
-        const today = new Date();
-        const dateStr = today.getMonth() + "/" + today.getDate() + " at " + today.getTime();
-        const imageRef = ref(storage, collectionPath + "/" + dateStr + ".jpg");
-        uploadBytes(imageRef, blob).then((snapshot) => {
+    async function saveToFirebase(blob: Blob, today: Date) {
+        const collectionPath = "users/" + auth.currentUser?.uid +"/images";
+        const imageURLNew = URL.createObjectURL(blob);
+        const dateStr = today.getMonth() + "/" + today.getDate() + " at " + today.getTime() + ".jpg";
+        const storageRef = ref(storage, dateStr);
+        uploadBytes(storageRef, blob).then((snapshot) => {
             console.log('Uploaded a blob or file!');
-          });
+          })
     }
 
     const handleSaveLocal = () => {
@@ -79,14 +79,14 @@ export const ImageGeneration: React.FC = ({}) => {
             mode: "cors"
         }).then((response) => response.blob())
         .then((blob) => {
-            saveToFirebase(blob);
+            const today = new Date();
+            saveToFirebase(blob, today);
             // Create a URL for the Blob
             const url = URL.createObjectURL(blob);
 
             // Create an anchor element for downloading
             const a = document.createElement('a');
             a.href = url;
-            const today = new Date();
             const dateStr = today.getMonth() + "/" + today.getDate() + " at " + today.getTime();
             a.download = dateStr; // Specify the desired download filename
 
