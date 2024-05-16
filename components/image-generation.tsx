@@ -9,13 +9,14 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { getAuth, updatePassword } from 'firebase/auth'
-import { auth, db } from '../app/firebase'
+import { auth, db, storage } from '../app/firebase'
 import { Toaster } from "@/components/ui/toaster"
 import { toast, useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
 import { usePrompt } from "@/hooks/usePrompt"
 import { doc, setDoc } from "firebase/firestore"; 
 import axios from "axios";
+import { ref, uploadBytes } from "firebase/storage";
 
 export const ImageGeneration: React.FC = ({}) => {
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -62,12 +63,13 @@ export const ImageGeneration: React.FC = ({}) => {
         console.log("save image");
     }
 
-    async function saveToFirebase(blob: any) {
+    async function saveToFirebase(blob: Blob) {
         const collectionPath = auth.currentUser?.uid +"/images"
         const today = new Date();
         const dateStr = today.getMonth() + "/" + today.getDate() + " at " + today.getTime();
-        await setDoc(doc(db, "users/" + collectionPath, dateStr), {
-            image: blob,
+        const imageRef = ref(storage, collectionPath)
+        uploadBytes(imageRef, blob).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
           });
     }
 
