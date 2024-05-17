@@ -14,12 +14,6 @@ import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
-  
-
-
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-interface ResetFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const NavBar: FC = ({}) => {
     const router = useRouter();
@@ -45,7 +39,7 @@ export const NavBar: FC = ({}) => {
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href = "/landing-page" legacyBehavior passHref>
+                    <Link href = "/chat" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Chat
                         </NavigationMenuLink>
