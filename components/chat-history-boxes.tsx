@@ -21,9 +21,11 @@ export const ChatHistoryBox: FC = ({}) => {
     const pathname = "users/" + userID +"/chats";
     useEffect(() => {
         const getDates = async () => {
-            const querySnapshot = await getDocs(collection(db, pathname));
-            const newDates = querySnapshot.docs.map((doc) => doc.id);
-            setDates([...dates, ...newDates]);
+            if (typeof userID !== 'undefined') {
+                const querySnapshot = await getDocs(collection(db, pathname));
+                const newDates = querySnapshot.docs.map((doc) => doc.id);
+                setDates([...dates, ...newDates]);
+            }
         }
         getDates();
     }, [userID]);
@@ -32,7 +34,7 @@ export const ChatHistoryBox: FC = ({}) => {
     let dateEls = dates.map((date, index) => <div className="mb-5" key={index}><ChatHistory key={index} date={date}/></div>);
 
     return (
-        <div className="mb-5" key={dates.length}>
+        <div className="mb-5 h-full" key={dates.length}>
             {dateEls}
         </div>
     )

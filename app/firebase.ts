@@ -9,13 +9,13 @@ import nextConfig from "../next.config";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: nextConfig.REACT_APP_API_KEY,
-  authDomain: nextConfig.REACT_APP_AUTH_DOMAIN,
-  projectId: nextConfig.REACT_APP_PROJECT_ID,
-  storageBucket: nextConfig.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: nextConfig.REACT_APP_MESSAGING_SENDER_ID,
-  appId: nextConfig.REACT_APP_APP_ID,
-  measurementId: nextConfig.REACT_APP_MEASUREMENT_ID
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase

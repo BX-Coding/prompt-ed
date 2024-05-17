@@ -24,13 +24,13 @@ export default function Home() {
         );
     } else {
         return (
-        <>
+        <div className="h-screen">
             <div className="flex mb-2 justify-between">
             <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
             <NavBar/>
             </div>
             <div className="flex flex-row w-screen">
-            <Card className="w-full ml-5 mb-5 mr-5 h-screen">
+            <Card className="w-full ml-5 mb-5 mr-5 h-max">
             <CardHeader>
                 <CardTitle>Chat History</CardTitle>
                 <CardDescription>Click on a chat to reopen it</CardDescription>
@@ -39,7 +39,7 @@ export default function Home() {
                 <ChatHistoryBox/>
             </CardContent>
             </Card>
-            <Card className="w-full mb-5 mr-5 h-screen">
+            <Card className="w-full mb-5 mr-5 h-max">
             <CardHeader>
                 <CardTitle>Image History</CardTitle>
                 <CardDescription>Click on an image to reopen it</CardDescription>
@@ -49,7 +49,7 @@ export default function Home() {
             </CardContent>
             </Card>
             </div>
-        </>
+        </div>
         );
     }
 }
