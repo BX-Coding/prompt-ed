@@ -1,16 +1,14 @@
 "use client"
 
 import { NavBar } from "@/components/navbar"
-import { getAuth, onAuthStateChanged} from "firebase/auth";
+import { onAuthStateChanged} from "firebase/auth";
 import { useState } from "react";
 import React from "react";
-import { UpdatePassword } from "@/components/update-password-form";
-import { AlertDelete } from "@/components/alert-delete";
 import { ImageGeneration } from "@/components/image-generation";
-import { Button } from "@/components/ui/button";
+import { auth } from "../firebase";
+
 export default function Home() {
 
-  const auth = getAuth();
   const [logIn, setLogIn] = useState(false);
   onAuthStateChanged(auth, (user) => {
     if (user && !logIn) {
