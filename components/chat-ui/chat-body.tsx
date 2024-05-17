@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import ChatBottombar from "./bottom";
 import { AnimatePresence, motion } from "framer-motion";
 
-//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master
+//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBodyProps {
   messages?: Message[];
   sendMessage: (newMessage: Message[]) => void;

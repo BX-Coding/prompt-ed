@@ -4,7 +4,7 @@ import { ChatBody } from "./chat-body";
 import React from "react";
 import { doc, setDoc } from "firebase/firestore";
 
-//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master
+//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatProps {
   messages?: Message[];
   date: string

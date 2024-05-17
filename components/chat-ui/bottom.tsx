@@ -7,12 +7,17 @@ import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 
-//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master
+//chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
   sendMessage: (newMessage: Message[]) => void;
   date: string
 }
 
+/**
+ * TO ADD AI FUNCTIONALITY: add AI generation to the generareAIMessage method.
+ * Use prompt parameter as the user's input. Leave ai to true but assign
+ * message to the desired AI content
+ */
 export default function ChatBottombar({
   sendMessage,
   date
@@ -26,11 +31,12 @@ export default function ChatBottombar({
   };
 
   //TODO: REPLACE THIS METHOD WITH GENERATING AI MESSAGES
-  const generateAIMessage = async() => {
+  const generateAIMessage = async(prompt: string) => {
     const aiMessage: Message = {
       message: "replace this with AI content",
       ai: true
     } 
+    console.log(prompt);
     return aiMessage
   }
 
@@ -45,7 +51,7 @@ export default function ChatBottombar({
       let messages = [personMessage];
       sendMessage(messages);
       //do AI stuff
-      const generateMessage = await generateAIMessage();
+      const generateMessage = await generateAIMessage(message);
       messages = [...messages, generateMessage];
       sendMessage(messages);
       setWaiting(false);
