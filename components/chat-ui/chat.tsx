@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master
 interface ChatProps {
   messages?: Message[];
-  date: Date
+  date: string
 }
 
 export function Chat({ messages, date }: ChatProps) {
@@ -38,8 +38,7 @@ export function Chat({ messages, date }: ChatProps) {
   }
 
   return (
-    <div className="h-screen flex flex-col items-center">
-        <div className="h-full flex flex-col justify-between w-full max-h-128">
+      <div className="h-screen flex flex-col items-center justify-between w-full max-h-128">
         <ChatBody
             messages={messagesState}
             sendMessage={sendMessage}
@@ -49,7 +48,6 @@ export function Chat({ messages, date }: ChatProps) {
             <Button className="max-w-10 mr-10 mb-5" onClick={onSave}>Save Chat</Button>
             <Button className="max-w-10 mb-5" onClick={onClear}>Clear</Button>
         </div>
-        </div>
-    </div>
+      </div>
   );
 }

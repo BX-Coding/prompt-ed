@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 interface ChatBodyProps {
   messages?: Message[];
   sendMessage: (newMessage: Message[]) => void;
-  date: Date
+  date: string
 }
 
 export function ChatBody({

@@ -1,32 +1,39 @@
 import * as React from "react"
 
-import { FC, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import Link from "next/link";
-import { format } from "url";
+import { FC, useEffect, useState } from 'react';
 import { collection, getDocs, query } from "firebase/firestore";
 import { auth, db } from "@/app/firebase";
 import { ChatHistory } from "./chat-history";
+import { onAuthStateChanged } from "firebase/auth";
+
+export const ChatHistoryBox: FC = ({}) => {
+    const [dates, setDates] = React.useState<string[]>([]);
+    const [userID, setUserID] = useState(auth.currentUser?.uid);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user && typeof userID === 'undefined') {
+          setUserID(user.uid);
+        } else {
+        }
+      });
 
 
-export function ChatHistoryBox() {
-    const [dates, setDates] = React.useState<string[]>([]);;
-
-
-    const pathname = "users/" + auth.currentUser?.uid +"/chats";
-    const q = query(collection(db, pathname));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        setDates([...dates, doc.id]);
-    });
+    const pathname = "users/" + userID +"/chats";
+    useEffect(() => {
+        const getDates = async () => {
+            const querySnapshot = await getDocs(collection(db, pathname));
+            const newDates = querySnapshot.docs.map((doc) => doc.id);
+            setDates([...dates, ...newDates]);
+        }
+        getDates();
+    }, [userID]);
 
     console.log(dates);
-    let dateEls = dates.map((date) => <ChatHistory date={new Date(date)}/>);
+    let dateEls = dates.map((date, index) => <div className="mb-5" key={index}><ChatHistory key={index} date={date}/></div>);
 
     return (
-        <>
+        <div className="mb-5" key={dates.length}>
             {dateEls}
-        </>
+        </div>
     )
 }

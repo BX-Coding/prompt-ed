@@ -32,7 +32,7 @@ export const NavBar: FC = ({}) => {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <Link href = "/landing-page" legacyBehavior passHref>
+                    <Link href = "/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             History
                         </NavigationMenuLink>

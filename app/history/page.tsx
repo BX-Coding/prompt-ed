@@ -1,17 +1,10 @@
 "use client"
 
-import Link from "next/link"
-import { UserAuthForm } from "../../components/login-form"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { Chat } from "@/components/chat-ui/chat"
 import { NavBar } from "@/components/navbar"
 import { onAuthStateChanged } from "firebase/auth"
 import { useState } from "react"
-import { auth, db } from "../firebase"
+import { auth } from "../firebase"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChatHistory } from "@/components/chat-history"
-import { collection, getDocs, query } from "firebase/firestore"
 import { ChatHistoryBox } from "@/components/chat-history-boxes"
 
 export default function Home() {
@@ -36,7 +29,8 @@ export default function Home() {
             <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
             <NavBar/>
             </div>
-            <Card className="w-50 h-screen">
+            <div className="flex flex-row w-screen">
+            <Card className="w-full ml-5 mb-5 mr-5 h-screen">
             <CardHeader>
                 <CardTitle>Chat History</CardTitle>
                 <CardDescription>Click on a chat to reopen it</CardDescription>
@@ -45,6 +39,16 @@ export default function Home() {
                 <ChatHistoryBox/>
             </CardContent>
             </Card>
+            <Card className="w-full mb-5 mr-5 h-screen">
+            <CardHeader>
+                <CardTitle>Image History</CardTitle>
+                <CardDescription>Click on an image to reopen it</CardDescription>
+            </CardHeader>
+            <CardContent>
+                nothing
+            </CardContent>
+            </Card>
+            </div>
         </>
         );
     }

@@ -10,7 +10,7 @@ import { Input } from "../ui/input";
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master
 interface ChatBottombarProps {
   sendMessage: (newMessage: Message[]) => void;
-  date: Date
+  date: string
 }
 
 export default function ChatBottombar({
