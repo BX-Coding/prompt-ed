@@ -46,7 +46,7 @@ export const NavBar: FC = ({}) => {
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href = "/landing-page" legacyBehavior passHref>
+                    <Link href = "/image-gen" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Images
                         </NavigationMenuLink>
