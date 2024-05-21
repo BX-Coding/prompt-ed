@@ -1,0 +1,24 @@
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_USE_EMULATORS
+    value: false
+
+  - variable: NEXT_PUBLIC_REACT_APP_API_KEY
+    secret: promptedFirebaseAppApiKey
+
+  - variable: NEXT_PUBLIC_REACT_APP_AUTH_DOMAIN
+    secret: promptedFirebaseAppAuthDomain
+
+  - variable: NEXT_PUBLIC_REACT_APP_PROJECT_ID
+    secret: promptedFirebaseAppProjectId
+
+  - variable: NEXT_PUBLIC_REACT_APP_STORAGE_BUCKET
+    secret: promptedFirebaseAppStorageBucket
+
+  - variable: NEXT_PUBLIC_REACT_APP_MESSAGING_SENDER_ID
+    secret: promptedFirebaseAppMessagingSenderId
+
+  - variable: NEXT_PUBLIC_REACT_APP_APP_ID
+    secret: promptedFirebaseAppAppId
+
+  - variable: NEXT_PUBLIC_REACT_APP_MEASUREMENT_ID
+    secret: promptedFirebaseAppMeasurementId
