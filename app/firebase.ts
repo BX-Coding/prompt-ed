@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getStorage, connectStorageEmulator } from "firebase/storage";
 import nextConfig from "../next.config";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -10,18 +10,39 @@ import nextConfig from "../next.config";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+  apiKey: process.env.NEXT_PUBLIC_REACT_APP_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_REACT_APP_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_REACT_APP_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_REACT_APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth();
-export const db = getFirestore();
-export const storage = getStorage();
+
+// Get Firebase services
+const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
+
+// Function that checks if project is running locally and if so, use firebase emulator services
+const connectToEmulators = () => {
+  if (process.env.NEXT_PUBLIC_FIREBASE_USE_EMULATORS === 'true') {
+    connectAuthEmulator(auth, "http://localhost:9099");
+    connectFirestoreEmulator(db, "localhost", 8080);
+    connectStorageEmulator(storage, "localhost", 9199);
+    console.log("Project using local Firebase emulators.")
+  }
+  else{
+    console.log("Using production Firebase settings")
+  }
+};
+
+// Connect to emulators if running locally
+connectToEmulators();
+
+export { auth, db, storage };
 export default app;
+
