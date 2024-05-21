@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import React, { useRef } from "react";
 import ChatBottombar from "./bottom";
 import { AnimatePresence, motion } from "framer-motion";
+import ScratchBlocks from "./scratch-blocks";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBodyProps {
@@ -65,7 +66,9 @@ export function ChatBody({
             </motion.div>
           ))}
         </AnimatePresence>
+        <ScratchBlocks code={`when flag clicked`}/>
       </div>
+      
       <ChatBottombar sendMessage={sendMessage} date={date}/>
     </div>
   );

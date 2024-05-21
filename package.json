@@ -46,6 +46,7 @@
     "react-resizable-panels": "^2.0.19",
     "react-router-dom": "^6.0.1",
     "sass": "^1.77.1",
+    "scratchblocks": "^3.6.4",
     "styled-components": "^5.3.11",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
