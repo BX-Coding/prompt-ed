@@ -1,22 +1,18 @@
-
 import { cn } from "@/lib/utils";
 import React, { useRef } from "react";
 import ChatBottombar from "./bottom";
 import { AnimatePresence, motion } from "framer-motion";
 import ScratchBlocks from "./scratch-blocks";
+import EmbeddedMessage from "./embedded-message";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBodyProps {
   messages?: Message[];
   sendMessage: (newMessage: Message[]) => void;
-  date: string
+  date: string;
 }
 
-export function ChatBody({
-  messages,
-  sendMessage,
-  date
-}: ChatBodyProps) {
+export function ChatBody({ messages, sendMessage, date }: ChatBodyProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -24,8 +20,19 @@ export function ChatBody({
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight;
     }
-    console.log(messages)
+    console.log(messages);
   }, [messages]);
+
+  const exampleResponse = `
+  Here is some Scratch code for you:
+
+  \`\`\`
+  when green flag clicked
+  forever
+    next costume
+    wait 0.1 seconds
+  \`\`\`
+  `;
 
   return (
     <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
@@ -58,18 +65,19 @@ export function ChatBody({
                 !message.ai ? "items-end" : "items-start"
               )}
             >
-            <div className="flex gap-3 items-center">
-              <span className=" bg-accent p-3 rounded-md max-w-xs text-foreground">
-                {message.message}
-              </span>
-            </div>
+              <div className="flex gap-3 items-center">
+                <div className=" bg-accent p-3 rounded-md max-w-xs text-foreground">
+                  {message.message}
+                  {message.ai ? (
+                    <EmbeddedMessage llmResponse={exampleResponse} />
+                  ) : null}
+                </div>
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>
-        <ScratchBlocks code={`when flag clicked`}/>
       </div>
-      
-      <ChatBottombar sendMessage={sendMessage} date={date}/>
+      <ChatBottombar sendMessage={sendMessage} date={date} />
     </div>
   );
 }
