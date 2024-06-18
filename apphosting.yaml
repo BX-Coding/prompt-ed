@@ -3,7 +3,7 @@ env:
     value: false
 
   - variable: NEXT_PUBLIC_REACT_APP_API_KEY
-    secret: promptedFirebaseAppApiKey
+    secret: projects/prompt-ed-retry/secrets/promptedFirebaseAppApiKey
 
   - variable: NEXT_PUBLIC_REACT_APP_AUTH_DOMAIN
     secret: promptedFirebaseAppAuthDomain
