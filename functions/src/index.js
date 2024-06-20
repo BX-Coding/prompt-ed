@@ -2,13 +2,15 @@ const {onRequest} = require("firebase-functions/v2/https");
 
 const { createProdia } = require("prodia");
 
-const prodiaKey = process.env.NEXT_PUBLIC_PRODIA_API_KEY;
+const {defineString} = require("firebase-functions/params")
 
-const prodia = createProdia({
-  apiKey: prodiaKey,
-});
+const prodiaKey = defineString("PRODIA_API_KEY");
 
 const prodiaRequest = async (prompt) => {
+  const prodia = createProdia({
+    apiKey: prodiaKey.value(),
+  });
+
   const job = await prodia.generate({
     prompt: prompt,
     model: "v1-5-pruned-emaonly.safetensors [d7049739]"
