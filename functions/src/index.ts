@@ -2,9 +2,8 @@ import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import OpenAI from "openai";
 import { defineString } from "firebase-functions/params";
-import * as functions from "firebase-functions";
 const openaiKey = defineString("OPENAI_API_KEY");
-const axios = require("axios");
+import { moderationFunctions } from "./moderationFunctions";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -36,45 +35,3 @@ export const generateImage = onRequest(
     response.send(dalleResponse);
   }
 );
-
-const apiKey = functions.config().textmoderation.apikey;
-
-const moderateText = async (text: string) => {
-  const endpoint =
-    "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/text-moderation";
-  try {
-    const response = await axios.post(
-      endpoint,
-      { text: text },
-      {
-        headers: {
-          "x-api-key": apiKey,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error moderating text :", error);
-  }
-};
-
-const moderateImage = async (imageUrl: string) => {
-  const endpoint =
-    "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/image-moderation";
-  try {
-    const response = await axios.post(
-      endpoint,
-      { image_url: imageUrl },
-      {
-        headers: {
-          "x-api-key": apiKey,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error moderating image :", error);
-  }
-};
