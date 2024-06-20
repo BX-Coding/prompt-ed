@@ -39,7 +39,7 @@ export const generateImage = onRequest(
 
 const apiKey = functions.config().textmoderation.apikey;
 
-export const moderateText = async (text: string) => {
+const moderateText = async (text: string) => {
   const endpoint =
     "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/text-moderation";
   try {
@@ -59,7 +59,7 @@ export const moderateText = async (text: string) => {
   }
 };
 
-export const moderateImage = async (imageUrl: string) => {
+const moderateImage = async (imageUrl: string) => {
   const endpoint =
     "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/image-moderation";
   try {
