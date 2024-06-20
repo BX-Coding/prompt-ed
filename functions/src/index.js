@@ -26,13 +26,15 @@ const prodiaRequest = async (prompt) => {
 exports.generateImage = onRequest(
   { cors: true },
   async (request, response) => {
+    const prompt = request.body.data.prompt;
+
     const prodiaResponse = await prodiaRequest(prompt);
 
     if (prodiaResponse == "") {
       // request failed.
     }
 
-    imageab = await fetch(prodiaResponse, {
+    var imageab = await fetch(prodiaResponse, {
       method: 'GET'
     }).then((response) => response.arrayBuffer());
 
