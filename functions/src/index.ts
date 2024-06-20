@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { createProdia } from "prodia";
 import { defineSecret } from "firebase-functions/params";
-import { onRequest } from "firebase-functions/v1/https";
+import { onRequest } from "firebase-functions/v2/https";
 
 const prodiaKey = defineSecret("prodia-key");
 
