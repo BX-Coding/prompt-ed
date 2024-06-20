@@ -1,57 +1,38 @@
-/*import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
-import OpenAI from "openai";
-import {defineString} from "firebase-functions/params";
-const openaiKey = defineString("OPENAI_API_KEY");*/
-
-/*{
-  "created": 1589478378,
-  "data": [
-    {
-      "url": "https://..."
-    },
-    {
-      "url": "https://..."
-    }
-  ]
-}*/
-
 const {onRequest} = require("firebase-functions/v2/https");
 
-const OpenAI = require("openai");
+const { createProdia } = require("prodia");
 
-const openaiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+const prodiaKey = process.env.NEXT_PUBLIC_PRODIA_API_KEY;
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+const prodia = createProdia({
+  apiKey: prodiaKey,
+});
 
-const dalleRequest = async (openai, prompt) => {
-  const response = await openai.images.generate({
-    model: "dall-e-2",
+const prodiaRequest = async (prompt) => {
+  const job = await prodia.generate({
     prompt: prompt,
-    n: 1,
-    size: "256x256",
+    model: "v1-5-pruned-emaonly.safetensors [d7049739]"
   });
-  return response;
-};
+
+  const { imageUrl, status } = await prodia.wait(job);
+
+  if (status == "succeeded") {
+    return imageUrl;
+  } else {
+    return "";
+  }
+}
 
 exports.generateImage = onRequest(
   { cors: true },
-  //async (request: { body: { data: { prompt: any; }; }; }, response: { send: (arg0: any) => void; }) => {
   async (request, response) => {
-    const openai = new OpenAI({apiKey: openaiKey});
+    const prodiaResponse = await prodiaRequest(prompt);
 
-    const prompt = request.body.data.prompt;
-    /*logger.info(
-      `Recieved ${request.body.data} Requesting dalle with prompt ${prompt}`,
-      {structuredData: true});*/
-      
-    var imageab;
+    if (prodiaResponse == "") {
+      // request failed.
+    }
 
-    const dalleResponse = await dalleRequest(openai, prompt);
-    console.log(dalleResponse.data[0].url);
-    //response.send(dalleResponse);
-    imageab = await fetch(dalleResponse.data[0].url, {
+    imageab = await fetch(prodiaResponse, {
       method: 'GET'
     }).then((response) => response.arrayBuffer());
 
