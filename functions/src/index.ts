@@ -1,58 +1,57 @@
-import * as functions from 'firebase-functions';
-import fetch from 'node-fetch';
-import { createProdia } from 'prodia';
+import fetch from "node-fetch";
+import { createProdia } from "prodia";
+import { defineSecret } from "firebase-functions/params";
+import { onRequest } from "firebase-functions/v1/https";
 
-const prodiaKey = functions.config().prodia.key;
+const prodiaKey = defineSecret("prodia-key");
 
 const prodiaRequest = async (prompt: string): Promise<string> => {
   const prodia = createProdia({
-    apiKey: prodiaKey,
+    apiKey: prodiaKey.value(),
   });
 
   const job = await prodia.generate({
     prompt: prompt,
-    model: 'v1-5-pruned-emaonly.safetensors [d7049739]',
+    model: "v1-5-pruned-emaonly.safetensors [d7049739]",
   });
 
   const { imageUrl, status } = await prodia.wait(job);
 
-  if (status === 'succeeded') {
+  if (status === "succeeded") {
     return imageUrl;
   } else {
-    return '';
+    return "";
   }
 };
 
-export const generateImage = functions.https.onRequest(
-  async (request: functions.https.Request, response: functions.Response<any>) => {
-    const prompt = request.body?.data?.prompt;
+exports.generateImage = onRequest(async (request, response) => {
+  const prompt = request.body?.data?.prompt;
 
-    if (!prompt) {
-      response.status(400).send('Invalid request: missing prompt');
+  if (!prompt) {
+    response.status(400).send("Invalid request: missing prompt");
+    return;
+  }
+
+  try {
+    const prodiaResponse = await prodiaRequest(prompt);
+
+    if (prodiaResponse === "") {
+      response.status(500).send("Failed to generate image");
       return;
     }
 
-    try {
-      const prodiaResponse = await prodiaRequest(prompt);
+    const imageArrayBuffer = await fetch(prodiaResponse, {
+      method: "GET",
+    }).then((res) => res.arrayBuffer());
 
-      if (prodiaResponse === '') {
-        response.status(500).send('Failed to generate image');
-        return;
-      }
+    const imageData = new Uint8Array(imageArrayBuffer);
 
-      const imageArrayBuffer = await fetch(prodiaResponse, {
-        method: 'GET',
-      }).then((res) => res.arrayBuffer());
-
-      const imageData = new Uint8Array(imageArrayBuffer);
-
-      response.send({
-        created: new Date(),
-        data: imageData,
-      });
-    } catch (error) {
-      console.error('Error generating image:', error);
-      response.status(500).send('Error generating image');
-    }
+    response.send({
+      created: new Date(),
+      data: imageData,
+    });
+  } catch (error) {
+    console.error("Error generating image:", error);
+    response.status(500).send("Error generating image");
   }
-);
+});
