@@ -6,10 +6,11 @@ import {useState} from 'react';
 import { Icons } from "@/components/icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
-import { auth, storage } from '../app/firebase'
+import { auth, storage, functions } from '../app/firebase'
+import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster"
-import { useRouter } from 'next/navigation'
 import { ref, uploadBytes } from "firebase/storage";
+
 import axios from "axios";
 
 /**
@@ -27,30 +28,25 @@ export const ImageGeneration: React.FC = ({}) => {
     const [prompt, setPrompt] = useState('');
     const [imageURL, setImageURL] = useState('');
 
-    //NEED TO CHANGE THIS ONCE API KEY AVAILABLE
-    const firebaseFunctionUrl = "https://generateimage-ksagj5rnfq-uc.a.run.app";
-    const router = useRouter();
-
-
-    const generateImage = async (prompt: string) => {
-        const res = await axios.post(firebaseFunctionUrl, {
-          data: {prompt: prompt,}
-        })
-        return res.data.data.map((urlDict: Record<string, string>) => urlDict.url);
-    }
-
+    const generateImage = httpsCallable(functions, 'generateImage');
 
     async function submitHandler(event: React.SyntheticEvent) {
         event.preventDefault()
         setIsLoading(true)
-    
-        //UN-COMMENT THIS OUT WHEN READY TO TEST AI GENERATION!!!
-        // const urls = await generateImage(prompt);
-        // setImageURL(urls[0]);
 
-        //test URL- DELETE THIS LINE ONCE AI ADDED
-        setImageURL("https://github.com/shadcn.png");
+        const response = await generateImage({prompt: prompt});
 
+        var imagearray : number[] = [];
+        interface Dict {
+            [key: number]: number
+        }
+        Object.values(response.data as Object).forEach((x) => imagearray.push(x as number));
+        var imageblob = new Blob([new Uint8Array(imagearray)], {type: "application/octet-stream"});
+
+        const url = URL.createObjectURL(imageblob);
+        console.log(url);
+        
+        setImageURL(url);
 
         setIsLoading(false);
         setTimeout(() => {
@@ -77,7 +73,7 @@ export const ImageGeneration: React.FC = ({}) => {
     async function saveToFirebase(blob: Blob, today: Date) {
         const collectionPath = "users/" + auth.currentUser?.uid +"/images";
         const imageURLNew = URL.createObjectURL(blob);
-        const dateStr = today.toString().replace(" ", "_") + ".jpg";
+        const dateStr = today.toString().replace(" ", "_") + ".png";
         const storageRef = ref(storage, dateStr);
         uploadBytes(storageRef, blob).then((snapshot) => {
             console.log('Uploaded a blob or file!');
