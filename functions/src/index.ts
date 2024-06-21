@@ -3,9 +3,11 @@ import { createProdia } from "prodia";
 import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 
+const prodiaKey = defineSecret("prodia-key");
+
 const prodiaRequest = async (prompt: string, key: string): Promise<string> => {
   const prodia = createProdia({
-    apiKey: prodiaKey.value(),
+    apiKey: key,
   });
 
   const job = await prodia.generate({
@@ -22,7 +24,6 @@ const prodiaRequest = async (prompt: string, key: string): Promise<string> => {
   }
 };
 
-const prodiaKey = defineSecret("prodia-key");
 exports.generateImage = onRequest(
   { secrets: [prodiaKey] },
   async (request, response) => {
