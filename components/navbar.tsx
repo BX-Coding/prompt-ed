@@ -29,8 +29,16 @@ export const NavBar: FC = ({}) => {
 
   return (
     <>
-        <NavigationMenu>
-            <NavigationMenuList>
+        <NavigationMenu className="flex-initial">
+            <NavigationMenuList className="h-nav-bar w-screen bg-card px-9 pt-[26px] items-start">
+                <NavigationMenuItem>
+                    <Link href = "/history" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            History
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem className="flex-1" />
                 <NavigationMenuItem>
                     <Link href = "/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
