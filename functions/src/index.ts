@@ -3,7 +3,7 @@ import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 
 import { imageFunctions } from "./imageFunctions";
-// import { moderationFunctions } from "./moderationFunctions";
+import { moderationFunctions } from "./moderationFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
@@ -30,16 +30,39 @@ exports.generateImage = onRequest(
         return;
       }
 
+      // Get image moderation response
+      const moderationRes = await moderationFunctions.moderateImage(prodiaResponse, moderationKey.value())
+
+      // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
+      if(JSON.stringify(moderationRes)=="{}"){
+        console.log("No negative flags detected in image")
+        const imageArrayBuffer = await fetch(prodiaResponse, {
+          method: "GET",
+        }).then((res) => res.arrayBuffer());
+  
+        const imageData = new Uint8Array(imageArrayBuffer);
+  
+        response.send({
+          created: new Date(),
+          data: imageData,
+        });
+      }
+      else{
+        console.log("Negative flags detected in image!")
+        response.status(403).send("Negative flags have been detected in image!");
+      }
+
       const imageArrayBuffer = await fetch(prodiaResponse, {
-        method: "GET",
-      }).then((res) => res.arrayBuffer());
+          method: "GET",
+        }).then((res) => res.arrayBuffer());
+  
+        const imageData = new Uint8Array(imageArrayBuffer);
+  
+        response.send({
+          created: new Date(),
+          data: imageData,
+        });
 
-      const imageData = new Uint8Array(imageArrayBuffer);
-
-      response.send({
-        created: new Date(),
-        data: imageData,
-      });
     } catch (error) {
       console.error("Error generating image:", error);
       response.status(500).send("Error generating image");
