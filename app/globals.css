@@ -15,7 +15,8 @@
     --popover: #F0F0DF;
     --popover-foreground: #2B3A42;
   
-    --primary: #D0E8FF;
+    --primary: #d0e8ff;
+    --primary-hover: rgba(208, 232, 255, 0.4);
     --primary-foreground: #00093D;
   
     --secondary: #0079B5;

@@ -33,8 +33,8 @@ export const UITestingGround: React.FC = ({}) => {
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button>Button</Button>
-                    <Button variant="outline">Button</Button>
+                    <Button disabled={true}>Button</Button>
+                    <Button disabled={true} variant="outline">Button</Button>
                 </div>
                 <div className="flex flex-row space-x-2">
                     <Button>Button</Button>
@@ -45,7 +45,7 @@ export const UITestingGround: React.FC = ({}) => {
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button variant="accent">Button</Button>
+                    <Button disabled={true} variant="accent">Button</Button>
                 </div>
                 <div className="flex flex-row space-x-2">
                     <Button variant="accent">Button</Button>
@@ -55,7 +55,7 @@ export const UITestingGround: React.FC = ({}) => {
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button variant="destructive">Button</Button>
+                    <Button disabled={true} variant="destructive">Button</Button>
                 </div>
                 <div className="flex flex-row space-x-2">
                     <Button variant="destructive">Button</Button>

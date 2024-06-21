@@ -15,7 +15,9 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
 
-export const NavBar: FC = ({}) => {
+const highlightedClassName = " bg-primary ";
+
+export const NavBar: FC = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" } ) => {
     const router = useRouter();
     const handleLogOut = () => {
         signOut(auth).then(() => {
@@ -31,7 +33,7 @@ export const NavBar: FC = ({}) => {
     <>
         <NavigationMenu className="flex-initial">
             <NavigationMenuList className="h-nav-bar w-screen bg-card px-9 pt-[26px] items-start">
-                <NavigationMenuItem>
+                <NavigationMenuItem className={props.navLocation == "home" ? highlightedClassName : ""}>
                     <Link href = "/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             History
@@ -39,28 +41,28 @@ export const NavBar: FC = ({}) => {
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem className="flex-1" />
-                <NavigationMenuItem>
+                <NavigationMenuItem className={props.navLocation == "history" ? highlightedClassName : ""}>
                     <Link href = "/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             History
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
+                <NavigationMenuItem className={props.navLocation == "chat" ? highlightedClassName : ""}>
                     <Link href = "/chat" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Chat
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
+                <NavigationMenuItem className={props.navLocation == "images" ? highlightedClassName : ""}>
                     <Link href = "/image-gen" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Images
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
+                <NavigationMenuItem className={props.navLocation == "account" ? highlightedClassName : ""}>
                     <Link href = "/account" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Account
