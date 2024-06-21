@@ -2,19 +2,20 @@ import fetch from "node-fetch";
 import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 
+// Interface Functions
 import { imageFunctions } from "./imageFunctions";
-// import { moderationFunctions } from "./moderationFunctions";
+import { moderationFunctions } from "./moderationFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
 const moderationKey = defineSecret("moderation-key");
 
-// interface TextModerationResponse {
-//   Positive: number;
-//   Negative: number;
-//   Neutral: number;
-//   Mixed: number;
-// }
+interface TextModerationResponse {
+  Positive: number;
+  Negative: number;
+  Neutral: number;
+  Mixed: number;
+}
 
 exports.generateImage = onRequest(
   { secrets: [prodiaKey, moderationKey] },
@@ -26,12 +27,13 @@ exports.generateImage = onRequest(
       return;
     }
 
-    // const textModerationRes: TextModerationResponse =
-    //   await moderationFunctions.moderateText(prompt, moderationKey.value());
-    // if (textModerationRes.Negative > 0.5) {
-    //   response.status(403).send("Negative flags have been detected in prompt!");
-    //   return;
-    // }
+    const textModerationRes: TextModerationResponse =
+      await moderationFunctions.moderateText(prompt, moderationKey.value());
+    if (textModerationRes.Negative > 0.5) {
+      console.log("No negative flags in prompt detected.");
+      response.status(403).send("Negative flags have been detected in prompt!");
+      return;
+    }
 
     try {
       const prodiaResponse = await imageFunctions.prodiaRequest(
@@ -45,37 +47,30 @@ exports.generateImage = onRequest(
       }
 
       // Get image moderation response
-      // const imageModerationRes = await moderationFunctions.moderateImage(prodiaResponse, moderationKey.value())
+      const imageModerationRes = await moderationFunctions.moderateImage(
+        prodiaResponse,
+        moderationKey.value()
+      );
 
-      // // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
-      // if(JSON.stringify(imageModerationRes)=="{}"){
-      //   console.log("No negative flags detected in image")
-      //   const imageArrayBuffer = await fetch(prodiaResponse, {
-      //     method: "GET",
-      //   }).then((res) => res.arrayBuffer());
+      // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
+      if (JSON.stringify(imageModerationRes) == "{}") {
+        console.log("No negative flags detected in image");
+        const imageArrayBuffer = await fetch(prodiaResponse, {
+          method: "GET",
+        }).then((res) => res.arrayBuffer());
 
-      //   const imageData = new Uint8Array(imageArrayBuffer);
+        const imageData = new Uint8Array(imageArrayBuffer);
 
-      //   response.send({
-      //     created: new Date(),
-      //     data: imageData,
-      //   });
-      // }
-      // else{
-      //   console.log("Negative flags detected in image!")
-      //   response.status(403).send("Negative flags have been detected in image!");
-      // }
-
-      const imageArrayBuffer = await fetch(prodiaResponse, {
-        method: "GET",
-      }).then((res) => res.arrayBuffer());
-
-      const imageData = new Uint8Array(imageArrayBuffer);
-
-      response.send({
-        created: new Date(),
-        data: imageData,
-      });
+        response.send({
+          created: new Date(),
+          data: imageData,
+        });
+      } else {
+        console.log("Negative flags detected in image!");
+        response
+          .status(403)
+          .send("Negative flags have been detected in image!");
+      }
     } catch (error) {
       console.error("Error generating image:", error);
       response.status(500).send("Error generating image");
