@@ -3,9 +3,7 @@ import { createProdia } from "prodia";
 import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 
-const prodiaKey = defineSecret("prodia-key");
-
-const prodiaRequest = async (prompt: string): Promise<string> => {
+const prodiaRequest = async (prompt: string, key: string): Promise<string> => {
   const prodia = createProdia({
     apiKey: prodiaKey.value(),
   });
@@ -24,34 +22,38 @@ const prodiaRequest = async (prompt: string): Promise<string> => {
   }
 };
 
-exports.generateImage = onRequest(async (request, response) => {
-  const prompt = request.body?.data?.prompt;
+const prodiaKey = defineSecret("prodia-key");
+exports.generateImage = onRequest(
+  { secrets: [prodiaKey] },
+  async (request, response) => {
+    const prompt = request.body?.data?.prompt;
 
-  if (!prompt) {
-    response.status(400).send("Invalid request: missing prompt");
-    return;
-  }
-
-  try {
-    const prodiaResponse = await prodiaRequest(prompt);
-
-    if (prodiaResponse === "") {
-      response.status(500).send("Failed to generate image");
+    if (!prompt) {
+      response.status(400).send("Invalid request: missing prompt");
       return;
     }
 
-    const imageArrayBuffer = await fetch(prodiaResponse, {
-      method: "GET",
-    }).then((res) => res.arrayBuffer());
+    try {
+      const prodiaResponse = await prodiaRequest(prompt, prodiaKey.value());
 
-    const imageData = new Uint8Array(imageArrayBuffer);
+      if (prodiaResponse === "") {
+        response.status(500).send("Failed to generate image");
+        return;
+      }
 
-    response.send({
-      created: new Date(),
-      data: imageData,
-    });
-  } catch (error) {
-    console.error("Error generating image:", error);
-    response.status(500).send("Error generating image");
+      const imageArrayBuffer = await fetch(prodiaResponse, {
+        method: "GET",
+      }).then((res) => res.arrayBuffer());
+
+      const imageData = new Uint8Array(imageArrayBuffer);
+
+      response.send({
+        created: new Date(),
+        data: imageData,
+      });
+    } catch (error) {
+      console.error("Error generating image:", error);
+      response.status(500).send("Error generating image");
+    }
   }
-});
+);
