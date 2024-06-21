@@ -12,8 +12,8 @@ const moderationKey = defineSecret("moderation-key");
 // interface TextModerationResponse {
 //   Positive: number;
 //   Negative: number;
-//   Neutral: Number;
-//   Mixed: Number;
+//   Neutral: number;
+//   Mixed: number;
 // }
 
 exports.generateImage = onRequest(
