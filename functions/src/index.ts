@@ -7,7 +7,14 @@ import { imageFunctions } from "./imageFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
-const moderationKey = defineSecret("moderation-key")
+const moderationKey = defineSecret("moderation-key");
+
+// interface TextModerationResponse {
+//   Positive: number;
+//   Negative: number;
+//   Neutral: Number;
+//   Mixed: Number;
+// }
 
 exports.generateImage = onRequest(
   { secrets: [prodiaKey, moderationKey] },
@@ -18,6 +25,13 @@ exports.generateImage = onRequest(
       response.status(400).send("Invalid request: missing prompt");
       return;
     }
+
+    // const textModerationRes: TextModerationResponse =
+    //   await moderationFunctions.moderateText(prompt, moderationKey.value());
+    // if (textModerationRes.Negative > 0.5) {
+    //   response.status(403).send("Negative flags have been detected in prompt!");
+    //   return;
+    // }
 
     try {
       const prodiaResponse = await imageFunctions.prodiaRequest(
@@ -31,17 +45,17 @@ exports.generateImage = onRequest(
       }
 
       // Get image moderation response
-      // const moderationRes = await moderationFunctions.moderateImage(prodiaResponse, moderationKey.value())
+      // const imageModerationRes = await moderationFunctions.moderateImage(prodiaResponse, moderationKey.value())
 
       // // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
-      // if(JSON.stringify(moderationRes)=="{}"){
+      // if(JSON.stringify(imageModerationRes)=="{}"){
       //   console.log("No negative flags detected in image")
       //   const imageArrayBuffer = await fetch(prodiaResponse, {
       //     method: "GET",
       //   }).then((res) => res.arrayBuffer());
-  
+
       //   const imageData = new Uint8Array(imageArrayBuffer);
-  
+
       //   response.send({
       //     created: new Date(),
       //     data: imageData,
@@ -53,16 +67,15 @@ exports.generateImage = onRequest(
       // }
 
       const imageArrayBuffer = await fetch(prodiaResponse, {
-          method: "GET",
-        }).then((res) => res.arrayBuffer());
-  
-        const imageData = new Uint8Array(imageArrayBuffer);
-  
-        response.send({
-          created: new Date(),
-          data: imageData,
-        });
+        method: "GET",
+      }).then((res) => res.arrayBuffer());
 
+      const imageData = new Uint8Array(imageArrayBuffer);
+
+      response.send({
+        created: new Date(),
+        data: imageData,
+      });
     } catch (error) {
       console.error("Error generating image:", error);
       response.status(500).send("Error generating image");
