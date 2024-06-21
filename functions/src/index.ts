@@ -3,12 +3,14 @@ import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 
 import { imageFunctions } from "./imageFunctions";
+// import { moderationFunctions } from "./moderationFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
+const moderationKey = defineSecret("moderation-key")
 
 exports.generateImage = onRequest(
-  { secrets: [prodiaKey] },
+  { secrets: [prodiaKey, moderationKey] },
   async (request, response) => {
     const prompt = request.body?.data?.prompt;
 
