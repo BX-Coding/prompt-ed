@@ -1,37 +1,60 @@
+import fetch from "node-fetch";
+import { createProdia } from "prodia";
+import { defineSecret } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
-import OpenAI from "openai";
-import { defineString } from "firebase-functions/params";
-const openaiKey = defineString("OPENAI_API_KEY");
-import { moderationFunctions } from "./moderationFunctions";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+const prodiaKey = defineSecret("prodia-key");
 
-const dalleRequest = async (openai: OpenAI, prompt: string) => {
-  const response = await openai.images.generate({
-    model: "dall-e-2",
-    prompt: prompt,
-    n: 1,
-    size: "256x256",
+const prodiaRequest = async (prompt: string, key: string): Promise<string> => {
+  const prodia = createProdia({
+    apiKey: key,
   });
-  return response;
+
+  const job = await prodia.generate({
+    prompt: prompt,
+    model: "v1-5-pruned-emaonly.safetensors [d7049739]",
+  });
+
+  const { imageUrl, status } = await prodia.wait(job);
+
+  if (status === "succeeded") {
+    return imageUrl;
+  } else {
+    return "";
+  }
 };
 
-export const generateImage = onRequest(
-  { cors: true },
-  async (
-    request: { body: { data: { prompt: any } } },
-    response: { send: (arg0: any) => void }
-  ) => {
-    const openai = new OpenAI({ apiKey: openaiKey.value() });
+exports.generateImage = onRequest(
+  { secrets: [prodiaKey] },
+  async (request, response) => {
+    const prompt = request.body?.data?.prompt;
 
-    const prompt = request.body.data.prompt;
-    logger.info(
-      `Recieved ${request.body.data} Requesting dalle with prompt ${prompt}`,
-      { structuredData: true }
-    );
-    const dalleResponse = await dalleRequest(openai, prompt);
-    response.send(dalleResponse);
+    if (!prompt) {
+      response.status(400).send("Invalid request: missing prompt");
+      return;
+    }
+
+    try {
+      const prodiaResponse = await prodiaRequest(prompt, prodiaKey.value());
+
+      if (prodiaResponse === "") {
+        response.status(500).send("Failed to generate image");
+        return;
+      }
+
+      const imageArrayBuffer = await fetch(prodiaResponse, {
+        method: "GET",
+      }).then((res) => res.arrayBuffer());
+
+      const imageData = new Uint8Array(imageArrayBuffer);
+
+      response.send({
+        created: new Date(),
+        data: imageData,
+      });
+    } catch (error) {
+      console.error("Error generating image:", error);
+      response.status(500).send("Error generating image");
+    }
   }
 );
