@@ -24,11 +24,8 @@ export default function Home() {
         );
     } else {
         return (
-        <div className="h-screen">
-            <div className="flex mb-2 justify-between">
-            <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
-            <NavBar/>
-            </div>
+        <div className="flex flex-col h-screen">
+            <NavBar navLocation="history"/>
             <div className="flex flex-row w-screen">
             <Card className="w-full ml-5 mb-5 mr-5 h-max">
             <CardHeader>

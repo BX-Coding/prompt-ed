@@ -70,12 +70,9 @@ export default function Home() {
     );
   } else {
     return (
-      <div className="h-screen">
-        <div className="flex mb-2 justify-between">
-          <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
-          <NavBar/>
-        </div>
-        <Card className="h-max ml-5 mr-5">
+      <div className="flex flex-col h-screen">
+        <NavBar navLocation="chat"/>
+        <Card className="h-max m-5">
           <CardHeader>
             <CardTitle>Chat</CardTitle>
             <CardDescription suppressHydrationWarning>{inDate === '' ? date.toString() : inDate}</CardDescription>

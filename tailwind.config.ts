@@ -68,6 +68,7 @@ module.exports = {
         },
         card: {
           DEFAULT: "var(--card)",
+          solid: "var(--card-solid)",
           foreground: "var(--card-foreground)",
         },
       },

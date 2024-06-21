@@ -9,7 +9,8 @@
     --background: #D0E8FF;
     --foreground: #00093D;
   
-    --card: #FCFCFC;
+    --card: rgba(255, 255, 255, 0.4);
+    --card-solid: #FCFCFC;
     --card-foreground: #00093D;
   
     --popover: #F0F0DF;

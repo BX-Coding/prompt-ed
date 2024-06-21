@@ -51,17 +51,11 @@ export default function Home() {
               <br/>
               <h3 className="text-xl text-center font-bold mt-2 mb-20 text-muted">Generative AI for Kids</h3>
             </div>
-            <div className="relative">
-              <Button asChild className={cn(
-                      buttonVariants({ variant: "outline", size:"xl"}),
-                      "absolute left-5"
-                  )}>
+            <div className="relative space-x-4">
+              <Button asChild variant="outline" size="xl" className="w-48">
                   <Link href="/login">Login</Link>
               </Button>
-              <Button asChild className={cn(
-                      buttonVariants({ variant: "outline", size:"xl" }),
-                      "absolute right-5"
-                  )}>
+              <Button asChild variant="outline" size="xl" className="w-48">
                   <Link href="/create-account">Sign-Up</Link>
               </Button>
             </div>
