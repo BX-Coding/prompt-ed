@@ -2,15 +2,9 @@
 
 import * as React from "react"
 
-import {useState} from 'react';
-import { Icons } from "@/components/icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
-import { auth, storage } from '../app/firebase'
-import { Toaster } from "@/components/ui/toaster"
-import { useRouter } from 'next/navigation'
-import { ref, uploadBytes } from "firebase/storage";
-import axios from "axios";
+import { Switch } from "./ui/switch";
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -33,32 +27,110 @@ export const UITestingGround: React.FC = ({}) => {
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button disabled={true}>Button</Button>
-                    <Button disabled={true} variant="outline">Button</Button>
+                    <Button size="sm" disabled={true}>Button</Button>
+                    <Button size="sm" disabled={true} variant="outline">Button</Button>
                 </div>
                 <div className="flex flex-row space-x-2">
-                    <Button>Button</Button>
-                    <Button variant="outline">Button</Button>
+                    <Button size="sm">Button</Button>
+                    <Button size="sm" variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="default" disabled={true}>Button</Button>
+                    <Button size="default" disabled={true} variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="default">Button</Button>
+                    <Button size="default" variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="lg" disabled={true}>Button</Button>
+                    <Button size="lg" disabled={true} variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="lg">Button</Button>
+                    <Button size="lg" variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="xl" disabled={true}>Button</Button>
+                    <Button size="xl" disabled={true} variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="xl">Button</Button>
+                    <Button size="xl" variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="icon" disabled={true}>Button</Button>
+                    <Button size="icon" disabled={true} variant="outline">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="icon">Button</Button>
+                    <Button size="icon" variant="outline">Button</Button>
                 </div>
             </div>
             <div className="p-4 flex-initial space-y-4">
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button disabled={true} variant="accent">Button</Button>
+                    <Button size="sm" disabled={true} variant="accent">Button</Button>
+                    <Button size="sm" disabled={true} variant="destructive">Button</Button>
                 </div>
                 <div className="flex flex-row space-x-2">
-                    <Button variant="accent">Button</Button>
+                    <Button size="sm" variant="accent">Button</Button>
+                    <Button size="sm" variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="default" disabled={true} variant="accent">Button</Button>
+                    <Button size="default" disabled={true} variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="default" variant="accent">Button</Button>
+                    <Button size="default" variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="lg" disabled={true} variant="accent">Button</Button>
+                    <Button size="lg" disabled={true} variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="lg" variant="accent">Button</Button>
+                    <Button size="lg" variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="xl" disabled={true} variant="accent">Button</Button>
+                    <Button size="xl" disabled={true} variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="xl" variant="accent">Button</Button>
+                    <Button size="xl" variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="icon" disabled={true} variant="accent">Button</Button>
+                    <Button size="icon" disabled={true} variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="icon" variant="accent">Button</Button>
+                    <Button size="icon" variant="destructive">Button</Button>
                 </div>
             </div>
             <div className="p-4 flex-initial space-y-4">
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
                 <Input type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
-                    <Button disabled={true} variant="destructive">Button</Button>
+                    <Switch size="small" disabled={true} />
                 </div>
                 <div className="flex flex-row space-x-2">
-                    <Button variant="destructive">Button</Button>
+                    <Switch size="small" />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Switch size="default" disabled={true} />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Switch size="default" />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Switch size="large" disabled={true} />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Switch size="large" />
                 </div>
             </div>
         </div>

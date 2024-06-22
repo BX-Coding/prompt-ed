@@ -19,7 +19,7 @@ module.exports = {
       },
     },
     fontSize: {
-      sm: ['14px', '20px'],
+      sm: ['11px', '20px'],
       base: ['16px', '24px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
@@ -40,7 +40,8 @@ module.exports = {
         foreground: "var(--foreground)",
         primary: {
           DEFAULT: "var(--primary)",
-          hover: "var(--primary-hover)",
+          'hover-light': "var(--primary-hover-light)",
+          'hover-heavy': "var(--primary-hover-heavy)",
           foreground: "var(--primary-foreground)",
         },
         'button-default-text': "var(--primary-foreground)",
@@ -76,6 +77,7 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xs: "calc(var(--radius) - 5px)",
       },
       keyframes: {
         "accordion-down": {
@@ -97,6 +99,8 @@ module.exports = {
       width: {
         'nav-bar-button': '131.5px',
         '150': '37.5rem',
+        'input': '27px',
+        '13': '3.25rem',
       },
       height: {
         'nav-bar-button': '48px',
