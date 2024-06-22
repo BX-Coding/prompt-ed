@@ -30,7 +30,7 @@ exports.generateImage = onRequest(
     const textModerationRes: TextModerationResponse =
       await moderationFunctions.moderateText(prompt, moderationKey.value());
     if (textModerationRes.Negative > 0.5) {
-      console.log("No negative flags in prompt detected.");
+      console.log("Negative flags in prompt detected.");
       response.status(403).send("Negative flags have been detected in prompt!");
       return;
     }
@@ -46,30 +46,34 @@ exports.generateImage = onRequest(
         return;
       }
 
-      // Get image moderation response
-      const imageModerationRes = await moderationFunctions.moderateImage(
-        prodiaResponse,
-        moderationKey.value()
-      );
+      try {
+        // Get image moderation response
+        const imageModerationRes = await moderationFunctions.moderateImage(
+          prodiaResponse,
+          moderationKey.value()
+        );
+        // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
+        if (JSON.stringify(imageModerationRes) == "{}") {
+          console.log("No negative flags detected in image");
+          const imageArrayBuffer = await fetch(prodiaResponse, {
+            method: "GET",
+          }).then((res) => res.arrayBuffer());
 
-      // Check if moderation response is empty (empty means no flags in image has been detected) then respond with image
-      if (JSON.stringify(imageModerationRes) == "{}") {
-        console.log("No negative flags detected in image");
-        const imageArrayBuffer = await fetch(prodiaResponse, {
-          method: "GET",
-        }).then((res) => res.arrayBuffer());
+          const imageData = new Uint8Array(imageArrayBuffer);
 
-        const imageData = new Uint8Array(imageArrayBuffer);
-
-        response.send({
-          created: new Date(),
-          data: imageData,
-        });
-      } else {
-        console.log("Negative flags detected in image!");
-        response
-          .status(403)
-          .send("Negative flags have been detected in image!");
+          response.send({
+            created: new Date(),
+            data: imageData,
+          });
+        } else {
+          console.log("Negative flags detected in image!");
+          response
+            .status(403)
+            .send("Negative flags have been detected in image!");
+        }
+      } catch (e) {
+        console.error("Error moderating image:", e);
+        response.status(500).send("Error moderating image");
       }
     } catch (error) {
       console.error("Error generating image:", error);
