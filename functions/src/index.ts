@@ -5,10 +5,12 @@ import { onRequest } from "firebase-functions/v2/https";
 // Interface Functions
 import { imageFunctions } from "./imageFunctions";
 import { moderationFunctions } from "./moderationFunctions";
+import { chatFunctions } from "./textFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
 const moderationKey = defineSecret("moderation-key");
+const openAiKey = defineSecret("openai-key");
 
 interface TextModerationResponse {
   Positive: number;
@@ -78,6 +80,26 @@ exports.generateImage = onRequest(
     } catch (error) {
       console.error("Error generating image:", error);
       response.status(500).send("Error generating image");
+    }
+  }
+);
+
+exports.createChat = onRequest(
+  { secrets: [openAiKey, moderationKey] },
+  async (request, response) => {
+    const prompt = request.body?.data?.prompt;
+
+    try {
+      const chatResponse = await chatFunctions.openAiChatRequest(
+        prompt,
+        openAiKey.value()
+      );
+
+      const messageContent = chatResponse.message.content;
+      response.send({ data: messageContent });
+    } catch (e) {
+      console.error("Error generating chat:", e);
+      response.status(500).send("Error generating chat");
     }
   }
 );

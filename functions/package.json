@@ -17,6 +17,7 @@
     "axios": "^1.6.1",
     "firebase-admin": "^12.1.0",
     "firebase-functions": "^5.0.0",
+    "openai": "^4.47.1",
     "prodia": "^0.3.0"
   },
   "devDependencies": {

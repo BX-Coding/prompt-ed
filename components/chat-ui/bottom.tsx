@@ -6,6 +6,8 @@ import React, { useRef, useState } from "react";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "@/app/firebase";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
@@ -29,16 +31,27 @@ export default function ChatBottombar({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
   };
+  const generateChat = httpsCallable(functions, "createChat");
 
   //TODO: REPLACE THIS METHOD WITH GENERATING AI MESSAGES
-  const generateAIMessage = async(prompt: string) => {
-    const aiMessage: Message = {
-      message: "replace this with AI content",
-      ai: true
-    } 
-    console.log(prompt);
-    return aiMessage
-  }
+  const generateAIMessage = async (prompt: string) => {
+    try {
+      const response = await generateChat({ prompt });
+
+      // Trying to log what response from firebase function is
+      console.log(response)
+  
+      const aiMessage = {
+        message: "Temporary message",
+        ai: true,
+      };
+  
+      return aiMessage;
+    } catch (error) {
+      console.error("Error generating AI message:", error);
+      throw error;
+    }
+  };
 
   const handleSend = async () => {
     if (message.trim()) {
