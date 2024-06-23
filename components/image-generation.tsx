@@ -10,6 +10,7 @@ import { auth, storage, functions } from "../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
 import { ref, uploadBytes } from "firebase/storage";
+import Image from "next/image";
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -27,7 +28,12 @@ export const ImageGeneration: React.FC = ({}) => {
   const [imageURL, setImageURL] = useState("");
   const [res, setRes] = useState(<></>);
 
-  const generateImage = httpsCallable(functions, "generateImage");
+  const generateImage = httpsCallable(functions, "generateImageCall");
+
+  type GenerateImageResponse = {
+    created: Date;
+    data: Uint8Array;
+  };
 
   async function submitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -37,9 +43,10 @@ export const ImageGeneration: React.FC = ({}) => {
 
     try {
       const response = await generateImage({ prompt: prompt });
+      const data = response.data as GenerateImageResponse;
       console.log(response);
       var imagearray: number[] = [];
-      Object.values(response.data as Object).forEach((x) =>
+      Object.values(data.data as Object).forEach((x) =>
         imagearray.push(x as number)
       );
       var imageblob = new Blob([new Uint8Array(imagearray)], {
@@ -49,7 +56,7 @@ export const ImageGeneration: React.FC = ({}) => {
       const url = URL.createObjectURL(imageblob);
 
       setImageURL(url);
-      setRes(<img src={url} className="mt-20" />);
+      setRes(<img alt={prompt} src={url} className="mt-20" />);
 
       setIsLoading(false);
     } catch (e: any) {

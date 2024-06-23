@@ -17,7 +17,7 @@ interface TextModerationResponse {
   Mixed: number;
 }
 
-exports.generateImage = onCall(
+exports.generateImageCall = onCall(
   { cors: true, secrets: [prodiaKey, moderationKey] },
   async (request) => {
     const prompt = request.data?.prompt;
