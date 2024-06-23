@@ -1,15 +1,12 @@
-import * as functions from "firebase-functions";
 const axios = require("axios");
 
-const apiKey = functions.config().textmoderation.apikey;
-
 interface ModerationFunctions {
-  moderateText: (text: string) => Promise<any>;
-  moderateImage: (imageUrl: string) => Promise<any>;
+  moderateText: (text: string, apiKey:string) => Promise<any>;
+  moderateImage: (imageUrl: string, apiKey:string) => Promise<any>;
 }
 
 export const moderationFunctions: ModerationFunctions = {
-  moderateText: async (text: string) => {
+  moderateText: async (text: string, apiKey:string) => {
     const endpoint =
       "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/text-moderation";
     try {
@@ -29,7 +26,7 @@ export const moderationFunctions: ModerationFunctions = {
       throw new Error("Error moderating text");
     }
   },
-  moderateImage: async (imageUrl: string) => {
+  moderateImage: async (imageUrl: string, apiKey:string) => {
     const endpoint =
       "https://4s77vb8f38.execute-api.us-east-2.amazonaws.com/Deploy/image-moderation";
     try {
