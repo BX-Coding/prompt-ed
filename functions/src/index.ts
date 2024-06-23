@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { defineSecret } from "firebase-functions/params";
-import { onRequest } from "firebase-functions/v2/https";
+import { HttpsError, onCall } from "firebase-functions/v2/https";
 
 // Interface Functions
 import { imageFunctions } from "./imageFunctions";
@@ -17,22 +17,23 @@ interface TextModerationResponse {
   Mixed: number;
 }
 
-exports.generateImage = onRequest(
-  { secrets: [prodiaKey, moderationKey] },
-  async (request, response) => {
-    const prompt = request.body?.data?.prompt;
+exports.generateImage = onCall(
+  { cors: true, secrets: [prodiaKey, moderationKey] },
+  async (request) => {
+    const prompt = request.data?.prompt;
 
     if (!prompt) {
-      response.status(400).send("Invalid request: missing prompt");
-      return;
+      throw new HttpsError("invalid-argument", "missing prompt");
     }
 
     const textModerationRes: TextModerationResponse =
       await moderationFunctions.moderateText(prompt, moderationKey.value());
     if (textModerationRes.Negative > 0.5) {
       console.log("Negative flags in prompt detected.");
-      response.status(403).send("Negative flags have been detected in prompt!");
-      return;
+      throw new HttpsError(
+        "permission-denied",
+        "Negative flags have been detected in prompt!"
+      );
     }
 
     try {
@@ -42,8 +43,7 @@ exports.generateImage = onRequest(
       );
 
       if (prodiaResponse === "") {
-        response.status(500).send("Failed to generate image");
-        return;
+        throw new HttpsError("internal", "Failed to generate image");
       }
 
       try {
@@ -61,23 +61,24 @@ exports.generateImage = onRequest(
 
           const imageData = new Uint8Array(imageArrayBuffer);
 
-          response.send({
+          return {
             created: new Date(),
             data: imageData,
-          });
+          };
         } else {
           console.log("Negative flags detected in image!");
-          response
-            .status(403)
-            .send("Negative flags have been detected in image!");
+          throw new HttpsError(
+            "permission-denied",
+            "Negative flags have been detected in image!"
+          );
         }
       } catch (e) {
         console.error("Error moderating image:", e);
-        response.status(500).send("Error moderating image");
+        throw new HttpsError("internal", "Error moderating image");
       }
     } catch (error) {
       console.error("Error generating image:", error);
-      response.status(500).send("Error generating image");
+      throw new HttpsError("internal", "Error generating image");
     }
   }
 );
