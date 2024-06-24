@@ -17,7 +17,7 @@ export const HomeSidebar: FC<{}> = () => {
                     <TabsTrigger value="Lesson4">Lesson 4</TabsTrigger>
                     <TabsTrigger value="Lesson5">Lesson 5</TabsTrigger>
                 </TabsList>
-                <TabsContent value="Lesson1" className="flex flex-1 w-full">
+                <TabsContent value="Lesson1" className="h-full w-full">
                     <Card className="bg-primary pt-12 px-10 w-full h-full">
                         <p className="text-xl font-bold">
                             Welcome to Neural Kingdom
