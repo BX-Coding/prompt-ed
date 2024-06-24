@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import nextConfig from "../next.config";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,6 +27,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
+const functions = getFunctions();
 
 // Function that checks if project is running locally and if so, use firebase emulator services
 const connectToEmulators = () => {
@@ -33,6 +35,7 @@ const connectToEmulators = () => {
     connectAuthEmulator(auth, "http://localhost:9099");
     connectFirestoreEmulator(db, "localhost", 8080);
     connectStorageEmulator(storage, "localhost", 9199);
+    connectFunctionsEmulator(functions, "localhost", 5001);
     console.log("Project using local Firebase emulators.")
   }
   else{
@@ -43,6 +46,6 @@ const connectToEmulators = () => {
 // Connect to emulators if running locally
 connectToEmulators();
 
-export { auth, db, storage };
+export { auth, db, storage, functions };
 export default app;
 
