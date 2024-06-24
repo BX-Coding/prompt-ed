@@ -1,15 +1,23 @@
 import OpenAI from "openai";
 
 interface ChatFunctions {
-  openAiChatRequest: (prompt: string, apiKey: string) => Promise<any>;
+  openAiChatRequest: (
+    messages: ChatHistoryMessage[],
+    apiKey: string
+  ) => Promise<any>;
+}
+
+interface ChatHistoryMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
 }
 
 export const chatFunctions: ChatFunctions = {
-  openAiChatRequest: async (prompt, apiKey) => {
-    const openai = new OpenAI({apiKey:apiKey});
+  openAiChatRequest: async (messages: ChatHistoryMessage[], apiKey) => {
+    const openai = new OpenAI({ apiKey: apiKey });
     try {
       const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: prompt }],
+        messages: messages,
         model: "gpt-3.5-turbo-16k",
       });
 

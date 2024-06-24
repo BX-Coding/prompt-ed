@@ -87,11 +87,11 @@ exports.generateImage = onRequest(
 exports.createChat = onRequest(
   { secrets: [openAiKey, moderationKey] },
   async (request, response) => {
-    const prompt = request.body?.data?.prompt;
+    const messages = request.body?.data?.messages;
 
     try {
       const chatResponse = await chatFunctions.openAiChatRequest(
-        prompt,
+        messages,
         openAiKey.value()
       );
 
