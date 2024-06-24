@@ -47,8 +47,14 @@ export const UITestingGround: React.FC = ({}) => {
                     ]} defaultValue="Lesson 1" />
             </div>
             <div className="p-4 flex-initial space-y-4">
-                <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
-                <Input type="text" placeholder="Inputs" />
+                <Input inputSize="sm" className="w-64" disabled={true} type="text" placeholder="Inputs" />
+                <Input inputSize="sm" type="text" placeholder="Inputs" />
+                <Input inputSize="default" className="w-64" disabled={true} type="text" placeholder="Inputs" />
+                <Input inputSize="default" type="text" placeholder="Inputs" />
+                <Input inputSize="lg" className="w-64" disabled={true} type="text" placeholder="Inputs" />
+                <Input inputSize="lg" type="text" placeholder="Inputs" />
+                <Input inputSize="xl" className="w-64" disabled={true} type="text" placeholder="Inputs" />
+                <Input inputSize="xl" type="text" placeholder="Inputs" />
                 <div className="flex flex-row space-x-2">
                     <Button size="sm" disabled={true}>Button</Button>
                     <Button size="sm" disabled={true} variant="outline">Button</Button>
