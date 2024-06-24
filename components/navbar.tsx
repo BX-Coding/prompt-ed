@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 const highlightedClassName = " bg-primary ";
 
-export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" } ) => {
+export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login" }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login" } ) => {
     const router = useRouter();
     const handleLogOut = () => {
         signOut(auth).then(() => {
@@ -41,7 +41,23 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem className="flex-1" />
-                <NavigationMenuItem >
+                {window.location.pathname == "/" ? <>
+                <NavigationMenuItem>
+                    <Link href = "/create-account" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "create-account" ? highlightedClassName : "")}>
+                            Register
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link href = "/login" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "login" ? highlightedClassName : "")}>
+                            Login
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                </> : <>
+                <NavigationMenuItem>
                     <Link href = "/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "history" ? highlightedClassName : "")}>
                             History
@@ -76,6 +92,7 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
+                </>}
             </NavigationMenuList>
         </NavigationMenu>
     </>
