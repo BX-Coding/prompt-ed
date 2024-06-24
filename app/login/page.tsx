@@ -3,14 +3,16 @@ import Link from "next/link"
 import { LoginForm } from "../../components/login-form"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { NavBar } from "@/components/navbar"
 
 export default function Home() {
 
 
   return (
-    <>
-      <div className="lg:p-8">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+    <div className="flex flex-col h-screen">
+      <NavBar navLocation="login" isLoginPage={true} />
+      <div className="flex flex-row h-full">
+        <div className="mx-auto flex w-1/2 h-full flex-col justify-center align-center space-y-6 sm:w-[350px]">
           <Link
           href="/create-account"
           className={cn(
@@ -20,26 +22,19 @@ export default function Home() {
           >
           Create Account
           </Link>
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Welcome!
+          <div className="flex flex-col space-y-2">
+            <h1 className="text-title text-black font-medium tracking-tight">
+              Get started for free!
             </h1>
             <p>
-              Enter your email and password to login
+              Log in to access your personalized dashboard and start generating amazing images!
             </p>
           </div>
           <LoginForm />
-          <p>
-            Struggling with logging in? {" "}
-            <Link
-              href="/password-reset"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Reset Password
-            </Link>{" "}
-          </p>
+        </div>
+        <div className="flex flex-col w-1/2 bg-primary-foreground">
         </div>
       </div>
-    </>
+    </div>
   )
 }

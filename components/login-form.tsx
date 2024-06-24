@@ -13,6 +13,7 @@ import { auth } from '../app/firebase'
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -165,6 +166,12 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 disabled={isLoading}
               />
             </div>
+            <Link
+                href="/password-reset"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Forgot Password?
+              </Link>{" "}
             <Button disabled={isLoading}>
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
