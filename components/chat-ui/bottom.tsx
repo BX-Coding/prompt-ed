@@ -15,6 +15,11 @@ interface ChatBottombarProps {
   date: string
 }
 
+interface ChatHistoryMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
 /**
  * TO ADD AI FUNCTIONALITY: add AI generation to the generareAIMessage method.
  * Use prompt parameter as the user's input. Leave ai to true but assign
@@ -27,25 +32,33 @@ export default function ChatBottombar({
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [messages, changeMessages] = useState<ChatHistoryMessage[]>([])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
   };
   const generateChat = httpsCallable(functions, "createChat");
-
+  
   //TODO: REPLACE THIS METHOD WITH GENERATING AI MESSAGES
   const generateAIMessage = async (prompt: string) => {
+    changeMessages((oldArray)=>([...oldArray, {role:"user", content:prompt}]))
     try {
-      const response = await generateChat({ prompt });
+      messages.push({ role: "user", content: prompt });
 
-      // Trying to log what response from firebase function is
-      console.log(response)
+      const response = await generateChat({ messages });
+
+      const message = typeof response.data === 'string' ? response.data : String(response.data);
   
+      // const llmResponse = { role: "assistant", content: message };
+      // messages.push(llmResponse);
+
+      changeMessages((oldArray)=>([...oldArray, {role:"assistant", content:message}]))
+      
       const aiMessage = {
-        message: "Temporary message",
+        message: message,
         ai: true,
       };
-  
+
       return aiMessage;
     } catch (error) {
       console.error("Error generating AI message:", error);
@@ -60,13 +73,12 @@ export default function ChatBottombar({
           message: message,
           ai: false
       }
-      console.log(personMessage.message)
-      let messages = [personMessage];
-      sendMessage(messages);
+      let clientMessages = [personMessage];
+      sendMessage(clientMessages);
       //do AI stuff
       const generateMessage = await generateAIMessage(message);
-      messages = [...messages, generateMessage];
-      sendMessage(messages);
+      clientMessages = [...clientMessages, generateMessage];
+      sendMessage(clientMessages);
       setWaiting(false);
       setMessage("");
       if (inputRef.current) {
