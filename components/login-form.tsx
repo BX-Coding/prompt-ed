@@ -160,7 +160,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
     await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
-      router.push("/landing-page");
+      router.push("/home");
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
