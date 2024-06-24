@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 const highlightedClassName = " bg-primary ";
 
-export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login" }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login" } ) => {
+export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
     const router = useRouter();
     const handleLogOut = () => {
         signOut(auth).then(() => {
@@ -41,7 +41,7 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem className="flex-1" />
-                {window.location.pathname == "/" ? <>
+                {props.isLoginPage ? <>
                 <NavigationMenuItem>
                     <Link href = "/create-account" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "create-account" ? highlightedClassName : "")}>
