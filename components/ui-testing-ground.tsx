@@ -5,6 +5,7 @@ import * as React from "react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Switch } from "./ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -20,8 +21,15 @@ export const UITestingGround: React.FC = ({}) => {
     return (
         <>
         <div className="flex flex-1 flex-row justify-start bg-[#F7F7F7]">
-            <div className="flex flex-initial w-150 bg-primary-foreground text-primary">
-                test
+            <div className="flex flex-initial flex-col items-center w-150 bg-primary-foreground text-primary pt-4">
+                <Tabs defaultValue="account" className="flex flex-col items-center w-full">
+                    <TabsList>
+                        <TabsTrigger value="account">Account</TabsTrigger>
+                        <TabsTrigger value="password">Password</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="account" className="text-white">Make changes to your account here.</TabsContent>
+                    <TabsContent value="password" className="text-white">Change your password here.</TabsContent>
+                </Tabs>
             </div>
             <div className="p-4 flex-initial space-y-4">
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />

@@ -21,6 +21,7 @@ module.exports = {
     fontSize: {
       sm: ['11px', '20px'],
       base: ['16px', '24px'],
+      tabs: ['17px', '26px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
       'input': inputText,
@@ -74,6 +75,7 @@ module.exports = {
         },
       },
       borderRadius: {
+        xl: "calc(var(--radius) + 2px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
