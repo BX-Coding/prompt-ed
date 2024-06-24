@@ -21,6 +21,7 @@ import { usePrompt } from "@/hooks/usePrompt";
 import { log } from "util";
 import { ModeChangeAlert } from "./mode-change-alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Card } from "../ui/card";
 
 type GenerateImageResponse = {
   created: Date;
@@ -170,52 +171,60 @@ export const ImageGeneration: React.FC = ({}) => {
   }
   return (
     <>
-      <div className="flex flex-col items-center space-y-10 w-full px-20">
-        <Tabs className="w-full" value={blockMode ? "block" : "text"}>
-          <form className="w-full" onSubmit={submitHandler}>
-            <div className="flex items-center w-full flex-col">
-              <TabsList className="grid w-1/2 grid-cols-2">
-                <ModeChangeAlert onDeny={() => {}} onConfirm={handleTextClick}>
-                  <TabsTrigger
-                    className="pointer-events-none w-full"
-                    value="text"
-                  >
-                    Text
+      <div className="flex flex-col items-center space-y-10 h-full w-full p-12">
+        <Tabs className="h-full w-full" value={blockMode ? "block" : "text"}>
+          <form className="h-full w-full" onSubmit={submitHandler}>
+            <Card className="h-full w-full px-6 py-12">
+              <div className="flex items-center h-full w-full flex-col">
+                <TabsList className="bg-primary-foreground grid w-1/2 grid-cols-2">
+                  <ModeChangeAlert onDeny={() => {}} onConfirm={handleTextClick}>
+                    <TabsTrigger
+                      className="pointer-events-none w-full"
+                      value="text"
+                    >
+                      Text
+                    </TabsTrigger>
+                  </ModeChangeAlert>
+                  <TabsTrigger onClick={handleBlockClick} value="block">
+                    Block
                   </TabsTrigger>
-                </ModeChangeAlert>
-                <TabsTrigger onClick={handleBlockClick} value="block">
-                  Block
-                </TabsTrigger>
-              </TabsList>
-              <div className="h-36 flex flex-col items-center justify-center">
-                <TabsContent value="text">
-                  <Input
-                    id="prompt"
-                    placeholder="Describe your image..."
-                    defaultValue={prompt}
-                    type="text"
-                    autoCapitalize="none"
-                    autoComplete="on"
-                    autoCorrect="on"
-                    onChange={(e) => setPrompt(e.target.value)}
-                    disabled={isLoading}
-                    className="mr-5 w-96"
-                  />
-                </TabsContent>
-                <TabsContent value="block">
-                  <div className="flex flex-row">
-                    <BuildableMenu />
-                    <PromptBox className="space-x-1 p-5" />
-                  </div>
-                </TabsContent>
+                </TabsList>
+                <div className="h-full w-full flex flex-col items-center justify-center">
+                  <TabsContent className="h-full w-full" value="text">
+                    <div className="h-full w-full flex flex-col">
+                      <div className="flex flex-1">
+                        
+                      </div>
+                      <Input
+                        id="prompt"
+                        placeholder="Describe your image..."
+                        defaultValue={prompt}
+                        type="text"
+                        autoCapitalize="none"
+                        autoComplete="on"
+                        autoCorrect="on"
+                        onChange={(e) => setPrompt(e.target.value)}
+                        disabled={isLoading}
+                        className="w-full flex order-last"
+                        inputSize="xl"
+                      />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="block">
+                    <div className="flex flex-row">
+                      <BuildableMenu />
+                      <PromptBox className="space-x-1 p-5" />
+                    </div>
+                  </TabsContent>
+                </div>
+                <Button disabled={isLoading}>
+                  {isLoading && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  <LightningBoltIcon /> Generate
+                </Button>
               </div>
-              <Button disabled={isLoading}>
-                {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <LightningBoltIcon /> Generate
-              </Button>
-            </div>
+            </Card>
           </form>
         </Tabs>
         {res}

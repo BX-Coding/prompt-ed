@@ -49,8 +49,7 @@ export default function Home() {
                     Welcome to Neural Kingdom
                 </p>},
             ]} defaultValue="Lesson 1" />
-          <div className="flex flex-col items-center">
-            <h1 className="text-4xl text-center font-bold mt-10 mb-10">Generate Image</h1>
+          <div className="flex flex-col items-center w-full">
             <ImageGeneration />
           </div>
         </div>
