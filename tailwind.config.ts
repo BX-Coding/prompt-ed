@@ -73,6 +73,9 @@ module.exports = {
           solid: "var(--card-solid)",
           foreground: "var(--card-foreground)",
         },
+        text: {
+          't2': "var(--text-t2)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

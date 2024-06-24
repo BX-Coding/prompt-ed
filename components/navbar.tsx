@@ -17,6 +17,9 @@ import { useRouter } from 'next/navigation';
 
 const highlightedClassName = " bg-primary ";
 
+// I don't know why, but bg-accent doesn't work here.
+const loginHighlightedClassName = " bg-[var(--accent)] hover:bg-[var(--accent)]  ";
+
 export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
     const router = useRouter();
     const handleLogOut = () => {
@@ -44,14 +47,14 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                 {props.isLoginPage ? <>
                 <NavigationMenuItem>
                     <Link href = "/create-account" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "create-account" ? highlightedClassName : "")}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "create-account" ? loginHighlightedClassName : highlightedClassName)}>
                             Register
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <Link href = "/login" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "login" ? highlightedClassName : "")}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "login" ? loginHighlightedClassName : highlightedClassName)}>
                             Login
                         </NavigationMenuLink>
                     </Link>
