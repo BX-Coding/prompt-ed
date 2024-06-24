@@ -6,6 +6,7 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Switch } from "./ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import { TabbedSidebar } from "./tabbed-sidebar";
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -22,14 +23,28 @@ export const UITestingGround: React.FC = ({}) => {
         <>
         <div className="flex flex-1 flex-row justify-start bg-[#F7F7F7]">
             <div className="flex flex-initial flex-col items-center w-150 bg-primary-foreground text-primary pt-4">
-                <Tabs defaultValue="account" className="flex flex-col items-center w-full">
-                    <TabsList className="w-full">
-                        <TabsTrigger value="account">Account</TabsTrigger>
-                        <TabsTrigger value="password">Password</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="account" className="text-white">Make changes to your account here.</TabsContent>
-                    <TabsContent value="password" className="text-white">Change your password here.</TabsContent>
-                </Tabs>
+                <TabbedSidebar tabs={[
+                    {name: "Lesson 1", content:
+                        <p className="text-xl font-bold">
+                            Welcome to Neural Kingdom
+                        </p>},
+                    {name: "Lesson 2", content:
+                        <p className="text-xl font-bold">
+                            Welcome to Neural Kingdom
+                        </p>},
+                    {name: "Lesson 3", content:
+                        <p className="text-xl font-bold">
+                            Welcome to Neural Kingdom
+                        </p>},
+                    {name: "Lesson 4", content:
+                        <p className="text-xl font-bold">
+                            Welcome to Neural Kingdom
+                        </p>},
+                    {name: "Lesson 5", content:
+                        <p className="text-xl font-bold">
+                            Welcome to Neural Kingdom
+                        </p>},
+                    ]} defaultValue="Lesson 1" />
             </div>
             <div className="p-4 flex-initial space-y-4">
                 <Input className="w-64" disabled={true} type="text" placeholder="Inputs" />
