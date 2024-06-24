@@ -34,7 +34,7 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
         <NavigationMenu className="flex-initial">
             <NavigationMenuList className="h-nav-bar w-screen bg-card-solid px-9 pt-[26px] items-start">
                 <NavigationMenuItem>
-                    <Link href = "/landing-page" legacyBehavior passHref>
+                    <Link href = "/home" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle() + (props.navLocation == "home" ? highlightedClassName : "")}>
                             Home
                         </NavigationMenuLink>
