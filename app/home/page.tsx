@@ -4,8 +4,8 @@ import { NavBar } from "@/components/navbar"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { HomeSidebar } from "@/components/home-sidebar";
 import { Button } from "@/components/ui/button";
+import { TabbedSidebar } from "@/components/tabbed-sidebar";
 
 export default function Home() {
   const router = useRouter();
@@ -42,7 +42,33 @@ export default function Home() {
         <div className="flex flex-row">
           <div className={"bg-primary-foreground flex flex-row h-[calc(100vh-90px)] max-xl:absolute max-xl:top-[90px] max-xl:left-0 " + (showSidebar ? " max-xl:w-[calc(100%-20px)] xl:w-[600px] " : " w-5 ")}>
             <div className={(showSidebar ? "" : "hidden")}>
-              <HomeSidebar />
+              <TabbedSidebar defaultValue="Lesson 1" tabs={[
+                {name: "Lesson 1", content:
+                  <p className="text-xl font-bold">
+                    Welcome to Neural Kingdom
+                  </p>
+                },
+                {name: "Lesson 2", content:
+                  <p className="text-xl font-bold">
+                    Welcome to Neural Kingdom
+                  </p>
+                },
+                {name: "Lesson 3", content:
+                  <p className="text-xl font-bold">
+                    Welcome to Neural Kingdom
+                  </p>
+                },
+                {name: "Lesson 4", content:
+                  <p className="text-xl font-bold">
+                    Welcome to Neural Kingdom
+                  </p>
+                },
+                {name: "Lesson 5", content:
+                  <p className="text-xl font-bold">
+                    Welcome to Neural Kingdom
+                  </p>
+                },
+              ]} />
             </div>
           </div>
           <div>
