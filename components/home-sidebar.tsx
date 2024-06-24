@@ -10,7 +10,7 @@ export const HomeSidebar: FC<{}> = () => {
     return (
         <div className="bg-primary-foreground min-w-[600px] h-full flex flex-col">
             <Tabs defaultValue="Lesson1" className="flex flex-col items-center w-full h-full pt-[30px] pb-10 px-10 space-y-[35px]">
-                <TabsList>
+                <TabsList className="w-full">
                     <TabsTrigger value="Lesson1">Lesson 1</TabsTrigger>
                     <TabsTrigger value="Lesson2">Lesson 2</TabsTrigger>
                     <TabsTrigger value="Lesson3">Lesson 3</TabsTrigger>
