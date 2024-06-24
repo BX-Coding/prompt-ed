@@ -24,6 +24,7 @@ module.exports = {
       tabs: ['17px', '26px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
+      'title': ['26px', '30px'],
       'input': inputText,
       'button-default-text': inputText,
       'button-accent-text': inputText,
@@ -72,6 +73,9 @@ module.exports = {
           DEFAULT: "var(--card)",
           solid: "var(--card-solid)",
           foreground: "var(--card-foreground)",
+        },
+        text: {
+          't2': "var(--text-t2)",
         },
       },
       borderRadius: {
