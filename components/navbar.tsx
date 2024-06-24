@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 const highlightedClassName = " bg-primary ";
 
 // I don't know why, but bg-accent doesn't work here.
-const loginHighlightedClassName = " bg-[var(--accent)] hover:bg-[var(--accent)]  ";
+const loginHighlightedClassName = " bg-[var(--accent)] hover:bg-[var(--accent)] ";
 
 export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
     const router = useRouter();
