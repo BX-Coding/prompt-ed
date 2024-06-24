@@ -191,7 +191,7 @@ export const ImageGeneration: React.FC = ({}) => {
                 <TabsContent value="text">
                   <Input
                     id="prompt"
-                    placeholder="Your prmpt here..."
+                    placeholder="Describe your image..."
                     defaultValue={prompt}
                     type="text"
                     autoCapitalize="none"
