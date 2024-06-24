@@ -1,17 +1,19 @@
 "use client"
 
 import Link from "next/link"
-import { UserAuthForm } from "../../components/login-form"
+import { StylisticPreviews, UserAuthForm } from "../../components/login-form"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { NavBar } from "@/components/navbar"
 
 export default function Home() {
 
   return (
-    <>
-      <div className="lg:p-8">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
+    <div className="flex flex-col h-screen">
+      <NavBar navLocation="create-account" isLoginPage={true} />
+      <div className="flex flex-row h-full">
+        <div className="mx-auto min-w-[440px] max-w-[560px] flex h-full flex-col justify-center align-center space-y-6 p-16">
+          <div className="flex flex-col space-y-2">
               <Link
           href="/login"
           className={cn(
@@ -21,15 +23,15 @@ export default function Home() {
           >
           Login
           </Link>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Welcome!
+            <h1 className="text-title text-black font-medium tracking-tight">
+              Get started for free!
             </h1>
-            <p>
+            <p className="text-black">
               Enter your email below to create your account
             </p>
           </div>
           <UserAuthForm />
-          <p>
+          <p className="text-black">
             By clicking continue, you agree to our{" "}
             <Link
               href="/terms"
@@ -47,7 +49,10 @@ export default function Home() {
             .
           </p>
         </div>
+        <div className="flex flex-col max-md:hidden min-w-[320px] w-[60%] max-w-[720px] overflow-clip bg-primary-foreground">
+          <StylisticPreviews />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
