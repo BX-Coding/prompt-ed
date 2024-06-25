@@ -42,19 +42,12 @@ export const ImageGeneration: React.FC = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [blockMode, setBlockMode] = useState(false);
   const [res, setRes] = useState<JSX.Element>(<></>);
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
-
-  const handleTextClick = () => {
-    setPrompt(constructPrompt());
-    setBlockMode(false);
-  };
 
   const handleBlockClick = () => {
     resetPrompt();
     addTextBlock(prompt);
-    setBlockMode(true);
   };
 
   const generateImage = httpsCallable(functions, "generateImageCall");
@@ -66,7 +59,7 @@ export const ImageGeneration: React.FC = ({}) => {
     setIsLoading(true);
 
     try {
-      const finalPrompt = blockMode ? constructPrompt() : prompt;
+      const finalPrompt = constructPrompt();
       const response = await generateImage({ prompt: finalPrompt });
       const data = response.data as GenerateImageResponse;
       console.log(response);
@@ -169,53 +162,20 @@ export const ImageGeneration: React.FC = ({}) => {
       </Button>
     );
   }
+
+  //handleBlockClick();
+
   return (
     <>
       <div className="flex flex-col items-center space-y-10 h-full w-full p-12">
-        <Tabs className="h-full w-full" value={blockMode ? "block" : "text"}>
           <form className="h-full w-full" onSubmit={submitHandler}>
             <Card className="h-full w-full px-6 py-12">
               <div className="flex items-center h-full w-full flex-col">
-                <TabsList className="bg-primary-foreground grid w-1/2 grid-cols-2">
-                  <ModeChangeAlert onDeny={() => {}} onConfirm={handleTextClick}>
-                    <TabsTrigger
-                      className="pointer-events-none w-full"
-                      value="text"
-                    >
-                      Text
-                    </TabsTrigger>
-                  </ModeChangeAlert>
-                  <TabsTrigger onClick={handleBlockClick} value="block">
-                    Block
-                  </TabsTrigger>
-                </TabsList>
                 <div className="h-full w-full flex flex-col items-center justify-center">
-                  <TabsContent className="h-full w-full" value="text">
-                    <div className="h-full w-full flex flex-col">
-                      <div className="flex flex-1">
-                        
-                      </div>
-                      <Input
-                        id="prompt"
-                        placeholder="Describe your image..."
-                        defaultValue={prompt}
-                        type="text"
-                        autoCapitalize="none"
-                        autoComplete="on"
-                        autoCorrect="on"
-                        onChange={(e) => setPrompt(e.target.value)}
-                        disabled={isLoading}
-                        className="w-full flex order-last"
-                        inputSize="xl"
-                      />
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="block">
-                    <div className="flex flex-row">
-                      <BuildableMenu />
-                      <PromptBox className="space-x-1 p-5" />
-                    </div>
-                  </TabsContent>
+                  <div className="flex flex-row">
+                    <BuildableMenu />
+                    <PromptBox className="space-x-1 p-5" />
+                  </div>
                 </div>
                 <Button disabled={isLoading}>
                   {isLoading && (
@@ -226,7 +186,6 @@ export const ImageGeneration: React.FC = ({}) => {
               </div>
             </Card>
           </form>
-        </Tabs>
         {res}
         <div className="flex flex-row justify-between mt-10">
           {saveFirebaseBttn}
