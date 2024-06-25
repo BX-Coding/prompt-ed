@@ -9,7 +9,7 @@ import { functions } from "@/app/firebase";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
-  sendMessage: (newMessage: Message[]) => void;
+  sendMessage: (newMessage: ChatHistoryMessage) => void;
   date: string;
 }
 
@@ -53,9 +53,9 @@ export default function ChatBottombar({
         { role: "assistant", content: message },
       ]);
 
-      const aiMessage = {
-        message: message,
-        ai: true,
+      const aiMessage: ChatHistoryMessage = {
+        role:"assistant",
+        content: message,
       };
 
       return aiMessage;
@@ -68,16 +68,14 @@ export default function ChatBottombar({
   const handleSend = async () => {
     if (message.trim()) {
       setWaiting(true);
-      const personMessage: Message = {
-        message: message,
-        ai: false,
+      const personMessage: ChatHistoryMessage = {
+        role:"user",
+        content: message,
       };
-      let clientMessages = [personMessage];
-      sendMessage(clientMessages);
+      sendMessage(personMessage);
       //do AI stuff
       const generateMessage = await generateAIMessage(message);
-      clientMessages = [...clientMessages, generateMessage];
-      sendMessage(clientMessages);
+      sendMessage(generateMessage);
       setWaiting(false);
       setMessage("");
       if (inputRef.current) {
