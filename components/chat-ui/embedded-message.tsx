@@ -7,17 +7,28 @@ interface Props {
 
 const extractParts = (
   responseText: string
-): { nonCode: string; code: string | null } => {
+): { nonCode: (string | JSX.Element)[]; code: string | null } => {
   const codePattern = /```(.*?)```/s;
-  const match = responseText.match(codePattern);
+  const parts: (string | JSX.Element)[] = [];
+  let match;
 
-  if (match) {
-    const nonCode = responseText.replace(codePattern, "").trim();
+  while ((match = codePattern.exec(responseText)) !== null) {
+    const nonCode = responseText.substring(0, match.index).trim();
+    if (nonCode) {
+      parts.push(nonCode);
+    }
+
     const code = match[1].trim();
-    return { nonCode, code };
-  } else {
-    return { nonCode: responseText.trim(), code: null };
+    parts.push(<ScratchBlocks key={code} code={code} />);
+
+    responseText = responseText.substring(match.index + match[0].length);
   }
+
+  if (responseText.trim()) {
+    parts.push(responseText.trim());
+  }
+
+  return { nonCode: parts, code: null };
 };
 
 const EmbeddedMessage: React.FC<Props> = ({ llmResponse }) => {
@@ -25,8 +36,9 @@ const EmbeddedMessage: React.FC<Props> = ({ llmResponse }) => {
 
   return (
     <>
-      <p>{nonCode}</p>
-      {code ? <ScratchBlocks code={code} /> : null}
+      {nonCode.map((part, index) => (
+        <p key={index}>{part}</p>
+      ))}
     </>
   );
 };

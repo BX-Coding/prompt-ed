@@ -76,8 +76,12 @@ export function ChatBody({
               )}
             >
             <div className="flex gap-3 items-center">
-              <span className={cn("p-3 rounded-md max-w-xs text-foreground", message.role==="error"?"bg-red-400":"bg-accent")}>
-                {message.content}
+              <span className={cn("p-3 rounded-md max-w-xs text-foreground", message.role === "error" ? "bg-red-400" : "bg-accent")}>
+                {message.content.toLowerCase().includes("scratch") ? (
+                  <EmbeddedMessage llmResponse={message.content} />
+                ) : (
+                  <>{message.content}</>
+                )}
               </span>
             </div>
             </motion.div>
