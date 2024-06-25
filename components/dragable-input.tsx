@@ -17,6 +17,6 @@ export const DragableInput: FC<DragableInputProps> = ({ onChange, initialValue }
 
     return <div className="flex flex-row items-center bg-secondary text-foreground p-1 rounded-md">
         <DragHandleDots2Icon className="cursor-move text-secondary-foreground" style={{height:size, width:size}}/>
-        <Input onChange={handleChange} type="text" title="Free Input" value={initialValue}/>
+        <Input onChange={handleChange} type="text" placeholder="Free Input" className="bg-primary" value={initialValue}/>
     </div>
 }
