@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 
-export const TabbedSidebar: FC<{ tabs : { labelElement? : React.ReactNode, name : string, content : React.ReactNode }[], defaultValue : string }> = (props : { tabs : { labelElement? : React.ReactNode, name : string, content : React.ReactNode }[], defaultValue : string }) => {
+export const TabbedSidebar: FC<{ tabs : { labelElement? : React.ReactNode, name : string, content : React.ReactNode }[], noCard? : boolean, defaultValue : string }> = (props : { tabs : { labelElement? : React.ReactNode, name : string, content : React.ReactNode }[], noCard? : boolean, defaultValue : string }) => {
     const [showSidebar, setShowSidebar] = useState(true);
 
     const toggleShowSidebar = () => {
@@ -23,15 +23,15 @@ export const TabbedSidebar: FC<{ tabs : { labelElement? : React.ReactNode, name 
                         {props.tabs?.map((tab) => <TabsTrigger key={tab.name} value={tab.name}>{tab.labelElement ? tab.labelElement : tab.name}</TabsTrigger>)}
                     </TabsList>
                     {props.tabs?.map((tab) => <TabsContent key={tab.name} value={tab.name} className="h-full w-full">
-                        <Card className="bg-primary pt-12 px-10 w-full h-full">
+                        {props.noCard ? tab.content : <Card className="bg-primary pt-12 px-10 w-full h-full">
                             {tab.content}
-                        </Card>
+                        </Card>}
                     </TabsContent>)}
                 </Tabs> : 
                 <div className="flex flex-col items-center w-full h-full pt-[30px] pb-10 px-10 space-y-[35px]">
-                    <Card className="bg-primary pt-12 px-10 w-full h-full">
+                    {props.noCard ? props.tabs[0].content : <Card className="bg-primary pt-12 px-10 w-full h-full">
                         {props.tabs[0].content}
-                    </Card>
+                    </Card>}
                 </div> }
                 <div className="flex border-t border-t-white">
 
