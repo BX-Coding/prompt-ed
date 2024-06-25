@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBodyProps {
-  messages?: ChatHistoryMessage[];
+  messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
   date: string
 }
@@ -19,7 +19,6 @@ interface ChatHistoryMessage {
 export function ChatBody({
   messages,
   sendMessage,
-  date
 }: ChatBodyProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +70,7 @@ export function ChatBody({
           ))}
         </AnimatePresence>
       </div>
-      <ChatBottombar sendMessage={sendMessage} date={date}/>
+      <ChatBottombar messages={messages} sendMessage={sendMessage}/>
     </div>
   );
 }

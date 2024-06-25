@@ -9,8 +9,8 @@ import { functions } from "@/app/firebase";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
+  messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
-  date: string;
 }
 
 interface ChatHistoryMessage {
@@ -25,12 +25,12 @@ interface ChatHistoryMessage {
  */
 export default function ChatBottombar({
   sendMessage,
-  date,
+  messages
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [messages, changeMessages] = useState<ChatHistoryMessage[]>([]);
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -39,26 +39,17 @@ export default function ChatBottombar({
 
   //TODO: REPLACE THIS METHOD WITH GENERATING AI MESSAGES
   const generateAIMessage = async (prompt: string) => {
-    changeMessages((oldArray) => [
-      ...oldArray,
-      { role: "user", content: prompt },
-    ]);
+
+    const tempMessages:ChatHistoryMessage[] = [...messages];
+    tempMessages.push({ role: "user", content: prompt })
+
+    sendMessage({ role: "user", content: prompt })
     try {
-      messages.push({ role: "user", content: prompt });
-      const response = await generateChat({ messages });
-      const message = String(response.data);
+      const response = await generateChat({ messages:tempMessages });
+      const aiMessage = String(response.data);
 
-      changeMessages((oldArray) => [
-        ...oldArray,
-        { role: "assistant", content: message },
-      ]);
+      sendMessage({ role: "assistant", content: aiMessage })
 
-      const aiMessage: ChatHistoryMessage = {
-        role:"assistant",
-        content: message,
-      };
-
-      return aiMessage;
     } catch (error) {
       console.error("Error generating AI message:", error);
       throw error;
@@ -68,14 +59,8 @@ export default function ChatBottombar({
   const handleSend = async () => {
     if (message.trim()) {
       setWaiting(true);
-      const personMessage: ChatHistoryMessage = {
-        role:"user",
-        content: message,
-      };
-      sendMessage(personMessage);
       //do AI stuff
-      const generateMessage = await generateAIMessage(message);
-      sendMessage(generateMessage);
+      await generateAIMessage(message);
       setWaiting(false);
       setMessage("");
       if (inputRef.current) {
