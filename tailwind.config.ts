@@ -25,6 +25,7 @@ module.exports = {
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
       'title': ['26px', '30px'],
+      'title-xl': ['36px', '42px'],
       'input': inputText,
       'button-default-text': inputText,
       'button-accent-text': inputText,
