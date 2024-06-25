@@ -69,7 +69,7 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
 
     return (
       <>
-        <div className={className + " flex flex-row"}>{buildables.map((card, i) => renderBuildable(card, i))}</div>
+        <div className={className + " flex flex-row flex-wrap"}>{buildables.map((card, i) => renderBuildable(card, i))}</div>
       </>
     )
 }

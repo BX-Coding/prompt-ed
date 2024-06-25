@@ -171,10 +171,10 @@ export const ImageGeneration: React.FC = ({}) => {
           <form className="h-full w-full" onSubmit={submitHandler}>
             <Card className="h-full w-full px-6 py-12">
               <div className="flex items-center h-full w-full flex-col">
-                <div className="h-full w-full flex flex-col items-center justify-center">
-                  <div className="flex flex-row">
+                <div className="w-full flex flex-col items-center justify-center">
+                  <div className="flex flex-row space-x-1">
                     <BuildableMenu />
-                    <PromptBox className="space-x-1 p-5" />
+                    <PromptBox className="space-x-1 space-y-1 items-end" />
                   </div>
                 </div>
                 <Button disabled={isLoading}>

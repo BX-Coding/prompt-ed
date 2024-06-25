@@ -23,13 +23,13 @@ export const BuildableMenu: FC<BuildableMenuProps> = ({ }) => {
     
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="bg-accent h-20 w-20 rounded-xl flex items-center justify-center drop-shadow-md">
+            <DropdownMenuTrigger className="bg-accent h-[35px] w-[35px] rounded-xl flex items-center justify-center drop-shadow-md">
             <Image
                 className="animate-bounce"
                 src="/logo-stroke.svg"
                 alt="Logo"
-                width={50}
-                height={50}
+                width={32}
+                height={32}
             />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
