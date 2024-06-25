@@ -31,7 +31,7 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
       return (
         <div className="h-nav-bar bg-card-solid space-x-[17px] flex flex-none flex-row pt-[26px] pl-8 pr-16">
             <Link href = "/home" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className={"w-12 " + highlightedClassName}>
+                <Button variant="navbar" size="navbar" className={"w-[48px] " + highlightedClassName}>
                     <Image src="/logo.svg" alt="Hammer" width={36} height={36} />
                 </Button>
             </Link>
