@@ -16,7 +16,7 @@ const highlightedClassName = " bg-primary ";
 
 const loginHighlightedClassName = " bg-accent hover:bg-accent ";
 
-export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "history" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
+export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "image-library" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
     const router = useRouter();
     const handleLogOut = () => {
         signOut(auth).then(() => {
@@ -54,12 +54,6 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                     Home
                 </Button>
             </Link>
-            <Link href = "/history" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className={(props.navLocation == "history" ? highlightedClassName : "")}>
-                    <StopwatchIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
-                    History
-                </Button>
-            </Link>
             <Link href = "/chat" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "chat" ? highlightedClassName : "")}>
                     <ChatBubbleIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
@@ -70,6 +64,12 @@ export const NavBar: FC<{ navLocation? : "home" | "history" | "chat" | "images" 
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "images" ? highlightedClassName : "")}>
                     <ImageIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Images
+                </Button>
+            </Link>
+            <Link href = "/image-library" legacyBehavior passHref>
+                <Button variant="navbar" size="navbar" className={(props.navLocation == "image-library" ? highlightedClassName : "")}>
+                    <StopwatchIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    Library
                 </Button>
             </Link>
             <Link href = "/account" legacyBehavior passHref>
