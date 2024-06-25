@@ -7,12 +7,20 @@ import EmbeddedMessage from "./embedded-message";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBodyProps {
-  messages?: Message[];
-  sendMessage: (newMessage: Message[]) => void;
-  date: string;
+  messages: ChatHistoryMessage[];
+  sendMessage: (newMessage: ChatHistoryMessage) => void;
+  date: string
 }
 
-export function ChatBody({ messages, sendMessage, date }: ChatBodyProps) {
+interface ChatHistoryMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export function ChatBody({
+  messages,
+  sendMessage,
+}: ChatBodyProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -62,22 +70,19 @@ export function ChatBody({ messages, sendMessage, date }: ChatBodyProps) {
               }}
               className={cn(
                 "flex flex-col gap-2 p-4 whitespace-pre-wrap",
-                !message.ai ? "items-end" : "items-start"
+                message.role==="assistant" ? "items-start" : "items-end"
               )}
             >
-              <div className="flex gap-3 items-center">
-                <div className=" bg-accent p-3 rounded-md max-w-xs text-foreground">
-                  {message.message}
-                  {message.ai ? (
-                    <EmbeddedMessage llmResponse={exampleResponse} />
-                  ) : null}
-                </div>
-              </div>
+            <div className="flex gap-3 items-center">
+              <span className=" bg-accent p-3 rounded-md max-w-xs text-foreground">
+                {message.content}
+              </span>
+            </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
-      <ChatBottombar sendMessage={sendMessage} date={date} />
+      <ChatBottombar messages={messages} sendMessage={sendMessage}/>
     </div>
   );
 }
