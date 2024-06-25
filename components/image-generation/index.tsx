@@ -4,12 +4,28 @@ import * as React from "react";
 
 import { useState } from "react";
 import { Icons } from "@/components/icons";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { auth, storage, functions } from "../app/firebase";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { auth, storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
 import { ref, uploadBytes } from "firebase/storage";
+import Image from "next/image";
+
+import axios from "axios";
+import { Toggle } from "../ui/toggle";
+import { PromptBox } from "../prompt-box";
+import { LightningBoltIcon } from "@radix-ui/react-icons";
+import { BuildableMenu } from "../buildable-menu";
+import { usePrompt } from "@/hooks/usePrompt";
+import { log } from "util";
+import { ModeChangeAlert } from "./mode-change-alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+
+type GenerateImageResponse = {
+  created: Date;
+  data: Uint8Array;
+};
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -22,12 +38,25 @@ import { ref, uploadBytes } from "firebase/storage";
  * the const urls and setImageURL in the submitHandler function.
  */
 export const ImageGeneration: React.FC = ({}) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [res, setRes] = useState(<></>);
+  const [blockMode, setBlockMode] = useState(false);
+  const [res, setRes] = useState<JSX.Element>(<></>);
+  const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
 
-  const generateImage = httpsCallable(functions, "generateImage");
+  const handleTextClick = () => {
+    setPrompt(constructPrompt());
+    setBlockMode(false);
+  };
+
+  const handleBlockClick = () => {
+    resetPrompt();
+    addTextBlock(prompt);
+    setBlockMode(true);
+  };
+
+  const generateImage = httpsCallable(functions, "generateImageCall");
 
   async function submitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -36,10 +65,12 @@ export const ImageGeneration: React.FC = ({}) => {
     setIsLoading(true);
 
     try {
-      const response = await generateImage({ prompt: prompt });
+      const finalPrompt = blockMode ? constructPrompt() : prompt;
+      const response = await generateImage({ prompt: finalPrompt });
+      const data = response.data as GenerateImageResponse;
       console.log(response);
       var imagearray: number[] = [];
-      Object.values(response.data as Object).forEach((x) =>
+      Object.values(data.data as Object).forEach((x) =>
         imagearray.push(x as number)
       );
       var imageblob = new Blob([new Uint8Array(imagearray)], {
@@ -49,7 +80,7 @@ export const ImageGeneration: React.FC = ({}) => {
       const url = URL.createObjectURL(imageblob);
 
       setImageURL(url);
-      setRes(<img src={url} className="mt-20" />);
+      setRes(<img alt={prompt} src={url} className="mt-20" />);
 
       setIsLoading(false);
     } catch (e: any) {
@@ -137,31 +168,56 @@ export const ImageGeneration: React.FC = ({}) => {
       </Button>
     );
   }
-
   return (
     <>
-      <div className="flex flex-col items-center">
-        <form onSubmit={submitHandler}>
-          <div className="flex items-center">
-            <Input
-              id="prompt"
-              placeholder="a nice image"
-              type="text"
-              autoCapitalize="none"
-              autoComplete="on"
-              autoCorrect="on"
-              onChange={(e) => setPrompt(e.target.value)}
-              disabled={isLoading}
-              className="mr-5 w-96"
-            />
-            <Button disabled={isLoading}>
-              {isLoading && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Generate
-            </Button>
-          </div>
-        </form>
+      <div className="flex flex-col items-center space-y-10 w-full px-20">
+        <Tabs className="w-full" value={blockMode ? "block" : "text"}>
+          <form className="w-full" onSubmit={submitHandler}>
+            <div className="flex items-center w-full flex-col">
+              <TabsList className="grid w-1/2 grid-cols-2">
+                <ModeChangeAlert onDeny={() => {}} onConfirm={handleTextClick}>
+                  <TabsTrigger
+                    className="pointer-events-none w-full"
+                    value="text"
+                  >
+                    Text
+                  </TabsTrigger>
+                </ModeChangeAlert>
+                <TabsTrigger onClick={handleBlockClick} value="block">
+                  Block
+                </TabsTrigger>
+              </TabsList>
+              <div className="h-36 flex flex-col items-center justify-center">
+                <TabsContent value="text">
+                  <Input
+                    id="prompt"
+                    placeholder="Your prmpt here..."
+                    defaultValue={prompt}
+                    type="text"
+                    autoCapitalize="none"
+                    autoComplete="on"
+                    autoCorrect="on"
+                    onChange={(e) => setPrompt(e.target.value)}
+                    disabled={isLoading}
+                    className="mr-5 w-96"
+                  />
+                </TabsContent>
+                <TabsContent value="block">
+                  <div className="flex flex-row">
+                    <BuildableMenu />
+                    <PromptBox className="space-x-1 p-5" />
+                  </div>
+                </TabsContent>
+              </div>
+              <Button disabled={isLoading}>
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                <LightningBoltIcon /> Generate
+              </Button>
+            </div>
+          </form>
+        </Tabs>
         {res}
         <div className="flex flex-row justify-between mt-10">
           {saveFirebaseBttn}
