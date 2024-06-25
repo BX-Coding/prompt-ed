@@ -30,7 +30,7 @@ export default function Home() {
         <div className="flex flex-row h-full">
           <TabbedSidebar noCard={true} tabs={[
             {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
-              <div className="overflow-y-auto w-full px-4 py-[30px]">
+              <div className="overflow-y-auto scrollbar scrollbar-thumb-gray-700 max-h-[calc(100vh-235px)] w-full px-4 py-[30px]">
                 <p className="text-title-xl font-bold text-white">
                     Image History
                 </p>
