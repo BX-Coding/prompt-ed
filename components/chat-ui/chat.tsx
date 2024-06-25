@@ -10,13 +10,16 @@ interface ChatProps {
   date: string
 }
 
-export function Chat({ messages, date }: ChatProps) {
-  const [messagesState, setMessages] = React.useState<Message[]>(
-    messages ?? []
-  );
+interface ChatHistoryMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
 
-  const sendMessage = (newMessage: Message[]) => {
-    setMessages([...messagesState, ...newMessage]);
+export function Chat({ date }: ChatProps) {
+  const [messagesState, setMessages] = React.useState<ChatHistoryMessage[]>([]);
+
+  const sendMessage = (newMessage: ChatHistoryMessage) => {
+    setMessages((prevArray)=>[...prevArray, newMessage]);
   };
 
   const onSave = async () => {
