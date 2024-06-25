@@ -11,10 +11,11 @@ import { functions } from "@/app/firebase";
 interface ChatBottombarProps {
   messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
+  errorLastPrompt: () => void;
 }
 
 interface ChatHistoryMessage {
-  role: "system" | "user" | "assistant";
+  role: "system" | "user" | "assistant" | "error";
   content: string;
 }
 
@@ -25,7 +26,8 @@ interface ChatHistoryMessage {
  */
 export default function ChatBottombar({
   sendMessage,
-  messages
+  messages,
+  errorLastPrompt
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
@@ -45,14 +47,15 @@ export default function ChatBottombar({
 
     sendMessage({ role: "user", content: prompt })
     try {
-      const response = await generateChat({ messages:tempMessages });
+      const response = await generateChat({ messages:tempMessages.filter(message => message.role !== "error")});
       const aiMessage = String(response.data);
 
       sendMessage({ role: "assistant", content: aiMessage })
 
     } catch (error) {
       console.error("Error generating AI message:", error);
-      throw error;
+      errorLastPrompt()
+      sendMessage({ role: "error", content: "Error generating response! Negative flags may have been detected in your prompt. Please try again." })
     }
   };
 

@@ -9,16 +9,18 @@ interface ChatBodyProps {
   messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
   date: string
+  errorLastPrompt: () => void;
 }
 
 interface ChatHistoryMessage {
-  role: "system" | "user" | "assistant";
+  role: "system" | "user" | "assistant" | "error";
   content: string;
 }
 
 export function ChatBody({
   messages,
   sendMessage,
+  errorLastPrompt
 }: ChatBodyProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +64,7 @@ export function ChatBody({
               )}
             >
             <div className="flex gap-3 items-center">
-              <span className=" bg-accent p-3 rounded-md max-w-xs text-foreground">
+              <span className={cn("p-3 rounded-md max-w-xs text-foreground", message.role==="error"?"bg-red-400":"bg-accent")}>
                 {message.content}
               </span>
             </div>
@@ -70,7 +72,7 @@ export function ChatBody({
           ))}
         </AnimatePresence>
       </div>
-      <ChatBottombar messages={messages} sendMessage={sendMessage}/>
+      <ChatBottombar messages={messages} sendMessage={sendMessage} errorLastPrompt={errorLastPrompt}/>
     </div>
   );
 }
