@@ -12,7 +12,7 @@ export const imageFunctions: ImageFunctions = {
 
     const job = await prodia.generate({
       prompt: prompt,
-      model: "v1-5-pruned-emaonly.safetensors [d7049739]",
+      model: "childrensStories_v1ToonAnime.safetensors [2ec7b88b]",
     });
 
     const { imageUrl, status } = await prodia.wait(job);

@@ -5,10 +5,12 @@ import { HttpsError, onCall } from "firebase-functions/v2/https";
 // Interface Functions
 import { imageFunctions } from "./imageFunctions";
 import { moderationFunctions } from "./moderationFunctions";
+import { chatFunctions } from "./textFunctions";
 
 // Define cloud secrets to be used
 const prodiaKey = defineSecret("prodia-key");
 const moderationKey = defineSecret("moderation-key");
+const openAiKey = defineSecret("openai-key");
 
 interface TextModerationResponse {
   Positive: number;
@@ -79,6 +81,27 @@ exports.generateImageCall = onCall(
     } catch (error) {
       console.error("Error generating image:", error);
       throw new HttpsError("internal", "Error generating image");
+    }
+  }
+);
+
+exports.createChat = onCall(
+  { cors:true, secrets: [openAiKey, moderationKey] },
+  async (request) => {
+    const messages = request.data?.messages;
+    try {
+      const chatResponse = await chatFunctions.openAiChatRequest(
+        messages,
+        openAiKey.value()
+      );
+      const messageContent = chatResponse.message.content;
+      return messageContent;
+    } catch (e) {
+      console.error("Error generating chat:", e);
+      throw new HttpsError(
+        "permission-denied",
+        "Error generating chat"
+      );
     }
   }
 );
