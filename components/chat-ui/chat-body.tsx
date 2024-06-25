@@ -33,17 +33,6 @@ export function ChatBody({
     console.log(messages);
   }, [messages]);
 
-  const exampleResponse = `
-  Here is some Scratch code for you:
-
-  \`\`\`
-  when green flag clicked
-  forever
-    next costume
-    wait 0.1 seconds
-  \`\`\`
-  `;
-
   return (
     <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
       <div
