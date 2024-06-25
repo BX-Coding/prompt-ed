@@ -43,8 +43,8 @@ export default function ChatBottombar({
       ...oldArray,
       { role: "user", content: prompt },
     ]);
-    setTimeout(()=>{},3000)
     try {
+      messages.push({ role: "user", content: prompt });
       const response = await generateChat({ messages });
       const message = String(response.data);
 
