@@ -93,7 +93,7 @@ exports.createChat = onCall(
       const prompt = messages[messages.length-1].content
       const textModerationRes: TextModerationResponse =
         await moderationFunctions.moderateText(prompt, moderationKey.value());
-      if (textModerationRes.Negative > 0.5) {
+      if (textModerationRes.Negative > 0.75) {
         console.log("Negative flags in prompt detected.");
         throw new HttpsError(
           "permission-denied",
