@@ -34,6 +34,7 @@ module.exports = {
     },
     fontFamily: {
       'roboto': ['Roboto', 'Helvetica', 'sans'],
+      'space-grotesk': ['Space Grotesk', 'Roboto', 'Helvetica', 'sans'],
     },
     extend: {
       colors: {

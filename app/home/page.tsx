@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { TabbedSidebar } from "@/components/tabbed-sidebar";
+import { ImageIcon, ChatBubbleIcon, BackpackIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -29,43 +30,49 @@ export default function Home() {
     return (
       <div className="flex flex-col h-screen">
         <NavBar navLocation="home" />
-        <div className="flex flex-row">
-          <TabbedSidebar defaultValue="Lesson 1" tabs={[
-            {
-              name: "Lesson 1", content:
-                <p className="text-xl font-bold">
-                  Welcome to Neural Kingdom
-                </p>
-            },
-            {
-              name: "Lesson 2", content:
-                <p className="text-xl font-bold">
-                  Welcome to Neural Kingdom
-                </p>
-            },
-            {
-              name: "Lesson 3", content:
-                <p className="text-xl font-bold">
-                  Welcome to Neural Kingdom
-                </p>
-            },
-            {
-              name: "Lesson 4", content:
-                <p className="text-xl font-bold">
-                  Welcome to Neural Kingdom
-                </p>
-            },
-            {
-              name: "Lesson 5", content:
-                <p className="text-xl font-bold">
-                  Welcome to Neural Kingdom
-                </p>
-            },
-          ]} />
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+        <div className="flex flex-row h-full">
+          {/* A <TabbedSidebar /> could be put here */}
+          <div className="grid items-center justify-items-center justify-center content-center w-full h-full">
+            <div className="text-black text-[40px] font-medium">
+              Let's Build Something Awesome!
+            </div>
+            <div className="flex mt-2 text-black text-lg">
+              Use these examples and templates to get started or create your own.
+            </div>
+            <div className="flex flex-row mt-8 space-x-10">
+              <Button variant="outline" size="xl" className="w-[360px] h-[120px] rounded-[15px] bg-white/40 border-primary-foreground"><p className="text-center text-wrap font-normal font-space-grotesk text-base text-primary-foreground">Example prompt or template that shows how lesson should be applied.</p></Button>
+              <Button variant="outline" size="xl" className="w-[360px] h-[120px] rounded-[15px] bg-white/40 border-primary-foreground"><p className="text-center text-wrap font-normal font-space-grotesk text-base text-primary-foreground">Example prompt or template that shows how lesson should be applied.</p></Button>
+            </div>
+            <div className="flex flex-row mt-6 space-x-10">
+              <Button variant="outline" size="xl" className="w-[360px] h-[120px] rounded-[15px] bg-white/40 border-primary-foreground"><p className="text-center text-wrap font-normal font-space-grotesk text-base text-primary-foreground">Example prompt or template that shows how lesson should be applied.</p></Button>
+              <Button variant="outline" size="xl" className="w-[360px] h-[120px] rounded-[15px] bg-white/40 border-primary-foreground"><p className="text-center text-wrap font-normal font-space-grotesk text-base text-primary-foreground">Example prompt or template that shows how lesson should be applied.</p></Button>
+            </div>
+            <div className="flex flex-row mt-12 mb-8 space-x-5">
+              <Link href="/image-gen">
+                <Button variant="outline" size="xl" className="w-[160px] h-[132px] rounded-[15px] bg-primary-foreground border-secondary">
+                  <div className="text-primary text-title font-normal grid justify-items-center gap-1">
+                    <ImageIcon className="w-12 h-12" color={"var(--accent)"} />
+                    Create
+                  </div>
+                </Button>
+              </Link>
+              <Link href="/chat">
+                <Button variant="outline" size="xl" className="w-[160px] h-[132px] rounded-[15px] bg-primary-foreground border-secondary">
+                  <div className="text-primary text-title font-normal grid justify-items-center gap-1">
+                    <ChatBubbleIcon className="w-12 h-12" color={"var(--accent)"} />
+                    Chat
+                  </div>
+                </Button>
+              </Link>
+              <Link href="/library">
+                <Button variant="outline" size="xl" className="w-[160px] h-[132px] rounded-[15px] bg-primary-foreground border-secondary">
+                  <div className="text-primary text-title font-normal grid justify-items-center gap-1">
+                    <BackpackIcon className="w-12 h-12" color={"var(--accent)"} />
+                    Library
+                  </div>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
