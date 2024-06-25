@@ -1,6 +1,4 @@
-import {
-    SendHorizontal
-  } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { buttonVariants } from "../ui/button";
@@ -12,7 +10,7 @@ import { functions } from "@/app/firebase";
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
   sendMessage: (newMessage: Message[]) => void;
-  date: string
+  date: string;
 }
 
 interface ChatHistoryMessage {
@@ -27,33 +25,39 @@ interface ChatHistoryMessage {
  */
 export default function ChatBottombar({
   sendMessage,
-  date
+  date,
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [messages, changeMessages] = useState<ChatHistoryMessage[]>([])
+  const [messages, changeMessages] = useState<ChatHistoryMessage[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
   };
   const generateChat = httpsCallable(functions, "createChat");
-  
+
   //TODO: REPLACE THIS METHOD WITH GENERATING AI MESSAGES
   const generateAIMessage = async (prompt: string) => {
-    changeMessages((oldArray)=>([...oldArray, {role:"user", content:prompt}]))
+    changeMessages((oldArray) => [
+      ...oldArray,
+      { role: "user", content: prompt },
+    ]);
     try {
       messages.push({ role: "user", content: prompt });
 
       const response = await generateChat({ messages });
 
-      const message = typeof response.data === 'string' ? response.data : String(response.data);
-  
-      // const llmResponse = { role: "assistant", content: message };
-      // messages.push(llmResponse);
+      const message =
+        typeof response.data === "string"
+          ? response.data
+          : String(response.data);
 
-      changeMessages((oldArray)=>([...oldArray, {role:"assistant", content:message}]))
-      
+      changeMessages((oldArray) => [
+        ...oldArray,
+        { role: "assistant", content: message },
+      ]);
+
       const aiMessage = {
         message: message,
         ai: true,
@@ -70,9 +74,9 @@ export default function ChatBottombar({
     if (message.trim()) {
       setWaiting(true);
       const personMessage: Message = {
-          message: message,
-          ai: false
-      }
+        message: message,
+        ai: false,
+      };
       let clientMessages = [personMessage];
       sendMessage(clientMessages);
       //do AI stuff
@@ -101,40 +105,39 @@ export default function ChatBottombar({
 
   return (
     <div className="p-2 flex justify-between w-full items-center gap-2">
-          <Input
-            autoComplete="off"
-            value={message}
-            ref={inputRef}
-            onKeyDown={(e) => handleKeyPress(e)}
-            onChange={(e) => handleInputChange(e)}
-            name="message"
-            placeholder="Aa"
-            className=" h-9 w-full flex items-center resize-none overflow-hidden text-foreground"
-          ></Input>
+      <Input
+        autoComplete="off"
+        value={message}
+        ref={inputRef}
+        onKeyDown={(e) => handleKeyPress(e)}
+        onChange={(e) => handleInputChange(e)}
+        name="message"
+        placeholder="Aa"
+        className=" h-9 w-full flex items-center resize-none overflow-hidden text-foreground"
+      ></Input>
 
-        {message.trim() && !waiting ? (
-          <Link
-            href="#"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "icon" }),
-              "h-9 w-9",
-              "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
-            )}
-            onClick={handleSend}
-          >
-            <SendHorizontal size={20} className="text-foreground" />
-          </Link>
-        ) : (
-          <Link
-            href="#"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "icon" }),
-              "h-9 w-9",
-              "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
-            )}
-          >
-          </Link>
-        )}
+      {message.trim() && !waiting ? (
+        <Link
+          href="#"
+          className={cn(
+            buttonVariants({ variant: "outline", size: "icon" }),
+            "h-9 w-9",
+            "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
+          )}
+          onClick={handleSend}
+        >
+          <SendHorizontal size={20} className="text-foreground" />
+        </Link>
+      ) : (
+        <Link
+          href="#"
+          className={cn(
+            buttonVariants({ variant: "outline", size: "icon" }),
+            "h-9 w-9",
+            "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
+          )}
+        ></Link>
+      )}
     </div>
   );
 }
