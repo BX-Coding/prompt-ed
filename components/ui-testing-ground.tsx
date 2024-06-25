@@ -1,12 +1,27 @@
 "use client"
 
 import * as React from "react"
+import { DimensionsIcon, InputIcon, ImageIcon, Pencil1Icon, FaceIcon, AngleIcon, TransparencyGridIcon, BlendingModeIcon, Cross2Icon } from '@radix-ui/react-icons'
+import Image from "next/image"
 
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Switch } from "./ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 import { TabbedSidebar } from "./tabbed-sidebar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "./ui/context-menu"
+import { DragableInput } from "./dragable-input"
+import { DragableTag } from "./dragable-tag"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "./ui/select"
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -160,6 +175,139 @@ export const UITestingGround: React.FC = ({}) => {
                 </div>
                 <div className="flex flex-row space-x-2">
                     <Switch size="large" />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Open</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <span>Profile</span>
+                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <span>Billing</span>
+                            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <span>Settings</span>
+                            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <span>Keyboard shortcuts</span>
+                            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <span>Team</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                            <span>Invite users</span>
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuItem>
+                                <span>Email</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                <span>Message</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                <span>More...</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuItem>
+                            <span>New Team</span>
+                            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                        <span>GitHub</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                        <span>Support</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                        <span>API</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                        <span>Log out</span>
+                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="bg-accent h-20 w-20 rounded-xl flex items-center justify-center drop-shadow-md">
+                        <Image
+                            className="animate-bounce"
+                            src="/logo-stroke.svg"
+                            alt="Logo"
+                            width={50}
+                            height={50}
+                        />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                        <DropdownMenuLabel>Add Block</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <InputIcon/><span>Free Input</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <DimensionsIcon/> <span>Size</span> 
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <BlendingModeIcon/> <span>Color</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <ImageIcon/> <span>Genre</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <FaceIcon/> <span>Emotion</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <Pencil1Icon/><span>Art Style</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <AngleIcon/><span>Image Angle</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex flex-row space-x-1">
+                            <TransparencyGridIcon/><span>Pattern</span>
+                        </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <DragableInput initialValue={"test"}/>
+                    <DragableTag initialValue={"Option 1"} selectOptions={["Option 1", "Option 2", "Option 3"]}/>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Select>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select a fruit" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                            <SelectLabel>Fruits</SelectLabel>
+                            <SelectItem value="apple">Apple</SelectItem>
+                            <SelectItem value="banana">Banana</SelectItem>
+                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                            <SelectItem value="grapes">Grapes</SelectItem>
+                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
         </div>
