@@ -85,22 +85,23 @@ exports.generateImageCall = onCall(
   }
 );
 
-exports.createChat = onRequest(
-  { secrets: [openAiKey, moderationKey] },
-  async (request, response) => {
-    const messages = request.body?.data?.messages;
-
+exports.createChat = onCall(
+  { cors:true, secrets: [openAiKey, moderationKey] },
+  async (request) => {
+    const messages = request.data?.messages;
     try {
       const chatResponse = await chatFunctions.openAiChatRequest(
         messages,
         openAiKey.value()
       );
-
       const messageContent = chatResponse.message.content;
-      response.send({ data: messageContent });
+      return messageContent;
     } catch (e) {
       console.error("Error generating chat:", e);
-      response.status(500).send("Error generating chat");
+      throw new HttpsError(
+        "permission-denied",
+        "Error generating chat"
+      );
     }
   }
 );
