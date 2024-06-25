@@ -86,10 +86,23 @@ exports.generateImageCall = onCall(
 );
 
 exports.createChat = onCall(
-  { cors:true, secrets: [openAiKey, moderationKey] },
+  { cors: true, secrets: [openAiKey, moderationKey] },
   async (request) => {
     const messages = request.data?.messages;
     try {
+      const prompt = messages[messages.length-1].content
+      const textModerationRes: TextModerationResponse =
+        await moderationFunctions.moderateText(prompt, moderationKey.value());
+      if (textModerationRes.Negative > 0.5) {
+        console.log("Negative flags in prompt detected.");
+        throw new HttpsError(
+          "permission-denied",
+          "Negative flags have been detected in prompt!"
+        );
+      } else {
+        console.log("No negative flags detected in prompt.");
+      }
+
       const chatResponse = await chatFunctions.openAiChatRequest(
         messages,
         openAiKey.value()
@@ -98,10 +111,7 @@ exports.createChat = onCall(
       return messageContent;
     } catch (e) {
       console.error("Error generating chat:", e);
-      throw new HttpsError(
-        "permission-denied",
-        "Error generating chat"
-      );
+      throw new HttpsError("permission-denied", "Error generating chat");
     }
   }
 );
