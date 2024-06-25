@@ -13,15 +13,6 @@ export default function Home() {
       <NavBar navLocation="login" isLoginPage={true} />
       <div className="flex flex-row h-full">
         <div className="mx-auto min-w-[440px] max-w-[560px] flex h-full flex-col justify-center align-center space-y-6 p-16">
-          <Link
-          href="/create-account"
-          className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "absolute right-4 top-4 md:right-8 md:top-8"
-          )}
-          >
-          Create Account
-          </Link>
           <div className="flex flex-col space-y-2">
             <h1 className="text-title text-black font-medium tracking-tight">
               Get started for free!
