@@ -8,6 +8,7 @@ import { ImageGeneration } from "@/components/image-generation";
 import { auth } from "../firebase";
 import { TabbedSidebar } from "@/components/tabbed-sidebar";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Home() {
 
@@ -30,7 +31,7 @@ export default function Home() {
         <div className="flex flex-row h-[calc(100vh-90px)]">
           <TabbedSidebar noCard={true} tabs={[
             {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
-              <div className="overflow-y-auto scrollbar scrollbar-thumb-gray-700 max-h-[calc(100vh-235px)] w-full px-4 py-[30px]">
+              <ScrollArea className="max-h-[calc(100vh-235px)] w-full px-4 py-[30px]">
                 <p className="text-title-xl font-bold text-white">
                     Image History
                 </p>
@@ -111,7 +112,7 @@ export default function Home() {
                     <Button variant="accent"></Button>
                   </div>
                 </div>
-              </div>},
+              </ScrollArea>},
             ]} defaultValue="Image History" />
           <div className="flex flex-col items-center w-full p-12">
             <ImageGeneration />

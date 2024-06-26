@@ -16,6 +16,7 @@ import { BuildableMenu } from "../buildable-menu";
 import { usePrompt } from "@/hooks/usePrompt";
 import { Card, CardContent } from "../ui/card";
 import { DownloadIcon, StarIcon } from "lucide-react";
+import { ScrollArea } from "../ui/scroll-area";
 
 type GenerateImageResponse = {
   created: Date;
@@ -153,35 +154,33 @@ export const ImageGeneration: React.FC = ({}) => {
   }
 
   return (
-    <>
-      <Card className="h-full w-full overflow-y-scroll">
-        <CardContent className="px-6 py-12">
-          <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-4 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
-            {res}
-            <div className="flex flex-row w-full justify-end space-x-2">
-              {saveFirebaseBttn}
-              {saveLocalBttn}
-            </div>
+    <ScrollArea className="h-full w-full">
+      <Card className="h-full w-full px-6 py-12">
+        <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-4 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
+          {res}
+          <div className="flex flex-row w-full justify-end space-x-2">
+            {saveFirebaseBttn}
+            {saveLocalBttn}
           </div>
-          <div className="p-4 w-full bg-card-solid rounded-lg">
-            <form className="w-full" onSubmit={submitHandler}>
-              <div className="flex items-start h-full w-full flex-col space-y-2">
-                <div className="flex flex-row w-full space-x-1">
-                  <BuildableMenu />
-                  <PromptBox className="gap-1" />
-                </div>
-                <Button variant="outline" disabled={isLoading}>
-                  {isLoading && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  <LightningBoltIcon /> Generate
-                </Button>
+        </div>
+        <div className="p-4 w-full bg-card-solid rounded-lg">
+          <form className="w-full" onSubmit={submitHandler}>
+            <div className="flex items-start h-full w-full flex-col space-y-2">
+              <div className="flex flex-row w-full space-x-1">
+                <BuildableMenu />
+                <PromptBox className="gap-1" />
               </div>
-            </form>
-            <Toaster />
-          </div>
-        </CardContent>
+              <Button variant="outline" disabled={isLoading}>
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                <LightningBoltIcon /> Generate
+              </Button>
+            </div>
+          </form>
+          <Toaster />
+        </div>
       </Card>
-    </>
+    </ScrollArea>
   );
 };
