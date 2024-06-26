@@ -9,8 +9,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
 import { Button } from "./ui/button";
-import { ChatBubbleIcon, ExitIcon, HomeIcon, ImageIcon, PersonIcon, StopwatchIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { HomeIcon, ImageIcon, LogOutIcon, MessageSquareIcon, TimerIcon, UserCircle2Icon } from "lucide-react";
 
 const highlightedClassName = " bg-primary ";
 
@@ -31,7 +31,7 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
       return (
         <div className="h-nav-bar bg-card-solid space-x-[17px] flex flex-none flex-row pt-[26px] pl-8 pr-16">
             <Link href = "/home" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className={"w-[48px] " + highlightedClassName}>
+                <Button variant="navbar" size="navbar-square" className={highlightedClassName}>
                     <Image src="/logo.svg" alt="Hammer" width={36} height={36} />
                 </Button>
             </Link>
@@ -56,7 +56,7 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/chat" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "chat" ? highlightedClassName : "")}>
-                    <ChatBubbleIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <MessageSquareIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Chat
                 </Button>
             </Link>
@@ -68,19 +68,19 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/image-library" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "image-library" ? highlightedClassName : "")}>
-                    <StopwatchIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <TimerIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Library
                 </Button>
             </Link>
             <Link href = "/account" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "account" ? highlightedClassName : "")}>
-                    <PersonIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <UserCircle2Icon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Account
                 </Button>
             </Link>
             <Link href = "/" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" onClick={handleLogOut}>
-                    <ExitIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <LogOutIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Log Out
                 </Button>
             </Link>

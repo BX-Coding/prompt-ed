@@ -106,6 +106,7 @@ module.exports = {
       },
       width: {
         'nav-bar-button': '131.5px',
+        'nav-bar-button-square': '48px',
         '150': '37.5rem',
         'input': '27px',
         '13': '3.25rem',

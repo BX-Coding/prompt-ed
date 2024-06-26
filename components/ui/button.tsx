@@ -29,6 +29,7 @@ const buttonVariants = cva(
         lg: "h-9 rounded-md px-4 text-base",
         xl: "h-11 rounded-md px-5 text-xl font-semibold",
         navbar: "w-nav-bar-button h-nav-bar-button rounded-[5px] text-nav-bar font-medium",
+        "navbar-square": "w-nav-bar-button-square h-nav-bar-button rounded-[5px] text-nav-bar font-medium",
         icon: "h-input w-input",
       },
     },
