@@ -37,7 +37,7 @@ export default function Home() {
                       Image History
                   </p>
                 </div>
-                <ScrollArea className="max-h-[calc(100vh-342px)] w-full px-4">
+                <ScrollArea type="auto" className="max-h-[calc(100vh-342px)] w-full px-4">
                   <div className="h-[92px] w-full border-b border-primary">
                     <p className="text-[15px] text-primary">
                       June 3
