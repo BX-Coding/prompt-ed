@@ -118,7 +118,7 @@ export default function Home() {
                 </ScrollArea>
               </>},
             ]} defaultValue="Image History" />
-          <div className="flex flex-col items-center w-full p-12">
+          <div className="flex flex-col items-center w-full px-12 py-6">
             <ImageGeneration />
           </div>
         </div>
