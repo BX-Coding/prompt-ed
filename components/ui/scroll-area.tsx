@@ -45,7 +45,7 @@ const ScrollBar = React.forwardRef<
       colorScheme === "blue" &&
         "bg-[rgba(69,142,222,0.4)]",
       colorScheme === "gray" &&
-        "bg-[rgba(69,142,222,0.4)]",
+        "bg-[rgb(44,44,44)]",
       orientation === "vertical" &&
         "h-full w-2 border-l border-l-transparent",
       orientation === "horizontal" &&
@@ -56,7 +56,7 @@ const ScrollBar = React.forwardRef<
   >
     <ScrollAreaPrimitive.ScrollAreaThumb className={cn("relative flex-1 rounded-full",
       colorScheme === "blue" && "bg-[rgba(69,142,222,0.8)]",
-      colorScheme === "gray" && "bg-[rgba(69,142,222,0.8)]")} />
+      colorScheme === "gray" && "bg-[rgb(107,107,107)]")} />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ))
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
