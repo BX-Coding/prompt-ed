@@ -170,7 +170,7 @@ export const ImageGeneration: React.FC = ({}) => {
                 <BuildableMenu />
                 <PromptBox className="gap-1" />
               </div>
-              <Button variant="outline" disabled={isLoading}>
+              <Button variant="outline" className="self-end" disabled={isLoading}>
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
