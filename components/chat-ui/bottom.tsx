@@ -24,7 +24,7 @@ interface ChatHistoryMessage {
  * Use prompt parameter as the user's input. Leave ai to true but assign
  * message to the desired AI content
  */
-export default function ChatBottombar({
+export default function ChatBottomBar({
   sendMessage,
   messages,
   errorLastPrompt
@@ -94,7 +94,8 @@ export default function ChatBottombar({
         onChange={(e) => handleInputChange(e)}
         name="message"
         placeholder="Aa"
-        className=" h-9 w-full flex items-center resize-none overflow-hidden text-foreground"
+        className="items-center resize-none overflow-hidden"
+        inputSize="xl"
       ></Input>
 
       {message.trim() && !waiting ? (

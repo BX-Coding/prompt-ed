@@ -57,14 +57,14 @@ export function Chat({ date }: ChatProps) {
   };
 
   return (
-      <div className="h-screen flex flex-col items-center justify-between w-full max-h-128">
+      <div className="h-full flex flex-col items-center justify-between w-full">
         <ChatBody
             messages={messagesState}
             sendMessage={sendMessage}
             date = {date}
             errorLastPrompt = {errorLastPrompt}
         />
-        <div className="w-screen flex justify-center">
+        <div className="w-full flex justify-center">
             <Button className="max-w-10 mr-10 mb-5" onClick={onSave}>Save Chat</Button>
             <Button className="max-w-10 mb-5" onClick={onClear}>Clear</Button>
         </div>
