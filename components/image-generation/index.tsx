@@ -87,6 +87,12 @@ export const ImageGeneration: React.FC = ({}) => {
     }
   }
 
+  async function clearHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
+
+    resetPrompt();
+  }
+
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
   const handleSaveFirebase = () => {
     //save data to firebase
@@ -176,6 +182,12 @@ export const ImageGeneration: React.FC = ({}) => {
                   <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
                 ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
                 Generate
+              </Button>
+              <Button variant="outline" className="self-end" onClick={clearHandler} disabled={isLoading}>
+                {isLoading ? (
+                  <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
+                ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
+                Reset
               </Button>
             </div>
           </form>
