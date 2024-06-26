@@ -41,7 +41,7 @@ export const UITestingGround: React.FC = ({}) => {
             <div className="flex flex-initial flex-col items-center bg-primary-foreground text-primary">
                 <TabbedSidebar tabs={[
                     {name: "Lesson 1", content:
-                        <ScrollArea className="h-[calc(100vh-400px)]">
+                        <ScrollArea type="auto" colorScheme="blue" className="h-[calc(100vh-400px)]">
                             <p className="text-xl font-bold">
                                 Welcome to Neural Kingdom
                             </p>
