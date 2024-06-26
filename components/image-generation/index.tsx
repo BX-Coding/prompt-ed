@@ -172,10 +172,10 @@ export const ImageGeneration: React.FC = ({}) => {
                 <PromptBox className="gap-1" />
               </div>
               <Button variant="outline" className="self-end" disabled={isLoading}>
-                {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <LightningBoltIcon /> Generate
+                {isLoading ? (
+                  <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
+                ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
+                Generate
               </Button>
             </div>
           </form>
