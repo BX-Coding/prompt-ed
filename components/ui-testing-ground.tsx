@@ -37,7 +37,7 @@ export const UITestingGround: React.FC = ({}) => {
     return (
         <>
         <div className="flex flex-1 flex-row justify-start bg-[#F7F7F7]">
-            <div className="flex flex-initial flex-col items-center w-150 bg-primary-foreground text-primary pt-4">
+            <div className="flex flex-initial flex-col items-center bg-primary-foreground text-primary pt-4">
                 <TabbedSidebar tabs={[
                     {name: "Lesson 1", content:
                         <p className="text-xl font-bold">
