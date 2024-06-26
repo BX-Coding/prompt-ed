@@ -60,12 +60,13 @@ export default function ChatBottomBar({
   };
 
   const handleSend = async () => {
-    if (message.trim()) {
+    const message_ref = message;
+    if (message_ref.trim()) {
       setWaiting(true);
-      //do AI stuff
-      await generateAIMessage(message);
-      setWaiting(false);
       setMessage("");
+      //do AI stuff
+      await generateAIMessage(message_ref);
+      setWaiting(false);
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -85,7 +86,7 @@ export default function ChatBottomBar({
   };
 
   return (
-    <div className="p-2 flex justify-between w-full items-center gap-2">
+    <div className="flex justify-between w-full items-center gap-2">
       <Input
         autoComplete="off"
         value={message}
@@ -93,7 +94,7 @@ export default function ChatBottomBar({
         onKeyDown={(e) => handleKeyPress(e)}
         onChange={(e) => handleInputChange(e)}
         name="message"
-        placeholder="Aa"
+        placeholder="Type your message here..."
         className="items-center resize-none overflow-hidden"
         inputSize="xl"
       ></Input>

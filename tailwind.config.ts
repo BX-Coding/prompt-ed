@@ -22,6 +22,7 @@ module.exports = {
       sm: ['11px', '20px'],
       base: ['16px', '24px'],
       tabs: ['17px', '26px'],
+      chat: ['18px', '25px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
       'title': ['26px', '30px'],
@@ -78,6 +79,7 @@ module.exports = {
         },
         text: {
           't2': "var(--text-t2)",
+          'p1': "var(--text-p1)",
         },
       },
       borderRadius: {

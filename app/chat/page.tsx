@@ -76,11 +76,11 @@ export default function Home() {
         <NavBar navLocation="chat"/>
         <div className="flex flex-row h-[calc(100vh-90px)]">
           <TabbedSidebar noCard={true} tabs={[
-            {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
+            {name: "Chat History", content: // This content is only here as a reference for what this should look like once actually implemented
               <>
                 <div className="w-full px-4 pt-[30px]">
                   <p className="text-title-xl font-bold text-white">
-                      Image History
+                      Chat History
                   </p>
                 </div>
                 <ScrollArea type="auto" className="max-h-[calc(100vh-342px)] w-full px-4">
@@ -163,7 +163,7 @@ export default function Home() {
                   </div>
                 </ScrollArea>
               </>},
-            ]} defaultValue="Image History" />
+            ]} defaultValue="Chat History" />
           <div className="flex flex-col items-center w-full px-12 py-6">
             <Card className="w-full h-full">
               {inDate === '' ? <Chat date={new Date().toString()}/> : <div key={messages.length}><Chat date={inDate} messages={messages}/></div>}
