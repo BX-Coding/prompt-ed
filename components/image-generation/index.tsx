@@ -166,9 +166,9 @@ export const ImageGeneration: React.FC = ({}) => {
           <div className="p-4 w-full bg-card-solid rounded-lg">
             <form className="w-full" onSubmit={submitHandler}>
               <div className="flex items-start h-full w-full flex-col space-y-2">
-                <div className="flex flex-row w-full space-x-1 items-end">
+                <div className="flex flex-row w-full space-x-1">
                   <BuildableMenu />
-                  <PromptBox className="space-x-1 space-y-1 items-end" />
+                  <PromptBox className="gap-1" />
                 </div>
                 <Button variant="outline" disabled={isLoading}>
                   {isLoading && (
