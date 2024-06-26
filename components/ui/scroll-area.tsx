@@ -5,10 +5,15 @@ import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
 import { cn } from "@/lib/utils"
 
+export interface ScrollAreaProps
+  extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> {
+    colorScheme? : "blue" | "gray"
+}
+
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
+  ScrollAreaProps
+>(({ className, children, colorScheme = "gray", ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
     className={cn("relative overflow-hidden", className)}
@@ -17,21 +22,30 @@ const ScrollArea = React.forwardRef<
     <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
       {children}
     </ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
+    <ScrollBar colorScheme={colorScheme} />
     <ScrollAreaPrimitive.Corner />
   </ScrollAreaPrimitive.Root>
 ))
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
+export interface ScrollBarProps
+  extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> {
+    colorScheme : "blue" | "gray"
+}
+
 const ScrollBar = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
->(({ className, orientation = "vertical", ...props }, ref) => (
+  ScrollBarProps
+>(({ className, orientation = "vertical", colorScheme, ...props }, ref) => (
   <ScrollAreaPrimitive.ScrollAreaScrollbar
     ref={ref}
     orientation={orientation}
     className={cn(
-      "flex touch-none select-none transition-colors bg-[rgba(69,142,222,0.4)] rounded-full",
+      "flex touch-none select-none transition-colors rounded-full",
+      colorScheme === "blue" &&
+        "bg-[rgba(69,142,222,0.4)]",
+      colorScheme === "gray" &&
+        "bg-[rgba(69,142,222,0.4)]",
       orientation === "vertical" &&
         "h-full w-2 border-l border-l-transparent",
       orientation === "horizontal" &&
@@ -40,7 +54,9 @@ const ScrollBar = React.forwardRef<
     )}
     {...props}
   >
-    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-[rgba(69,142,222,0.8)]" />
+    <ScrollAreaPrimitive.ScrollAreaThumb className={cn("relative flex-1 rounded-full",
+      colorScheme === "blue" && "bg-[rgba(69,142,222,0.8)]",
+      colorScheme === "gray" && "bg-[rgba(69,142,222,0.8)]")} />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ))
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
