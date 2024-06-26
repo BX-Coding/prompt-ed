@@ -154,7 +154,7 @@ export const ImageGeneration: React.FC = ({}) => {
   }
 
   return (
-    <ScrollArea className="h-full w-full">
+    <ScrollArea colorScheme="blue" className="h-full w-full">
       <Card className="h-full w-full px-6 py-12">
         <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-4 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
           {res}

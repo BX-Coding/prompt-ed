@@ -31,88 +31,92 @@ export default function Home() {
         <div className="flex flex-row h-[calc(100vh-90px)]">
           <TabbedSidebar noCard={true} tabs={[
             {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
-              <ScrollArea className="max-h-[calc(100vh-235px)] w-full px-4 py-[30px]">
-                <p className="text-title-xl font-bold text-white">
-                    Image History
-                </p>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
+              <>
+                <div className="w-full px-4 pt-[30px]">
+                  <p className="text-title-xl font-bold text-white">
+                      Image History
                   </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
-                    </p>
-                    <Button variant="accent"></Button>
-                  </div>
                 </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                <ScrollArea className="max-h-[calc(100vh-342px)] w-full px-4">
+                  <div className="h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                  <p className="text-[15px] text-primary">
-                    June 3
-                  </p>
-                  <div className="flex flex-row py-[18px]">
-                    <p className="flex-1 text-lg text-white">
-                      Title of prompt created
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
                     </p>
-                    <Button variant="accent"></Button>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
                   </div>
-                </div>
-              </ScrollArea>},
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                </ScrollArea>
+              </>},
             ]} defaultValue="Image History" />
           <div className="flex flex-col items-center w-full p-12">
             <ImageGeneration />
