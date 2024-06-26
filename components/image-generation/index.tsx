@@ -21,7 +21,7 @@ import { usePrompt } from "@/hooks/usePrompt";
 import { log } from "util";
 import { ModeChangeAlert } from "./mode-change-alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Card } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 
 type GenerateImageResponse = {
   created: Date;
@@ -44,11 +44,6 @@ export const ImageGeneration: React.FC = ({}) => {
   const [imageURL, setImageURL] = useState("");
   const [res, setRes] = useState<JSX.Element>(<></>);
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
-
-  const handleBlockClick = () => {
-    resetPrompt();
-    addTextBlock(prompt);
-  };
 
   const generateImage = httpsCallable(functions, "generateImageCall");
 
@@ -74,21 +69,21 @@ export const ImageGeneration: React.FC = ({}) => {
       const url = URL.createObjectURL(imageblob);
 
       setImageURL(url);
-      setRes(<img alt={prompt} src={url} className="mt-20" />);
+      setRes(<img alt={prompt} src={url} className="rounded-lg w-full" />);
 
       setIsLoading(false);
     } catch (e: any) {
       console.log(e.code);
       if (e.code === "functions/permission-denied") {
         setRes(
-          <div className="mt-20">
+          <div className="rounded-lg">
             Negative flags detected in your prompt or image, enter another
             prompt and try again.
           </div>
         );
       } else {
         setRes(
-          <div className="mt-20">
+          <div className="rounded-lg">
             Something went wrong with our request, please try again.
           </div>
         );
@@ -152,47 +147,47 @@ export const ImageGeneration: React.FC = ({}) => {
   let saveLocalBttn, saveFirebaseBttn;
   if (imageURL) {
     saveFirebaseBttn = (
-      <Button onClick={handleSaveFirebase} className="mt-20 mr-10">
+      <Button onClick={handleSaveFirebase} variant="accent">
         Save to Prompt-Ed
       </Button>
     );
     saveLocalBttn = (
-      <Button onClick={handleSaveLocal} className="mt-20">
+      <Button onClick={handleSaveLocal} variant="accent">
         Save to Computer
       </Button>
     );
   }
 
-  //handleBlockClick();
-
   return (
     <>
-      <div className="flex flex-col items-center space-y-10 h-full w-full p-12">
-          <form className="h-full w-full" onSubmit={submitHandler}>
-            <Card className="h-full w-full px-6 py-12">
-              <div className="flex items-center h-full w-full flex-col">
-                <div className="w-full flex flex-col items-center justify-center">
-                  <div className="flex flex-row space-x-1">
-                    <BuildableMenu />
-                    <PromptBox className="space-x-1 space-y-1 items-end" />
-                  </div>
+      <Card className="h-full w-full overflow-y-scroll">
+        <CardContent className="px-6 py-12">
+          <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-4 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
+            {res}
+            <div className="flex flex-row w-full justify-end space-x-2">
+              {saveFirebaseBttn}
+              {saveLocalBttn}
+            </div>
+          </div>
+          <div className="p-4 w-full bg-card-solid rounded-lg">
+            <form className="w-full" onSubmit={submitHandler}>
+              <div className="flex items-start h-full w-full flex-col space-y-2">
+                <div className="flex flex-row w-full space-x-1 items-end">
+                  <BuildableMenu />
+                  <PromptBox className="space-x-1 space-y-1 items-end" />
                 </div>
-                <Button disabled={isLoading}>
+                <Button variant="outline" disabled={isLoading}>
                   {isLoading && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   <LightningBoltIcon /> Generate
                 </Button>
               </div>
-            </Card>
-          </form>
-        {res}
-        <div className="flex flex-row justify-between mt-10">
-          {saveFirebaseBttn}
-          {saveLocalBttn}
-        </div>
-        <Toaster />
-      </div>
+            </form>
+            <Toaster />
+          </div>
+        </CardContent>
+      </Card>
     </>
   );
 };

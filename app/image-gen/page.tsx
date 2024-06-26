@@ -27,7 +27,7 @@ export default function Home() {
     return (
       <div className="flex flex-col h-screen">
         <NavBar navLocation="images"/>
-        <div className="flex flex-row h-full">
+        <div className="flex flex-row h-[calc(100vh-90px)]">
           <TabbedSidebar noCard={true} tabs={[
             {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
               <div className="overflow-y-auto scrollbar scrollbar-thumb-gray-700 max-h-[calc(100vh-235px)] w-full px-4 py-[30px]">
@@ -113,7 +113,7 @@ export default function Home() {
                 </div>
               </div>},
             ]} defaultValue="Image History" />
-          <div className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-full p-12">
             <ImageGeneration />
           </div>
         </div>
