@@ -154,8 +154,9 @@ export const ImageGeneration: React.FC = ({}) => {
   }
 
   return (
-    <ScrollArea colorScheme="blue" className="h-full w-full">
-      <Card className="h-full w-full px-6 py-12">
+    <Card className="h-full w-full">
+      <ScrollArea colorScheme="blue" className="h-full w-full px-6">
+        <div className="h-12 w-full" />
         <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-4 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
           {res}
           <div className="flex flex-row w-full justify-end space-x-2">
@@ -180,7 +181,8 @@ export const ImageGeneration: React.FC = ({}) => {
           </form>
           <Toaster />
         </div>
-      </Card>
-    </ScrollArea>
+        <div className="h-12 w-full" />
+      </ScrollArea>
+    </Card>
   );
 };
