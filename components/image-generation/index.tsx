@@ -5,22 +5,18 @@ import * as React from "react";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { auth, storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
 import { ref, uploadBytes } from "firebase/storage";
-import Image from "next/image";
 
-import axios from "axios";
-import { Toggle } from "../ui/toggle";
 import { PromptBox } from "../prompt-box";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { BuildableMenu } from "../buildable-menu";
 import { usePrompt } from "@/hooks/usePrompt";
-import { log } from "util";
-import { ModeChangeAlert } from "./mode-change-alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Card, CardContent } from "../ui/card";
+import { DownloadIcon, RotateCcwIcon, StarIcon } from "lucide-react";
+import { ScrollArea } from "../ui/scroll-area";
 
 type GenerateImageResponse = {
   created: Date;
@@ -41,20 +37,8 @@ export const ImageGeneration: React.FC = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [blockMode, setBlockMode] = useState(false);
   const [res, setRes] = useState<JSX.Element>(<></>);
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
-
-  const handleTextClick = () => {
-    setPrompt(constructPrompt());
-    setBlockMode(false);
-  };
-
-  const handleBlockClick = () => {
-    resetPrompt();
-    addTextBlock(prompt);
-    setBlockMode(true);
-  };
 
   const generateImage = httpsCallable(functions, "generateImageCall");
 
@@ -65,7 +49,7 @@ export const ImageGeneration: React.FC = ({}) => {
     setIsLoading(true);
 
     try {
-      const finalPrompt = blockMode ? constructPrompt() : prompt;
+      const finalPrompt = constructPrompt();
       const response = await generateImage({ prompt: finalPrompt });
       const data = response.data as GenerateImageResponse;
       console.log(response);
@@ -80,27 +64,37 @@ export const ImageGeneration: React.FC = ({}) => {
       const url = URL.createObjectURL(imageblob);
 
       setImageURL(url);
-      setRes(<img alt={prompt} src={url} className="mt-20" />);
+      setRes(<img alt={prompt} src={url} className="rounded-lg w-full" />);
 
       setIsLoading(false);
     } catch (e: any) {
       console.log(e.code);
       if (e.code === "functions/permission-denied") {
         setRes(
-          <div className="mt-20">
+          <div className="rounded-lg">
             Negative flags detected in your prompt or image, enter another
             prompt and try again.
           </div>
         );
       } else {
         setRes(
-          <div className="mt-20">
+          <div className="rounded-lg">
             Something went wrong with our request, please try again.
           </div>
         );
       }
       setIsLoading(false);
     }
+  }
+
+  async function clearHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
+
+    setRes(<></>);
+    setImageURL("");
+
+    resetPrompt();
+    addTextBlock(prompt);
   }
 
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
@@ -158,73 +152,53 @@ export const ImageGeneration: React.FC = ({}) => {
   let saveLocalBttn, saveFirebaseBttn;
   if (imageURL) {
     saveFirebaseBttn = (
-      <Button onClick={handleSaveFirebase} className="mt-20 mr-10">
-        Save to Prompt-Ed
+      <Button onClick={handleSaveFirebase} variant="accent" className="bg-transparent px-2">
+        <StarIcon color="var(--accent)" />
       </Button>
     );
     saveLocalBttn = (
-      <Button onClick={handleSaveLocal} className="mt-20">
-        Save to Computer
+      <Button onClick={handleSaveLocal} variant="accent" className="bg-transparent px-2">
+        <DownloadIcon color="var(--accent)" />
       </Button>
     );
   }
+
   return (
-    <>
-      <div className="flex flex-col items-center space-y-10 w-full px-20">
-        <Tabs className="w-full" value={blockMode ? "block" : "text"}>
+    <Card className="h-full w-full">
+      <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6">
+        <div className="h-12 w-full" />
+        <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-5 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
+          {res}
+          <div className="flex flex-row w-full justify-end space-x-2">
+            {saveFirebaseBttn}
+            {saveLocalBttn}
+          </div>
+        </div>
+        <div className="p-4 w-full bg-card-solid rounded-lg">
           <form className="w-full" onSubmit={submitHandler}>
-            <div className="flex items-center w-full flex-col">
-              <TabsList className="grid w-1/2 grid-cols-2">
-                <ModeChangeAlert onDeny={() => {}} onConfirm={handleTextClick}>
-                  <TabsTrigger
-                    className="pointer-events-none w-full"
-                    value="text"
-                  >
-                    Text
-                  </TabsTrigger>
-                </ModeChangeAlert>
-                <TabsTrigger onClick={handleBlockClick} value="block">
-                  Block
-                </TabsTrigger>
-              </TabsList>
-              <div className="h-36 flex flex-col items-center justify-center">
-                <TabsContent value="text">
-                  <Input
-                    id="prompt"
-                    placeholder="Your prmpt here..."
-                    defaultValue={prompt}
-                    type="text"
-                    autoCapitalize="none"
-                    autoComplete="on"
-                    autoCorrect="on"
-                    onChange={(e) => setPrompt(e.target.value)}
-                    disabled={isLoading}
-                    className="mr-5 w-96"
-                  />
-                </TabsContent>
-                <TabsContent value="block">
-                  <div className="flex flex-row">
-                    <BuildableMenu />
-                    <PromptBox className="space-x-1 p-5" />
-                  </div>
-                </TabsContent>
+            <div className="flex items-start h-full w-full flex-col space-y-2">
+              <div className="flex flex-row w-full space-x-1">
+                <BuildableMenu />
+                <PromptBox className="gap-1" />
               </div>
-              <Button disabled={isLoading}>
-                {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <LightningBoltIcon /> Generate
-              </Button>
+              <div className="flex flex-row self-end space-x-1">
+                <Button variant="outline" className="flex self-end" disabled={isLoading}>
+                  {isLoading ? (
+                    <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
+                  ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
+                  Generate
+                </Button>
+                <Button variant="outline" className="flex self-end" onClick={clearHandler} disabled={isLoading}>
+                  <RotateCcwIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />
+                  Reset
+                </Button>
+              </div>
             </div>
           </form>
-        </Tabs>
-        {res}
-        <div className="flex flex-row justify-between mt-10">
-          {saveFirebaseBttn}
-          {saveLocalBttn}
+          <Toaster />
         </div>
-        <Toaster />
-      </div>
-    </>
+        <div className="h-12 w-full" />
+      </ScrollArea>
+    </Card>
   );
 };
