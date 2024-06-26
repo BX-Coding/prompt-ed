@@ -22,6 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "./ui/select"
+import { ScrollArea } from "./ui/scroll-area"
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -37,12 +38,17 @@ export const UITestingGround: React.FC = ({}) => {
     return (
         <>
         <div className="flex flex-1 flex-row justify-start bg-[#F7F7F7]">
-            <div className="flex flex-initial flex-col items-center bg-primary-foreground text-primary pt-4">
+            <div className="flex flex-initial flex-col items-center bg-primary-foreground text-primary">
                 <TabbedSidebar tabs={[
                     {name: "Lesson 1", content:
-                        <p className="text-xl font-bold">
-                            Welcome to Neural Kingdom
-                        </p>},
+                        <ScrollArea className="h-[calc(100vh-400px)]">
+                            <p className="text-xl font-bold">
+                                Welcome to Neural Kingdom
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt consequat turpis. Sed quis vehicula metus. Nulla varius tellus sed bibendum rutrum. Vestibulum ligula mauris, efficitur et elit eu, malesuada aliquam nisi. In eu vestibulum justo, sit amet posuere lacus. Suspendisse ac congue purus. Nullam vel vehicula arcu, ac porta mauris. Donec suscipit turpis ex, eu congue justo aliquam in. Etiam tellus nibh, vestibulum sed neque sit amet, elementum ornare leo. Nam eu porta nisi, bibendum convallis ligula.<p />Aliquam justo neque, consectetur nec eros vel, vestibulum ullamcorper leo. Praesent dignissim consequat consectetur. Maecenas sollicitudin enim tellus, quis tempor risus dapibus ut. Nullam iaculis nulla sit amet erat facilisis, in varius mi vehicula. Aliquam erat volutpat. Nam lacinia cursus enim, et convallis ipsum laoreet ut. Vivamus leo ex, pretium vitae nisi eget, rutrum pretium neque.<p />Nunc vel ligula quis enim dictum tempor vel id ante. Aliquam dignissim arcu lorem, ac fringilla tellus tristique quis. Ut at vehicula sapien. Vestibulum molestie augue non nisl bibendum ullamcorper id ac nisi. Maecenas ut faucibus ligula. Phasellus at hendrerit mauris. Donec id interdum velit, a maximus massa. Nullam volutpat eget orci ut lobortis. Fusce luctus porta leo ut commodo. Vivamus et arcu vehicula, lacinia tortor nec, pulvinar odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum fermentum diam vitae quam sodales cursus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, gravida vitae vestibulum nec, cursus quis ex.<p />Cras blandit mattis dignissim. Nam sed rhoncus tellus. In eget sagittis sapien. Nullam vitae arcu aliquet odio sodales dignissim. Etiam sit amet leo consequat, convallis mi sed, convallis orci. Nullam efficitur posuere mi, accumsan ullamcorper ante tristique sit amet. Nullam sit amet viverra tortor. Mauris vulputate metus vitae odio dictum auctor. Nam congue arcu id diam dictum, tristique porttitor lacus maximus. Sed ultrices libero at nunc laoreet porta. Ut venenatis consectetur elit, a volutpat augue semper ac. Aenean aliquam condimentum nunc, et congue nibh.<p />Nam semper aliquam euismod. Pellentesque ornare laoreet dolor, nec dignissim justo porttitor vel. Nam vestibulum lectus eget nunc feugiat, scelerisque pharetra dui rutrum. Nunc facilisis est at diam bibendum sagittis. Sed porta cursus vestibulum. Duis vel dolor sit amet eros accumsan pulvinar at non nunc. Aliquam erat volutpat. Nulla at porta ante.
+                            </p>
+                        </ScrollArea>},
                     {name: "Lesson 2", content:
                         <p className="text-xl font-bold">
                             Welcome to Neural Kingdom
