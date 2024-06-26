@@ -15,7 +15,7 @@ import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { BuildableMenu } from "../buildable-menu";
 import { usePrompt } from "@/hooks/usePrompt";
 import { Card, CardContent } from "../ui/card";
-import { DownloadIcon, StarIcon } from "lucide-react";
+import { DownloadIcon, RotateCcwIcon, StarIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 
 type GenerateImageResponse = {
@@ -90,7 +90,11 @@ export const ImageGeneration: React.FC = ({}) => {
   async function clearHandler(event: React.SyntheticEvent) {
     event.preventDefault();
 
+    setRes(<></>);
+    setImageURL("");
+
     resetPrompt();
+    addTextBlock(prompt);
   }
 
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
@@ -177,18 +181,18 @@ export const ImageGeneration: React.FC = ({}) => {
                 <BuildableMenu />
                 <PromptBox className="gap-1" />
               </div>
-              <Button variant="outline" className="self-end" disabled={isLoading}>
-                {isLoading ? (
-                  <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
-                ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
-                Generate
-              </Button>
-              <Button variant="outline" className="self-end" onClick={clearHandler} disabled={isLoading}>
-                {isLoading ? (
-                  <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
-                ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
-                Reset
-              </Button>
+              <div className="flex flex-row self-end space-x-1">
+                <Button variant="outline" className="flex self-end" disabled={isLoading}>
+                  {isLoading ? (
+                    <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
+                  ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
+                  Generate
+                </Button>
+                <Button variant="outline" className="flex self-end" onClick={clearHandler} disabled={isLoading}>
+                  <RotateCcwIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />
+                  Reset
+                </Button>
+              </div>
             </div>
           </form>
           <Toaster />
