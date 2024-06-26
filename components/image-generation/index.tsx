@@ -5,23 +5,17 @@ import * as React from "react";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { auth, storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
 import { ref, uploadBytes } from "firebase/storage";
-import Image from "next/image";
 
-import axios from "axios";
-import { Toggle } from "../ui/toggle";
 import { PromptBox } from "../prompt-box";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { BuildableMenu } from "../buildable-menu";
 import { usePrompt } from "@/hooks/usePrompt";
-import { log } from "util";
-import { ModeChangeAlert } from "./mode-change-alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Card, CardContent } from "../ui/card";
+import { DownloadIcon, StarIcon } from "lucide-react";
 
 type GenerateImageResponse = {
   created: Date;
@@ -147,13 +141,13 @@ export const ImageGeneration: React.FC = ({}) => {
   let saveLocalBttn, saveFirebaseBttn;
   if (imageURL) {
     saveFirebaseBttn = (
-      <Button onClick={handleSaveFirebase} variant="accent">
-        Save to Prompt-Ed
+      <Button onClick={handleSaveFirebase} variant="accent" className="bg-transparent px-2">
+        <StarIcon color="var(--accent)" />
       </Button>
     );
     saveLocalBttn = (
-      <Button onClick={handleSaveLocal} variant="accent">
-        Save to Computer
+      <Button onClick={handleSaveLocal} variant="accent" className="bg-transparent px-2">
+        <DownloadIcon color="var(--accent)" />
       </Button>
     );
   }
