@@ -152,12 +152,12 @@ export const ImageGeneration: React.FC = ({}) => {
   let saveLocalBttn, saveFirebaseBttn;
   if (imageURL) {
     saveFirebaseBttn = (
-      <Button onClick={handleSaveFirebase} variant="accent" className="bg-transparent px-2">
+      <Button onClick={handleSaveFirebase} variant="accent" iconPosition="full" className="bg-transparent">
         <StarIcon color="var(--accent)" />
       </Button>
     );
     saveLocalBttn = (
-      <Button onClick={handleSaveLocal} variant="accent" className="bg-transparent px-2">
+      <Button onClick={handleSaveLocal} variant="accent" iconPosition="full" className="bg-transparent">
         <DownloadIcon color="var(--accent)" />
       </Button>
     );
@@ -182,14 +182,14 @@ export const ImageGeneration: React.FC = ({}) => {
                 <PromptBox className="gap-1" />
               </div>
               <div className="flex flex-row self-end space-x-1">
-                <Button variant="outline" className="flex self-end" disabled={isLoading}>
+                <Button variant="outline" className="flex self-end" iconPosition="left" disabled={isLoading}>
                   {isLoading ? (
-                    <Icons.spinner className="ml-[-4px] mr-1 h-[15px] w-[15px] animate-spin" />
-                  ) : (<LightningBoltIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />)}
+                    <Icons.spinner className="h-[15px] w-[15px] animate-spin" />
+                  ) : (<LightningBoltIcon className="h-[15px] w-[15px]" />)}
                   Generate
                 </Button>
-                <Button variant="outline" className="flex self-end" onClick={clearHandler} disabled={isLoading}>
-                  <RotateCcwIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" />
+                <Button variant="outline" className="flex self-end" iconPosition="left" onClick={clearHandler} disabled={isLoading}>
+                  <RotateCcwIcon className="h-[15px] w-[15px]" />
                   Reset
                 </Button>
               </div>
