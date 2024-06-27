@@ -31,8 +31,8 @@ export function Chat({ date }: ChatProps) {
     console.log(pathName);
     console.log(messageArr);
     const dateStr = date.toString();
-    const docRef = await setDoc(doc(db, pathName, dateStr), {
-        messages: messageArr
+    await setDoc(doc(db, pathName, dateStr), {
+      messages: messageArr
     });
   }
 
