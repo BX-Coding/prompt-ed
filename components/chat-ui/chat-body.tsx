@@ -6,7 +6,8 @@ import EmbeddedMessage from "./embedded-message";
 import Script from "next/script";
 import { ScrollArea } from "../ui/scroll-area";
 import { Button } from "../ui/button";
-import { CopyIcon, PenSquareIcon, RepeatIcon, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
+import { ThumbsUpIcon, ThumbsDownIcon, EditIcon, CopyIcon, RegenerateIcon } from "../icons/prompt-ed-icons";
+
 import Image from "next/image";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
@@ -67,7 +68,7 @@ export function ChatBody({
   }
 
   return (
-    <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
+    <div className="w-full overflow-y-hidden overflow-x-hidden h-full flex flex-col">
       <Script src="https://scratchblocks.github.io/js/scratchblocks-v3.6.4-min.js"
         onLoad={()=>{
           setScratchBlocksReady(true)
@@ -77,7 +78,7 @@ export function ChatBody({
         <div className="h-9" />
         <div
           ref={messagesContainerRef}
-          className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-1 flex-col"
+          className="w-full overflow-y-hidden overflow-x-hidden h-full flex flex-1 flex-col"
         >
           <AnimatePresence>
             {messages?.map((message, index) => (
@@ -110,14 +111,14 @@ export function ChatBody({
                   <div className="flex flex-row w-full h-9 mb-4">
                     <Image width={36} height={36} alt="AI" src="/chat-ai-icon.svg" />
                     <div className="flex flex-1" />
-                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left" onClick={() => handleCopy(message)}><CopyIcon className="h-[15px] w-[15px]" color="var(--secondary)" />Copy</Button>
+                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left" onClick={() => handleCopy(message)}><CopyIcon className="h-[15px] w-[15px] text-secondary" />Copy</Button>
                   </div>
                   {messageContent(message)}
                   <div className="flex flex-row w-full mt-4 gap-3">
-                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left"><RepeatIcon className="h-[15px] w-[15px]" color="var(--secondary)" />Regenerate</Button>
+                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left"><RegenerateIcon className="h-[15px] w-[15px] text-secondary" />Regenerate</Button>
                     <div className="flex flex-1" />
-                    <Button variant="outline" iconPosition="full"><ThumbsDownIcon className="h-[20px] w-[20px]" color="var(--secondary)" /></Button>
-                    <Button variant="outline" iconPosition="full"><ThumbsUpIcon className="h-[20px] w-[20px]" color="var(--secondary)" /></Button>
+                    <Button variant="outline" iconPosition="full"><ThumbsDownIcon className="h-[20px] w-[20px] text-secondary" /></Button>
+                    <Button variant="outline" iconPosition="full"><ThumbsUpIcon className="h-[20px] w-[20px] text-secondary" /></Button>
                   </div>
                 </div>
                    : 
@@ -127,7 +128,7 @@ export function ChatBody({
                   </div>
                   {messageContent(message)}
                   <div className="flex flex-1" />
-                  <Button variant="accent"><PenSquareIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--primary)" /></Button>
+                  <Button variant="accent" className="w-7 h-7"><EditIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--primary)" /></Button>
                 </div>}
               </div>
               </motion.div>

@@ -75,7 +75,7 @@
  
 @layer base {
   * {
-    @apply border-border font-roboto text-foreground;
+    @apply border-border font-roboto;
   }
   body {
     @apply bg-background;

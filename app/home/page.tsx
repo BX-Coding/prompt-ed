@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ImageIcon, ChatBubbleIcon, BackpackIcon } from "@radix-ui/react-icons";
+import { ChatBubbleIcon } from "@radix-ui/react-icons";
+import { MagicIcon, FileIcon } from "@/components/icons/prompt-ed-icons";
 import Link from "next/link";
 
 export default function Home() {
@@ -51,7 +52,7 @@ export default function Home() {
               <Link href="/image-gen">
                 <Button variant="outline" size="xl" className="w-[160px] h-[132px] rounded-[15px] bg-primary-foreground border-secondary">
                   <div className="text-primary text-title font-normal grid justify-items-center gap-1">
-                    <ImageIcon className="w-12 h-12" color={"var(--accent)"} />
+                    <MagicIcon className="w-12 h-12" color={"var(--accent)"} />
                     Create
                   </div>
                 </Button>
@@ -67,7 +68,7 @@ export default function Home() {
               <Link href="/library">
                 <Button variant="outline" size="xl" className="w-[160px] h-[132px] rounded-[15px] bg-primary-foreground border-secondary">
                   <div className="text-primary text-title font-normal grid justify-items-center gap-1">
-                    <BackpackIcon className="w-12 h-12" color={"var(--accent)"} />
+                    <FileIcon className="w-12 h-12" color={"var(--accent)"} />
                     Library
                   </div>
                 </Button>
