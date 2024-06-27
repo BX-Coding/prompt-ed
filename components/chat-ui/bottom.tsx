@@ -90,7 +90,7 @@ export default function ChatBottomBar({
   };
 
   return (
-    <div className="flex justify-between w-full items-center gap-2">
+    <div className="flex justify-between w-full items-center gap-2 mb-8">
       <Input
         autoComplete="off"
         value={message}
@@ -125,10 +125,8 @@ export default function ChatBottomBar({
           )}
         ></Link>
       )}
-      <div className="flex">
-        <Button className="max-w-10 mr-10 mb-5" onClick={onSave}>Save Chat</Button>
-        <Button className="max-w-10 mb-5" onClick={onClear}>Clear</Button>
-        </div>
+      <Button onClick={onSave}>Save Chat</Button>
+      <Button onClick={onClear}>Clear</Button>
     </div>
   );
 }
