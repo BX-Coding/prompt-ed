@@ -110,14 +110,14 @@ export function ChatBody({
                   <div className="flex flex-row w-full h-9 mb-4">
                     <Image width={36} height={36} alt="AI" src="/chat-ai-icon.svg" />
                     <div className="flex flex-1" />
-                    <Button className="text-[13px] text-text-p1" variant="outline" onClick={() => handleCopy(message)}><CopyIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" color="var(--secondary)" />Copy</Button>
+                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left" onClick={() => handleCopy(message)}><CopyIcon className="h-[15px] w-[15px]" color="var(--secondary)" />Copy</Button>
                   </div>
                   {messageContent(message)}
                   <div className="flex flex-row w-full mt-4 gap-3">
-                    <Button className="text-[13px] text-text-p1" variant="outline"><RepeatIcon className="ml-[-4px] mr-1 h-[15px] w-[15px]" color="var(--secondary)" />Regenerate</Button>
+                    <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left"><RepeatIcon className="h-[15px] w-[15px]" color="var(--secondary)" />Regenerate</Button>
                     <div className="flex flex-1" />
-                    <Button variant="outline"><ThumbsDownIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--secondary)" /></Button>
-                    <Button variant="outline"><ThumbsUpIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--secondary)" /></Button>
+                    <Button variant="outline" iconPosition="full"><ThumbsDownIcon className="h-[20px] w-[20px]" color="var(--secondary)" /></Button>
+                    <Button variant="outline" iconPosition="full"><ThumbsUpIcon className="h-[20px] w-[20px]" color="var(--secondary)" /></Button>
                   </div>
                 </div>
                    : 
