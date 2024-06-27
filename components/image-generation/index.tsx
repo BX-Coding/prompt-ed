@@ -135,7 +135,7 @@ export const ImageGeneration: React.FC = ({}) => {
 
   //This will save image to Firebase storage as a Blob - UNTESTED
   async function saveToFirebase(blob: Blob, today: Date, ) {
-    const userImagePath = auth.currentUser?.email + "/" + formatDate(today) + ".png"
+    const userImagePath = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
     const storageRef = ref(storage, userImagePath);
     uploadBytes(storageRef, blob).then(() => {
       console.log("Uploaded a blob or file!");
@@ -152,7 +152,7 @@ export const ImageGeneration: React.FC = ({}) => {
       .then((blob) => {
         const today = new Date();
         const url = URL.createObjectURL(blob);
-        const userImageFileName = auth.currentUser?.email + "/" + formatDate(today) + ".png"
+        const userImageFileName = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
 
         const a = document.createElement("a");
         a.href = url;
