@@ -1,7 +1,7 @@
 import { SendHorizontal } from "lucide-react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { httpsCallable } from "firebase/functions";
@@ -12,6 +12,8 @@ interface ChatBottombarProps {
   messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
   errorLastPrompt: () => void;
+  onSave: () => void;
+  onClear: () => void;
 }
 
 interface ChatHistoryMessage {
@@ -24,10 +26,12 @@ interface ChatHistoryMessage {
  * Use prompt parameter as the user's input. Leave ai to true but assign
  * message to the desired AI content
  */
-export default function ChatBottombar({
+export default function ChatBottomBar({
   sendMessage,
   messages,
-  errorLastPrompt
+  errorLastPrompt,
+  onSave,
+  onClear
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
@@ -60,12 +64,13 @@ export default function ChatBottombar({
   };
 
   const handleSend = async () => {
-    if (message.trim()) {
+    const message_ref = message;
+    if (message_ref.trim()) {
       setWaiting(true);
-      //do AI stuff
-      await generateAIMessage(message);
-      setWaiting(false);
       setMessage("");
+      //do AI stuff
+      await generateAIMessage(message_ref);
+      setWaiting(false);
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -85,7 +90,7 @@ export default function ChatBottombar({
   };
 
   return (
-    <div className="p-2 flex justify-between w-full items-center gap-2">
+    <div className="flex justify-between w-full items-center gap-2 mb-8">
       <Input
         autoComplete="off"
         value={message}
@@ -93,8 +98,9 @@ export default function ChatBottombar({
         onKeyDown={(e) => handleKeyPress(e)}
         onChange={(e) => handleInputChange(e)}
         name="message"
-        placeholder="Aa"
-        className=" h-9 w-full flex items-center resize-none overflow-hidden text-foreground"
+        placeholder="Type your message here..."
+        className="items-center resize-none overflow-hidden"
+        inputSize="xl"
       ></Input>
 
       {message.trim() && !waiting ? (
@@ -119,6 +125,8 @@ export default function ChatBottombar({
           )}
         ></Link>
       )}
+      <Button onClick={onSave}>Save Chat</Button>
+      <Button onClick={onClear}>Clear</Button>
     </div>
   );
 }
