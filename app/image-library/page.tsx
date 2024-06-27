@@ -25,7 +25,7 @@ export default function Home() {
     } else {
         return (
         <div className="flex flex-col h-screen">
-            <NavBar navLocation="history"/>
+            <NavBar navLocation="image-library"/>
             <div className="flex flex-row w-screen">
             <Card className="w-full ml-5 mb-5 mr-5 h-max">
             <CardHeader>

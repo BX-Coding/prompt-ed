@@ -10,8 +10,8 @@ import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { LogOutIcon, MessageSquareIcon, UserCircle2Icon } from "lucide-react";
-import { HomeIcon, FileIcon, MagicIcon } from "./icons/prompt-ed-icons";
+import { LogOutIcon } from "lucide-react";
+import { HomeIcon, FileIcon, MagicIcon, SettingsIcon, ChatBubbleIcon } from "./icons/prompt-ed-icons";
 
 const highlightedClassName = " bg-primary ";
 
@@ -57,7 +57,7 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/chat" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "chat" ? highlightedClassName : "")}>
-                    <MessageSquareIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <ChatBubbleIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Chat
                 </Button>
             </Link>
@@ -75,7 +75,7 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/account" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "account" ? highlightedClassName : "")}>
-                    <UserCircle2Icon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <SettingsIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Account
                 </Button>
             </Link>

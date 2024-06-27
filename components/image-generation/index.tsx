@@ -5,18 +5,18 @@ import * as React from "react";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "../ui/button";
-import { auth, storage, functions } from "../../app/firebase";
+import { storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
 import { ref, uploadBytes } from "firebase/storage";
-
 import { PromptBox } from "../prompt-box";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { BuildableMenu } from "../buildable-menu";
 import { usePrompt } from "@/hooks/usePrompt";
-import { Card, CardContent } from "../ui/card";
-import { DownloadIcon, RotateCcwIcon, StarIcon } from "lucide-react";
+import { Card } from "../ui/card";
+import { RotateCcwIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
+import { DownloadIcon, StarUnfilledIcon } from "../icons/prompt-ed-icons";
 
 type GenerateImageResponse = {
   created: Date;
@@ -152,12 +152,12 @@ export const ImageGeneration: React.FC = ({}) => {
   let saveLocalBttn, saveFirebaseBttn;
   if (imageURL) {
     saveFirebaseBttn = (
-      <Button onClick={handleSaveFirebase} variant="accent" iconPosition="full" className="bg-transparent">
-        <StarIcon color="var(--accent)" />
+      <Button title="Save to Library" onClick={handleSaveFirebase} variant="accent" iconPosition="full" className="bg-transparent">
+        <StarUnfilledIcon color="var(--accent)" />
       </Button>
     );
     saveLocalBttn = (
-      <Button onClick={handleSaveLocal} variant="accent" iconPosition="full" className="bg-transparent">
+      <Button title="Download Image" onClick={handleSaveLocal} variant="accent" iconPosition="full" className="bg-transparent">
         <DownloadIcon color="var(--accent)" />
       </Button>
     );

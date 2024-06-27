@@ -6,7 +6,7 @@ import EmbeddedMessage from "./embedded-message";
 import Script from "next/script";
 import { ScrollArea } from "../ui/scroll-area";
 import { Button } from "../ui/button";
-import { ThumbsUpIcon, ThumbsDownIcon, EditIcon, CopyIcon, RegenerateIcon } from "../icons/prompt-ed-icons";
+import { ThumbsUpIcon, ThumbsDownIcon, EditIcon, CopyIcon, RegenerateIcon, ChatAIIcon } from "../icons/prompt-ed-icons";
 
 import Image from "next/image";
 
@@ -109,7 +109,7 @@ export function ChatBody({
                 {message.role==="assistant" ? 
                 <div className="p-5 rounded-xl text-foreground w-full bg-card-solid mb-5 border shadow-[0_0_1px_rgba(0,0,0,0.05)]">
                   <div className="flex flex-row w-full h-9 mb-4">
-                    <Image width={36} height={36} alt="AI" src="/chat-ai-icon.svg" />
+                    <ChatAIIcon className="w-9 h-9 text-accent" />
                     <div className="flex flex-1" />
                     <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left" onClick={() => handleCopy(message)}><CopyIcon className="h-[15px] w-[15px] text-secondary" />Copy</Button>
                   </div>
@@ -117,18 +117,18 @@ export function ChatBody({
                   <div className="flex flex-row w-full mt-4 gap-3">
                     <Button className="text-[13px] text-text-p1" variant="outline" iconPosition="left"><RegenerateIcon className="h-[15px] w-[15px] text-secondary" />Regenerate</Button>
                     <div className="flex flex-1" />
-                    <Button variant="outline" iconPosition="full"><ThumbsDownIcon className="h-[20px] w-[20px] text-secondary" /></Button>
-                    <Button variant="outline" iconPosition="full"><ThumbsUpIcon className="h-[20px] w-[20px] text-secondary" /></Button>
+                    <Button title="I Like This" variant="outline" iconPosition="full"><ThumbsDownIcon className="h-[20px] w-[20px] text-secondary" /></Button>
+                    <Button title="I Dislike This" variant="outline" iconPosition="full"><ThumbsUpIcon className="h-[20px] w-[20px] text-secondary" /></Button>
                   </div>
                 </div>
                    : 
                 <div className={cn("p-5 rounded-xl space-x-2.5 items-center w-full mb-5 flex flex-row border shadow-[0_0_1px_rgba(0,0,0,0.05)]", message.role === "error" ? "bg-red-400" : "bg-primary")}>
                   <div className="overflow-hidden flex-none w-10 h-10 rounded-lg">
-                    <Image width={40} height={40} alt="AI" objectFit="cover" className="" src="/default-profile-icon.jpeg" />
+                    <Image width={40} height={40} alt="AI" objectFit="cover" src="/default-profile-icon.jpeg" />
                   </div>
                   {messageContent(message)}
                   <div className="flex flex-1" />
-                  <Button variant="accent" className="w-7 h-7"><EditIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--primary)" /></Button>
+                  <Button title="Edit" variant="accent" className="w-7 h-7"><EditIcon className="mx-[-8px] h-[20px] w-[20px]" color="var(--primary)" /></Button>
                 </div>}
               </div>
               </motion.div>

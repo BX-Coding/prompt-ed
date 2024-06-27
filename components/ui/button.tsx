@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "border border-input bg-primary-hover-light text-button-default-text active:enabled:shadow-[0_0_0_2px_rgba(239,64,1,0.25)]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "",
         link: "text-primary underline-offset-4 hover:underline",
         navbar: "bg-card-solid hover:bg-primary-hover-light",
       },

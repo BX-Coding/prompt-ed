@@ -5,8 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ChatBubbleIcon } from "@radix-ui/react-icons";
-import { MagicIcon, FileIcon } from "@/components/icons/prompt-ed-icons";
+import { MagicIcon, FileIcon, ChatBubbleIcon } from "@/components/icons/prompt-ed-icons";
 import Link from "next/link";
 
 export default function Home() {

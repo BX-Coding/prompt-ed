@@ -1,17 +1,14 @@
 "use client"
 
-import Link from "next/link"
-import { UserAuthForm } from "../../components/login-form"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import { Chat } from "@/components/chat-ui/chat"
 import { NavBar } from "@/components/navbar"
 import { onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth, db } from "../firebase"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { doc, getDoc } from "firebase/firestore"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { TabbedSidebar } from "@/components/tabbed-sidebar"
@@ -83,7 +80,7 @@ export default function Home() {
                       Chat History
                   </p>
                 </div>
-                <ScrollArea type="auto" className="max-h-[calc(100vh-342px)] w-full px-4">
+                <ScrollArea type="auto" className="max-h-[calc(100vh-348px)] w-full px-4">
                   <div className="h-[92px] w-full border-b border-primary">
                     <p className="text-[15px] text-primary">
                       June 3
