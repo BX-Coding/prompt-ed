@@ -24,7 +24,7 @@ const buttonVariants = cva(
         navbar: "bg-card-solid hover:bg-primary-hover-light",
       },
       size: {
-        default: "h-input px-3 py-1.5",
+        default: "h-input px-3 py-1.5 gap-1",
         sm: "h-5 rounded-md px-2 py-1 text-sm",
         lg: "h-9 rounded-md px-4 text-base",
         xl: "h-11 rounded-md px-5 text-xl font-semibold",
@@ -32,7 +32,26 @@ const buttonVariants = cva(
         "navbar-square": "w-nav-bar-button-square h-nav-bar-button rounded-[5px] text-nav-bar font-medium",
         icon: "h-input w-input",
       },
+      iconPosition: {
+        left: "",
+        right: "",
+        full: "",
+      }
     },
+    compoundVariants: [
+      { size: "default", iconPosition: "left", className: "pl-2" },
+      { size: "default", iconPosition: "right", className: "pr-2" },
+      { size: "default", iconPosition: "full", className: "px-2" },
+      { size: "sm", iconPosition: "left", className: "pl-2" },
+      { size: "sm", iconPosition: "right", className: "pr-2" },
+      { size: "sm", iconPosition: "full", className: "px-2" },
+      { size: "lg", iconPosition: "left", className: "pl-2" },
+      { size: "lg", iconPosition: "right", className: "pr-2" },
+      { size: "lg", iconPosition: "full", className: "px-2" },
+      { size: "xl", iconPosition: "left", className: "pl-2" },
+      { size: "xl", iconPosition: "right", className: "pr-2" },
+      { size: "xl", iconPosition: "full", className: "px-2" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
@@ -47,11 +66,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, iconPosition, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, iconPosition, className }))}
         ref={ref}
         {...props}
       />

@@ -23,6 +23,7 @@ import {
     SelectValue,
   } from "./ui/select"
 import { ScrollArea } from "./ui/scroll-area"
+import { PlusIcon } from "lucide-react"
 
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
@@ -159,6 +160,14 @@ export const UITestingGround: React.FC = ({}) => {
                 <div className="flex flex-row space-x-2">
                     <Button size="icon" variant="accent">Button</Button>
                     <Button size="icon" variant="destructive">Button</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="sm" iconPosition="left"><PlusIcon height={10} width={10} />New</Button>
+                    <Button iconPosition="left"><PlusIcon height={15} width={15} />New</Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Button size="lg" iconPosition="left"><PlusIcon height={15} width={15} />New</Button>
+                    <Button size="xl" iconPosition="left"><PlusIcon height={15} width={15} />New</Button>
                 </div>
             </div>
             <div className="p-4 flex-initial space-y-4">
