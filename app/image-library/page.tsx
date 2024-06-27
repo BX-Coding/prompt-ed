@@ -26,8 +26,8 @@ export default function Home() {
         return (
         <div className="flex flex-col h-screen">
             <NavBar navLocation="image-library"/>
-            <div className="flex flex-row w-screen">
-            <Card className="w-full ml-5 mb-5 mr-5 h-max">
+            <div className="flex flex-row w-screen p-5 gap-5">
+            <Card className="w-full h-max">
             <CardHeader>
                 <CardTitle>Chat History</CardTitle>
                 <CardDescription>Click on a chat to reopen it</CardDescription>
@@ -36,7 +36,7 @@ export default function Home() {
                 <ChatHistoryBox/>
             </CardContent>
             </Card>
-            <Card className="w-full mb-5 mr-5 h-max">
+            <Card className="w-full h-max">
             <CardHeader>
                 <CardTitle>Image History</CardTitle>
                 <CardDescription>Click on an image to reopen it</CardDescription>
