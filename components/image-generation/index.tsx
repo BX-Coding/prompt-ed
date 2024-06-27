@@ -103,6 +103,20 @@ export const ImageGeneration: React.FC = ({}) => {
     }
   }
 
+  function formatDate(date:Date) {
+    const options : Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    };
+
+    return date.toLocaleString('en-US', options);
+}
+
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
   const handleSaveFirebase = () => {
     //save data to firebase
@@ -120,10 +134,10 @@ export const ImageGeneration: React.FC = ({}) => {
   };
 
   //This will save image to Firebase storage as a Blob - UNTESTED
-  async function saveToFirebase(blob: Blob, today: Date) {
-    const dateStr = today.toString().replace(" ", "_") + ".png";
-    const storageRef = ref(storage, dateStr);
-    uploadBytes(storageRef, blob).then((snapshot) => {
+  async function saveToFirebase(blob: Blob, today: Date, ) {
+    const userImagePath = auth.currentUser?.email + "/" + formatDate(today) + ".png"
+    const storageRef = ref(storage, userImagePath);
+    uploadBytes(storageRef, blob).then(() => {
       console.log("Uploaded a blob or file!");
     });
   }
@@ -137,15 +151,12 @@ export const ImageGeneration: React.FC = ({}) => {
       .then((response) => response.blob())
       .then((blob) => {
         const today = new Date();
-        saveToFirebase(blob, today);
-        // Create a URL for the Blob
         const url = URL.createObjectURL(blob);
+        const userImageFileName = auth.currentUser?.email + "/" + formatDate(today) + ".png"
 
-        // Create an anchor element for downloading
         const a = document.createElement("a");
         a.href = url;
-        const dateStr = today.toString().replace(" ", "_");
-        a.download = dateStr; // Specify the desired download filename
+        a.download = userImageFileName
 
         // Programmatically trigger a click event on the anchor element
         a.click();
