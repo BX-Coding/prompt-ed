@@ -41,10 +41,10 @@ const buttonVariants = cva(
     compoundVariants: [
       { size: "default", iconPosition: "left", className: "pl-2" },
       { size: "default", iconPosition: "right", className: "pr-2" },
-      { size: "default", iconPosition: "full", className: "px-2" },
+      { size: "default", iconPosition: "full", className: "px-1.5" },
       { size: "sm", iconPosition: "left", className: "pl-2" },
       { size: "sm", iconPosition: "right", className: "pr-2" },
-      { size: "sm", iconPosition: "full", className: "px-2" },
+      { size: "sm", iconPosition: "full", className: "px-1" },
       { size: "lg", iconPosition: "left", className: "pl-2" },
       { size: "lg", iconPosition: "right", className: "pr-2" },
       { size: "lg", iconPosition: "full", className: "px-2" },
