@@ -6,6 +6,7 @@ import { useState } from "react";
 import React from "react";
 import { UpdatePassword } from "@/components/update-password-form";
 import { AlertDelete } from "@/components/alert-delete";
+import { Card } from "@/components/ui/card";
 export default function Home() {
 
   const [email, setEmail] = useState('');
@@ -29,15 +30,17 @@ export default function Home() {
     return (
         <div className="flex flex-col h-screen">
           <NavBar navLocation="account"/>
-          <div className="flex flex-col items-center">
-            <h1 className="text-4xl text-center font-bold mt-10 mb-10">Account Information</h1>
-            <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-10 text-muted">Email: {email}</h3>
-            <h3 className="text-xl text-center font-bold ml-2 mt-2 mb-2 text-muted">Update Password:</h3>
-            <UpdatePassword />
-            <div className="mt-20">
-              <AlertDelete />
+          <Card className="mx-12 my-6 p-12">
+            <div className="flex flex-col items-start gap-4">
+              <h1 className="text-title-xl text-black text-center font-bold">Account Information</h1>
+              <h3 className="text-xl text-center font-bold text-muted">Email: {email}</h3>
+              <h3 className="text-xl text-center font-bold text-muted">Update Password:</h3>
+              <UpdatePassword />
+              <div className="mt-20">
+                <AlertDelete />
+              </div>
             </div>
-          </div>
+          </Card>
       </div>
     );
   }
