@@ -10,7 +10,8 @@ import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { HomeIcon, ImageIcon, LogOutIcon, MessageSquareIcon, TimerIcon, UserCircle2Icon } from "lucide-react";
+import { LogOutIcon, MessageSquareIcon, UserCircle2Icon } from "lucide-react";
+import { HomeIcon, FileIcon, MagicIcon } from "./icons/prompt-ed-icons";
 
 const highlightedClassName = " bg-primary ";
 
@@ -62,13 +63,13 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/image-gen" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "images" ? highlightedClassName : "")}>
-                    <ImageIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <MagicIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Images
                 </Button>
             </Link>
             <Link href = "/image-library" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "image-library" ? highlightedClassName : "")}>
-                    <TimerIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <FileIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Library
                 </Button>
             </Link>
