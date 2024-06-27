@@ -63,11 +63,9 @@ export function Chat({ date }: ChatProps) {
             sendMessage={sendMessage}
             date = {date}
             errorLastPrompt = {errorLastPrompt}
+            onSave={onSave}
+            onClear={onClear}
         />
-        <div className="w-full flex justify-center">
-            <Button className="max-w-10 mr-10 mb-5" onClick={onSave}>Save Chat</Button>
-            <Button className="max-w-10 mb-5" onClick={onClear}>Clear</Button>
-        </div>
       </div>
   );
 }

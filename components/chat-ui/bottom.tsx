@@ -1,7 +1,7 @@
 import { SendHorizontal } from "lucide-react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { httpsCallable } from "firebase/functions";
@@ -12,6 +12,8 @@ interface ChatBottombarProps {
   messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
   errorLastPrompt: () => void;
+  onSave: () => void;
+  onClear: () => void;
 }
 
 interface ChatHistoryMessage {
@@ -27,7 +29,9 @@ interface ChatHistoryMessage {
 export default function ChatBottomBar({
   sendMessage,
   messages,
-  errorLastPrompt
+  errorLastPrompt,
+  onSave,
+  onClear
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
@@ -121,6 +125,10 @@ export default function ChatBottomBar({
           )}
         ></Link>
       )}
+      <div className="flex">
+        <Button className="max-w-10 mr-10 mb-5" onClick={onSave}>Save Chat</Button>
+        <Button className="max-w-10 mb-5" onClick={onClear}>Clear</Button>
+        </div>
     </div>
   );
 }
