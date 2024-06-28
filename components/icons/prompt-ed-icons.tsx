@@ -100,6 +100,12 @@ export const SettingsIcon = (props: IconProps) =>
         <path d="M1 15.212V12.788C1 11.3557 2.18941 10.1712 3.65867 10.1712C6.1914 10.1712 7.22689 8.40832 5.95352 6.246C5.22589 5.00646 5.65967 3.39506 6.93303 2.67888L9.35382 1.31538C10.4593 0.668066 11.8866 1.0537 12.5442 2.14174L12.6982 2.40342C13.9575 4.56574 16.0285 4.56574 17.3018 2.40342L17.4558 2.14174C18.1134 1.0537 19.5407 0.668066 20.6462 1.31538L23.067 2.67888C24.3403 3.39506 24.7741 5.00646 24.0465 6.246C22.7731 8.40832 23.8086 10.1712 26.3413 10.1712C27.7966 10.1712 29 11.3419 29 12.788V15.212C29 16.6444 27.8106 17.8288 26.3413 17.8288C23.8086 17.8288 22.7731 19.5917 24.0465 21.754C24.7741 23.0074 24.3403 24.605 23.067 25.3212L20.6462 26.6847C19.5407 27.332 18.1134 26.9463 17.4558 25.8583L17.3018 25.5966C16.0425 23.4343 13.9715 23.4343 12.6982 25.5966L12.5442 25.8583C11.8866 26.9463 10.4593 27.332 9.35382 26.6847L6.93303 25.3212C5.65967 24.605 5.22589 22.9936 5.95352 21.754C7.22689 19.5917 6.1914 17.8288 3.65867 17.8288C2.18941 17.8288 1 16.6444 1 15.212Z" stroke="currentColor" stroke-width="1.52559" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
 
+export const NavBarSettingsIcon = (props: IconProps) =>
+    <svg width="30" height="28" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M14.9939 17.8293C17.1426 17.8293 18.8845 16.1149 18.8845 14C18.8845 11.8851 17.1426 10.1706 14.9939 10.1706C12.8452 10.1706 11.1033 11.8851 11.1033 14C11.1033 16.1149 12.8452 17.8293 14.9939 17.8293Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1 15.212V12.788C1 11.3557 2.18941 10.1712 3.65867 10.1712C6.1914 10.1712 7.22689 8.40832 5.95352 6.246C5.22589 5.00646 5.65967 3.39506 6.93303 2.67888L9.35382 1.31538C10.4593 0.668066 11.8866 1.0537 12.5442 2.14174L12.6982 2.40342C13.9575 4.56574 16.0285 4.56574 17.3018 2.40342L17.4558 2.14174C18.1134 1.0537 19.5407 0.668066 20.6462 1.31538L23.067 2.67888C24.3403 3.39506 24.7741 5.00646 24.0465 6.246C22.7731 8.40832 23.8086 10.1712 26.3413 10.1712C27.7966 10.1712 29 11.3419 29 12.788V15.212C29 16.6444 27.8106 17.8288 26.3413 17.8288C23.8086 17.8288 22.7731 19.5917 24.0465 21.754C24.7741 23.0074 24.3403 24.605 23.067 25.3212L20.6462 26.6847C19.5407 27.332 18.1134 26.9463 17.4558 25.8583L17.3018 25.5966C16.0425 23.4343 13.9715 23.4343 12.6982 25.5966L12.5442 25.8583C11.8866 26.9463 10.4593 27.332 9.35382 26.6847L6.93303 25.3212C5.65967 24.605 5.22589 22.9936 5.95352 21.754C7.22689 19.5917 6.1914 17.8288 3.65867 17.8288C2.18941 17.8288 1 16.6444 1 15.212Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
 export const ChatBubbleIcon = (props: IconProps) =>
     <svg width="20.838" height="20.834" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path d="M 21.616 12.439 L 21.616 6.189 C 21.616 2.022 20.574 0.98 16.407 0.98 L 5.991 0.98 C 1.824 0.98 0.782 2.022 0.782 6.189 L 0.778 12.564 C 0.778 16.337 1.643 17.495 4.898 17.69 C 5.238 17.711 6.156 19.383 6.156 19.383 L 7.553 21.814 C 9.116 21.814 9.459 21.355 10.053 20.564 L 11.616 18.48 C 12.011 17.96 12.241 17.647 13.282 17.647 L 16.407 17.647 C 20.574 17.647 21.616 16.605 21.616 12.439 Z" stroke="currentColor" stroke-width="1.41016" stroke-miterlimit="10" />
@@ -111,4 +117,18 @@ export const RegisterIcon = (props: IconProps) =>
         <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M20 8V14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M23 11H17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
+export const UploadIcon = (props: IconProps) =>
+    <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M7.87305 4.17852L10.8597 1.19186L13.8464 4.17852" stroke="currentColor" stroke-width="2.11098" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M10.8604 11.7619V1.8452" stroke="currentColor" stroke-width="2.53318" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1.66602 9.42865C1.66602 10.9483 1.66628 13.5839 1.66652 15.6676C1.66672 17.3774 3.05208 18.762 4.76185 18.762C6.93525 18.762 9.68061 18.762 10.9993 18.762C12.3181 18.762 15.0637 18.762 17.2373 18.762C18.9473 18.762 20.3327 17.3772 20.3327 15.6672C20.3327 13.5836 20.3327 10.9482 20.3327 9.42865" stroke="currentColor" stroke-width="2.53318" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
+export const NavBarUploadIcon = (props: IconProps) =>
+    <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M7.87305 4.17852L10.8597 1.19186L13.8464 4.17852" stroke="currentColor" stroke-width="1.6" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M10.8604 11.7619V1.8452" stroke="currentColor" stroke-width="1.6" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1.66602 9.42865C1.66602 10.9483 1.66628 13.5839 1.66652 15.6676C1.66672 17.3774 3.05208 18.762 4.76185 18.762C6.93525 18.762 9.68061 18.762 10.9993 18.762C12.3181 18.762 15.0637 18.762 17.2373 18.762C18.9473 18.762 20.3327 17.3772 20.3327 15.6672C20.3327 13.5836 20.3327 10.9482 20.3327 9.42865" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
     </svg>

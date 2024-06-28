@@ -10,8 +10,7 @@ import { auth } from "@/app/firebase";
 import { useRouter } from 'next/navigation';
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { LogOutIcon } from "lucide-react";
-import { HomeIcon, FileIcon, MagicIcon, SettingsIcon, ChatBubbleIcon, RegisterIcon } from "./icons/prompt-ed-icons";
+import { HomeIcon, FileIcon, MagicIcon, NavBarSettingsIcon, ChatBubbleIcon, RegisterIcon, NavBarUploadIcon } from "./icons/prompt-ed-icons";
 
 const highlightedClassName = " bg-primary ";
 
@@ -74,13 +73,13 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             </Link>
             <Link href = "/account" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" className={(props.navLocation == "account" ? highlightedClassName : "")}>
-                    <SettingsIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <NavBarSettingsIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
                     Account
                 </Button>
             </Link>
             <Link href = "/" legacyBehavior passHref>
                 <Button variant="navbar" size="navbar" onClick={handleLogOut}>
-                    <LogOutIcon className="h-[21px] w-[21px] mr-3" color={"var(--accent)"} />
+                    <NavBarUploadIcon className="h-[21px] w-[21px] mr-3 rotate-90" color={"var(--accent)"} />
                     Log Out
                 </Button>
             </Link>
