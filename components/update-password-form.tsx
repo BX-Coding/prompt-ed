@@ -3,21 +3,17 @@
 import * as React from "react"
 
 import { useCallback, useState } from 'react';
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
-import { Label } from "./ui/label"
 import { getAuth, updatePassword } from 'firebase/auth'
-import { auth } from '../app/firebase'
-import { Toaster } from "@/components/ui/toaster"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
 import { CloseIcon } from "./icons/prompt-ed-icons";
 
 export interface UpdatePasswordProps { className?: string, onClose: () => void};
 
-export const UpdatePassword: React.FC<UpdatePasswordProps> = (props: UpdatePasswordProps) => {
+export const UpdatePassword: React.FC<UpdatePasswordProps> = ({className, onClose, ...props}: UpdatePasswordProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -45,7 +41,7 @@ export const UpdatePassword: React.FC<UpdatePasswordProps> = (props: UpdatePassw
           title: "Password Updated",
         });
         setIsLoading(false);
-        props.onClose();
+        onClose();
       }).catch((error) => {
         toast({
           title: "Account Timeout",
@@ -62,9 +58,9 @@ export const UpdatePassword: React.FC<UpdatePasswordProps> = (props: UpdatePassw
   }
 
   return (
-    <div className={"absolute w-full h-full flex flex-col items-center pt-[calc(30vh)] bg-[rgba(0,0,0,0.2)] " + props.className}>
+    <div className={"absolute w-full h-full flex flex-col items-center pt-[calc(30vh)] bg-[rgba(0,0,0,0.2)] " + className}>
       <div className="grid bg-card-solid p-6 pt-2 rounded-xl">
-        <Button variant="ghost" className="justify-self-end w-2.5 p-0" onClick={props.onClose}><CloseIcon /></Button>
+        <Button variant="ghost" className="justify-self-end w-2.5 p-0" onClick={onClose}><CloseIcon /></Button>
         <form className="grid gap-1" onSubmit={submitHandler}>
           <p className="font-normal text-input opacity-60">New Password</p>
           <Input
