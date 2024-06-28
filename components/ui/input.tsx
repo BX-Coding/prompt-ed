@@ -13,8 +13,8 @@ const inputVariants = cva(
     variants: {
       inputSize: {
         default: "h-input w-full rounded-md",
-        sm: "h-input w-full rounded-md",
-        lg: "h-input w-full rounded-md",
+        sm: "h-5 w-full rounded-md",
+        lg: "h-9 px-4 w-full rounded-md text-base",
         xl: "h-[60px] w-full rounded-lg text-tabs p-[21px]",
       },
     },
