@@ -11,12 +11,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-button-default-text active:enabled:shadow-[0_0_0_2px_rgba(239,64,1,0.25)]",
+        default: "bg-primary text-button-default-text active:enabled:shadow-[0_0_0_2px_rgba(59,160,255,0.25)]",
         accent: "bg-accent text-button-accent-text active:enabled:shadow-[0_0_0_2px_rgba(239,64,1,0.25)]",
         destructive:
           "bg-destructive text-button-destructive-text active:enabled:shadow-[0_0_0_2px_rgba(239,64,1,0.25)]",
         outline:
-          "border border-input bg-primary-hover-light text-button-default-text active:enabled:shadow-[0_0_0_2px_rgba(239,64,1,0.25)]",
+          "border border-input bg-primary-hover-light text-button-default-text active:enabled:shadow-[0_0_0_2px_rgba(59,160,255,0.25)]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "",
