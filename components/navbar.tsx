@@ -11,11 +11,9 @@ import { useRouter } from 'next/navigation';
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { LogOutIcon } from "lucide-react";
-import { HomeIcon, FileIcon, MagicIcon, SettingsIcon, ChatBubbleIcon } from "./icons/prompt-ed-icons";
+import { HomeIcon, FileIcon, MagicIcon, SettingsIcon, ChatBubbleIcon, RegisterIcon } from "./icons/prompt-ed-icons";
 
 const highlightedClassName = " bg-primary ";
-
-const loginHighlightedClassName = " bg-accent hover:bg-accent ";
 
 export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean }> = ( props: { navLocation? : "home" | "image-library" | "chat" | "images" | "account" | "create-account" | "login", isLoginPage? : boolean } ) => {
     const router = useRouter();
@@ -39,13 +37,14 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             <div className="flex grow" />
             {props.isLoginPage ? <>
             <Link href = "/create-account" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className={(props.navLocation == "create-account" ? loginHighlightedClassName : highlightedClassName)}>
-                    Register
+                <Button variant="navbar" size="navbar" className="bg-accent">
+                    <RegisterIcon className="h-[21px] w-[21px] mr-3" color={"white"} />
+                    <p className="text-white">Register</p>
                 </Button>
             </Link>
             <Link href = "/login" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className={(props.navLocation == "login" ? loginHighlightedClassName : highlightedClassName)}>
-                    Login
+                <Button variant="navbar" size="navbar" className="bg-gray-300">
+                    <p className="text-[#0C41A9]">Login</p>
                 </Button>
             </Link>
             </> : <>

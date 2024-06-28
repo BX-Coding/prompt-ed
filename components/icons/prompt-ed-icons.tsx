@@ -104,3 +104,11 @@ export const ChatBubbleIcon = (props: IconProps) =>
     <svg width="20.838" height="20.834" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path d="M 21.616 12.439 L 21.616 6.189 C 21.616 2.022 20.574 0.98 16.407 0.98 L 5.991 0.98 C 1.824 0.98 0.782 2.022 0.782 6.189 L 0.778 12.564 C 0.778 16.337 1.643 17.495 4.898 17.69 C 5.238 17.711 6.156 19.383 6.156 19.383 L 7.553 21.814 C 9.116 21.814 9.459 21.355 10.053 20.564 L 11.616 18.48 C 12.011 17.96 12.241 17.647 13.282 17.647 L 16.407 17.647 C 20.574 17.647 21.616 16.605 21.616 12.439 Z" stroke="currentColor" stroke-width="1.41016" stroke-miterlimit="10" />
     </svg>
+
+export const RegisterIcon = (props: IconProps) =>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 8V14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M23 11H17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>

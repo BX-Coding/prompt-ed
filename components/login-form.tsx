@@ -116,6 +116,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 autoCorrect="off"
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
+                inputSize="lg"
               />
             </div>
             <div className="grid gap-1">
@@ -131,6 +132,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 autoCorrect="off"
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
+                inputSize="lg"
               />
             </div>
             <Button variant="accent" size="lg" disabled={isLoading}>
@@ -195,6 +197,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 autoCorrect="off"
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
+                inputSize="lg"
               />
             </div>
             <div className="grid gap-1">
@@ -210,6 +213,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 autoCorrect="off"
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
+                inputSize="lg"
               />
             </div>
             <Link
@@ -282,6 +286,7 @@ export function ResetForm({ className, ...props }: ResetFormProps) {
                 autoCorrect="off"
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
+                inputSize="lg"
               />
             </div>
             <Button disabled={isLoading}>
