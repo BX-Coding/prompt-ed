@@ -36,13 +36,13 @@ export const NavBar: FC<{ navLocation? : "home" | "image-library" | "chat" | "im
             <div className="flex grow" />
             {props.isLoginPage ? <>
             <Link href = "/create-account" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className="bg-accent">
+                <Button variant="navbar" size="navbar" className="bg-accent hover:bg-[#ffc85e]">
                     <RegisterIcon className="h-[21px] w-[21px] mr-3" color={"white"} />
                     <p className="text-white">Register</p>
                 </Button>
             </Link>
             <Link href = "/login" legacyBehavior passHref>
-                <Button variant="navbar" size="navbar" className="bg-gray-300">
+                <Button variant="navbar" size="navbar" className="bg-gray-300 hover:bg-gray-200">
                     <p className="text-[#0C41A9]">Login</p>
                 </Button>
             </Link>
