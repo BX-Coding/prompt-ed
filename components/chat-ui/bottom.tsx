@@ -1,17 +1,18 @@
-import { SendHorizontal } from "lucide-react";
-import Link from "next/link";
 import React, { useRef, useState } from "react";
-import { buttonVariants } from "../ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/app/firebase";
+import { SendIcon, StarUnfilledIcon } from "../icons/prompt-ed-icons";
+import { RotateCcwIcon } from "lucide-react";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatBottombarProps {
   messages: ChatHistoryMessage[];
   sendMessage: (newMessage: ChatHistoryMessage) => void;
   errorLastPrompt: () => void;
+  onSave: () => void;
+  onClear: () => void;
 }
 
 interface ChatHistoryMessage {
@@ -24,10 +25,12 @@ interface ChatHistoryMessage {
  * Use prompt parameter as the user's input. Leave ai to true but assign
  * message to the desired AI content
  */
-export default function ChatBottombar({
+export default function ChatBottomBar({
   sendMessage,
   messages,
-  errorLastPrompt
+  errorLastPrompt,
+  onSave,
+  onClear
 }: ChatBottombarProps) {
   const [message, setMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
@@ -60,12 +63,13 @@ export default function ChatBottombar({
   };
 
   const handleSend = async () => {
-    if (message.trim()) {
+    const message_ref = message;
+    if (message_ref.trim()) {
       setWaiting(true);
-      //do AI stuff
-      await generateAIMessage(message);
-      setWaiting(false);
       setMessage("");
+      //do AI stuff
+      await generateAIMessage(message_ref);
+      setWaiting(false);
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -85,7 +89,7 @@ export default function ChatBottombar({
   };
 
   return (
-    <div className="p-2 flex justify-between w-full items-center gap-2">
+    <div className="flex w-full items-center gap-2 mb-8">
       <Input
         autoComplete="off"
         value={message}
@@ -93,32 +97,19 @@ export default function ChatBottombar({
         onKeyDown={(e) => handleKeyPress(e)}
         onChange={(e) => handleInputChange(e)}
         name="message"
-        placeholder="Aa"
-        className=" h-9 w-full flex items-center resize-none overflow-hidden text-foreground"
+        placeholder="Type your message here..."
+        className="items-center resize-none overflow-hidden pr-16"
+        inputSize="xl"
       ></Input>
-
-      {message.trim() && !waiting ? (
-        <Link
-          href="#"
-          className={cn(
-            buttonVariants({ variant: "outline", size: "icon" }),
-            "h-9 w-9",
-            "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
-          )}
-          onClick={handleSend}
-        >
-          <SendHorizontal size={20} className="text-foreground" />
-        </Link>
-      ) : (
-        <Link
-          href="#"
-          className={cn(
-            buttonVariants({ variant: "outline", size: "icon" }),
-            "h-9 w-9",
-            "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
-          )}
-        ></Link>
-      )}
+      <div className="relative -ml-2">
+        <div className="absolute right-[21px] -bottom-[18px]">
+          <Button title="Send" variant="ghost" size="icon" className={message.trim() && !waiting ? "" : "opacity-50"} onClick={handleSend}>
+            <SendIcon className="w-6 h-6 text-accent" />
+          </Button>
+        </div>
+      </div>
+      <Button title="Save Chat" variant="ghost" iconPosition="full" onClick={onSave}><StarUnfilledIcon className="w-6 h-6 text-accent" /></Button>
+      <Button title="Clear" variant="ghost" iconPosition="full" onClick={onClear}><RotateCcwIcon className="w-6 h-6 text-accent" /></Button>
     </div>
   );
 }

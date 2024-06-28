@@ -1,18 +1,17 @@
 "use client"
 
-import Link from "next/link"
-import { UserAuthForm } from "../../components/login-form"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import { Chat } from "@/components/chat-ui/chat"
 import { NavBar } from "@/components/navbar"
 import { onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth, db } from "../firebase"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { doc, getDoc } from "firebase/firestore"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import React from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { TabbedSidebar } from "@/components/tabbed-sidebar"
 
 export default function Home() {
 
@@ -70,20 +69,104 @@ export default function Home() {
     );
   } else {
     return (
-      <div className="h-screen">
-        <div className="flex mb-2 justify-between">
-          <h3 className="text-xl text-start font-bold ml-2 mt-2 text-muted">Prompt-Ed</h3>
-          <NavBar/>
+      <div className="flex flex-col h-screen">
+        <NavBar navLocation="chat"/>
+        <div className="flex flex-row h-[calc(100vh-90px)]">
+          <TabbedSidebar noCard={true} tabs={[
+            {name: "Chat History", content: // This content is only here as a reference for what this should look like once actually implemented
+              <>
+                <div className="w-full px-4 pt-[30px]">
+                  <p className="text-title-xl font-bold text-white">
+                      Chat History
+                  </p>
+                </div>
+                <ScrollArea type="auto" className="max-h-[calc(100vh-348px)] w-full px-4">
+                  <div className="h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
+                    <p className="text-[15px] text-primary">
+                      June 3
+                    </p>
+                    <div className="flex flex-row py-[18px]">
+                      <p className="flex-1 text-lg text-white">
+                        Title of prompt created
+                      </p>
+                      <Button variant="accent"></Button>
+                    </div>
+                  </div>
+                </ScrollArea>
+              </>},
+            ]} defaultValue="Chat History" />
+          <div className="flex flex-col items-center w-full px-12 py-6">
+            <Card className="w-full h-full">
+              {inDate === '' ? <Chat date={new Date().toString()}/> : <div key={messages.length}><Chat date={inDate} messages={messages}/></div>}
+            </Card>
+          </div>
         </div>
-        <Card className="h-max ml-5 mr-5">
-          <CardHeader>
-            <CardTitle>Chat</CardTitle>
-            <CardDescription suppressHydrationWarning>{inDate === '' ? date.toString() : inDate}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {inDate === '' ? <Chat date={new Date().toString()}/> : <div key={messages.length}><Chat date={inDate} messages={messages}/></div>}
-          </CardContent>
-          </Card>
       </div>
     );
   }
