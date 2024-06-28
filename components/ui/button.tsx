@@ -31,6 +31,7 @@ const buttonVariants = cva(
         navbar: "w-nav-bar-button h-nav-bar-button rounded-[5px] text-nav-bar font-medium",
         "navbar-square": "w-nav-bar-button-square h-nav-bar-button rounded-[5px] text-nav-bar font-medium",
         icon: "h-input w-input",
+        menu: "h-16 px-8 text-lg"
       },
       iconPosition: {
         left: "",
