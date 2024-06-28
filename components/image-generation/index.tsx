@@ -9,7 +9,8 @@ import { Input } from "../ui/input";
 import { auth, storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, listAll, getDownloadURL, StorageReference, ListResult, uploadBytes } from "firebase/storage";
+
 import Image from "next/image";
 
 import axios from "axios";
@@ -43,7 +44,34 @@ export const ImageGeneration: React.FC = ({}) => {
   const [imageURL, setImageURL] = useState("");
   const [blockMode, setBlockMode] = useState(false);
   const [res, setRes] = useState<JSX.Element>(<></>);
+  const [userGeneratedImages, setUserGeneratedImages] = useState<string[]>([])
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
+
+  React.useEffect(()=>{
+    
+    const getUserImages = async (folderName: string | undefined): Promise<void> =>{
+      const folderRef: StorageReference = ref(storage, folderName);
+      const imageUrls: string[] = [];
+    
+      try {
+        const result: ListResult = await listAll(folderRef);
+    
+        const urlPromises: Promise<string>[] = result.items.map((itemRef: StorageReference) => {
+          return getDownloadURL(itemRef);
+        });
+    
+        const urls: string[] = await Promise.all(urlPromises);
+        imageUrls.push(...urls);
+      } catch (error) {
+        console.error("Error getting image URLs:", error);
+      }
+      
+      setUserGeneratedImages(imageUrls)
+    }
+
+    getUserImages(auth.currentUser?.uid)
+
+  },[])
 
   const handleTextClick = () => {
     setPrompt(constructPrompt());
@@ -179,6 +207,9 @@ export const ImageGeneration: React.FC = ({}) => {
       </Button>
     );
   }
+
+  // console.log(userGeneratedImages)
+
   return (
     <>
       <div className="flex flex-col items-center space-y-10 w-full px-20">
