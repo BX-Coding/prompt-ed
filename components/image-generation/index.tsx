@@ -9,7 +9,8 @@ import { Input } from "../ui/input";
 import { auth, storage, functions } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, listAll, getDownloadURL, StorageReference, ListResult, uploadBytes } from "firebase/storage";
+
 import Image from "next/image";
 
 import axios from "axios";
@@ -43,7 +44,34 @@ export const ImageGeneration: React.FC = ({}) => {
   const [imageURL, setImageURL] = useState("");
   const [blockMode, setBlockMode] = useState(false);
   const [res, setRes] = useState<JSX.Element>(<></>);
+  const [userGeneratedImages, setUserGeneratedImages] = useState<string[]>([])
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
+
+  React.useEffect(()=>{
+    
+    const getUserImages = async (folderName: string | undefined): Promise<void> =>{
+      const folderRef: StorageReference = ref(storage, folderName);
+      const imageUrls: string[] = [];
+    
+      try {
+        const result: ListResult = await listAll(folderRef);
+    
+        const urlPromises: Promise<string>[] = result.items.map((itemRef: StorageReference) => {
+          return getDownloadURL(itemRef);
+        });
+    
+        const urls: string[] = await Promise.all(urlPromises);
+        imageUrls.push(...urls);
+      } catch (error) {
+        console.error("Error getting image URLs:", error);
+      }
+      
+      setUserGeneratedImages(imageUrls)
+    }
+
+    getUserImages(auth.currentUser?.uid)
+
+  },[])
 
   const handleTextClick = () => {
     setPrompt(constructPrompt());
@@ -103,6 +131,20 @@ export const ImageGeneration: React.FC = ({}) => {
     }
   }
 
+  function formatDate(date:Date) {
+    const options : Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    };
+
+    return date.toLocaleString('en-US', options);
+}
+
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
   const handleSaveFirebase = () => {
     //save data to firebase
@@ -120,10 +162,10 @@ export const ImageGeneration: React.FC = ({}) => {
   };
 
   //This will save image to Firebase storage as a Blob - UNTESTED
-  async function saveToFirebase(blob: Blob, today: Date) {
-    const dateStr = today.toString().replace(" ", "_") + ".png";
-    const storageRef = ref(storage, dateStr);
-    uploadBytes(storageRef, blob).then((snapshot) => {
+  async function saveToFirebase(blob: Blob, today: Date, ) {
+    const userImagePath = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
+    const storageRef = ref(storage, userImagePath);
+    uploadBytes(storageRef, blob).then(() => {
       console.log("Uploaded a blob or file!");
     });
   }
@@ -137,15 +179,12 @@ export const ImageGeneration: React.FC = ({}) => {
       .then((response) => response.blob())
       .then((blob) => {
         const today = new Date();
-        saveToFirebase(blob, today);
-        // Create a URL for the Blob
         const url = URL.createObjectURL(blob);
+        const userImageFileName = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
 
-        // Create an anchor element for downloading
         const a = document.createElement("a");
         a.href = url;
-        const dateStr = today.toString().replace(" ", "_");
-        a.download = dateStr; // Specify the desired download filename
+        a.download = userImageFileName
 
         // Programmatically trigger a click event on the anchor element
         a.click();
@@ -168,6 +207,9 @@ export const ImageGeneration: React.FC = ({}) => {
       </Button>
     );
   }
+
+  // console.log(userGeneratedImages)
+
   return (
     <>
       <div className="flex flex-col items-center space-y-10 w-full px-20">

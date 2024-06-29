@@ -1,8 +1,8 @@
 import { auth, db } from "@/app/firebase";
 import { Button } from "../ui/button";
 import { ChatBody } from "./chat-body";
-import React from "react";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { doc, setDoc, collection, getDocs, QuerySnapshot, DocumentData, CollectionReference, query } from "firebase/firestore";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatProps {
@@ -16,7 +16,33 @@ interface ChatHistoryMessage {
 }
 
 export function Chat({ date }: ChatProps) {
-  const [messagesState, setMessages] = React.useState<ChatHistoryMessage[]>([]);
+  const [messagesState, setMessages] = useState<ChatHistoryMessage[]>([]);
+  const [userChats, setUserChats] = useState<DocumentData[]>([])
+
+  useEffect(()=>{
+    
+    const getUserChats = async (userId: string | undefined): Promise<void> => {
+      const pathName = "users/" + userId + "/chats"
+      const collectionRef = query(collection(db, pathName));
+      const chats: DocumentData[] = [];
+    
+      try {
+        const querySnapshot: QuerySnapshot = await getDocs(collectionRef);
+    
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          chats.push({ id: doc.id, ...doc.data() });
+        });
+      } catch (error) {
+        console.error("Error getting documents:", error);
+      }
+    
+      setUserChats(chats)
+    }
+
+    getUserChats(auth.currentUser?.uid)
+
+  },[])
 
   const sendMessage = (newMessage: ChatHistoryMessage) => {
     setMessages((prevArray)=>[...prevArray, newMessage]);
@@ -31,8 +57,8 @@ export function Chat({ date }: ChatProps) {
     console.log(pathName);
     console.log(messageArr);
     const dateStr = date.toString();
-    const docRef = await setDoc(doc(db, pathName, dateStr), {
-        messages: messageArr
+    await setDoc(doc(db, pathName, dateStr), {
+      messages: messageArr
     });
   }
 
@@ -55,6 +81,8 @@ export function Chat({ date }: ChatProps) {
       return newChatHistory;
     });
   };
+
+  console.log(userChats)
 
   return (
       <div className="h-screen flex flex-col items-center justify-between w-full max-h-128">
