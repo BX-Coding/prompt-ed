@@ -14,6 +14,11 @@ import { ref, listAll, getDownloadURL, getMetadata, StorageReference, ListResult
 interface UserImage{
   url:string
   date:string
+  prompt:string | undefined
+}
+
+interface ImageMetaData extends FullMetadata{
+  prompt:string
 }
 
 export default function Home() {
@@ -39,7 +44,8 @@ export default function Home() {
           const url = await getDownloadURL(itemRef);
           const metadata: FullMetadata = await getMetadata(itemRef);
           const date = metadata.timeCreated; // Assuming the metadata includes a 'timeCreated' property
-          return { url, date };
+          const prompt = metadata.customMetadata?.prompt
+          return { url, date, prompt};
         });
     
         const userImages: UserImage[] = await Promise.all(urlPromises);
@@ -73,17 +79,19 @@ export default function Home() {
                   </p>
                 </div>
                 <ScrollArea type="auto" className="max-h-[calc(100vh-348px)] w-full px-4">
-                  {/* {userGeneratedImages.map((image,key)=>(
+                  {userGeneratedImages.map((image,key)=>(
                     <div className="mt-[30px] h-[92px] w-full border-b border-primary" key={key}>
                     <p className="text-[15px] text-primary">
                       {image.date}
                     </p>
                     <div className="flex flex-row py-[18px]">
-                      <img className="object-contain" src={image.url}></img>
+                      <p className="flex-1 text-lg text-white">
+                        {image.prompt}
+                      </p>
                       <Button variant="accent"></Button>
                     </div>
                   </div>
-                  ))} */}
+                  ))}
                 </ScrollArea>
               </>},
             ]} defaultValue="Image History" />
