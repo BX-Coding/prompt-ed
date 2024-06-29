@@ -5,10 +5,15 @@ import * as React from "react";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "../ui/button";
-import { storage, functions } from "../../app/firebase";
+import { storage, functions, auth } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, listAll, getDownloadURL, StorageReference, ListResult, uploadBytes } from "firebase/storage";
+
+import Image from "next/image";
+
+import axios from "axios";
+import { Toggle } from "../ui/toggle";
 import { PromptBox } from "../prompt-box";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { BuildableMenu } from "../buildable-menu";
@@ -38,7 +43,35 @@ export const ImageGeneration: React.FC = ({}) => {
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [res, setRes] = useState<JSX.Element>(<></>);
+  const [userGeneratedImages, setUserGeneratedImages] = useState<string[]>([])
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
+
+  React.useEffect(()=>{
+    
+    const getUserImages = async (folderName: string | undefined): Promise<void> =>{
+      const folderRef: StorageReference = ref(storage, folderName);
+      const imageUrls: string[] = [];
+    
+      try {
+        const result: ListResult = await listAll(folderRef);
+    
+        const urlPromises: Promise<string>[] = result.items.map((itemRef: StorageReference) => {
+          return getDownloadURL(itemRef);
+        });
+    
+        const urls: string[] = await Promise.all(urlPromises);
+        imageUrls.push(...urls);
+      } catch (error) {
+        console.error("Error getting image URLs:", error);
+      }
+      
+      setUserGeneratedImages(imageUrls)
+    }
+
+    getUserImages(auth.currentUser?.uid)
+
+  },[])
+
 
   const generateImage = httpsCallable(functions, "generateImageCall");
 
@@ -87,15 +120,19 @@ export const ImageGeneration: React.FC = ({}) => {
     }
   }
 
-  async function clearHandler(event: React.SyntheticEvent) {
-    event.preventDefault();
+  function formatDate(date:Date) {
+    const options : Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    };
 
-    setRes(<></>);
-    setImageURL("");
-
-    resetPrompt();
-    addTextBlock(prompt);
-  }
+    return date.toLocaleString('en-US', options);
+}
 
   //This will save image to Firebase storage as a Blob after fetching url - UNTESTED
   const handleSaveFirebase = () => {
@@ -114,10 +151,10 @@ export const ImageGeneration: React.FC = ({}) => {
   };
 
   //This will save image to Firebase storage as a Blob - UNTESTED
-  async function saveToFirebase(blob: Blob, today: Date) {
-    const dateStr = today.toString().replace(" ", "_") + ".png";
-    const storageRef = ref(storage, dateStr);
-    uploadBytes(storageRef, blob).then((snapshot) => {
+  async function saveToFirebase(blob: Blob, today: Date, ) {
+    const userImagePath = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
+    const storageRef = ref(storage, userImagePath);
+    uploadBytes(storageRef, blob).then(() => {
       console.log("Uploaded a blob or file!");
     });
   }
@@ -131,15 +168,12 @@ export const ImageGeneration: React.FC = ({}) => {
       .then((response) => response.blob())
       .then((blob) => {
         const today = new Date();
-        saveToFirebase(blob, today);
-        // Create a URL for the Blob
         const url = URL.createObjectURL(blob);
+        const userImageFileName = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
 
-        // Create an anchor element for downloading
         const a = document.createElement("a");
         a.href = url;
-        const dateStr = today.toString().replace(" ", "_");
-        a.download = dateStr; // Specify the desired download filename
+        a.download = userImageFileName
 
         // Programmatically trigger a click event on the anchor element
         a.click();
@@ -162,6 +196,8 @@ export const ImageGeneration: React.FC = ({}) => {
       </Button>
     );
   }
+
+  // console.log(userGeneratedImages)
 
   return (
     <Card className="h-full w-full">
@@ -188,7 +224,7 @@ export const ImageGeneration: React.FC = ({}) => {
                   ) : (<LightningBoltIcon className="h-[15px] w-[15px]" />)}
                   Generate
                 </Button>
-                <Button variant="outline" className="flex self-end" iconPosition="left" onClick={clearHandler} disabled={isLoading}>
+                <Button variant="outline" className="flex self-end" iconPosition="left" disabled={isLoading}>
                   <RotateCcwIcon className="h-[15px] w-[15px]" />
                   Reset
                 </Button>
