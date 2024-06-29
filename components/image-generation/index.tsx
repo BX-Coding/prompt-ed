@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { storage, functions, auth } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref, listAll, getDownloadURL, StorageReference, ListResult, uploadBytes } from "firebase/storage";
+import { ref,uploadBytes, UploadMetadata } from "firebase/storage";
 
 import Image from "next/image";
 
@@ -48,7 +48,8 @@ export const ImageGeneration: React.FC = ({}) => {
   const generateImage = httpsCallable(functions, "generateImageCall");
 
   async function submitHandler(event: React.SyntheticEvent) {
-    event.preventDefault();
+    event.preventDefault()
+    setPrompt(constructPrompt())
     setRes(<></>);
     setImageURL("");
     setIsLoading(true);
@@ -126,7 +127,12 @@ export const ImageGeneration: React.FC = ({}) => {
   async function saveToFirebase(blob: Blob, today: Date, ) {
     const userImagePath = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
     const storageRef = ref(storage, userImagePath);
-    uploadBytes(storageRef, blob).then(() => {
+    const metadata: UploadMetadata = {
+      customMetadata: {
+        'prompt': prompt,
+      }
+    };
+    uploadBytes(storageRef, blob, metadata).then(() => {
       console.log("Uploaded a blob or file!");
     });
   }
