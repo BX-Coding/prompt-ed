@@ -43,35 +43,7 @@ export const ImageGeneration: React.FC = ({}) => {
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [res, setRes] = useState<JSX.Element>(<></>);
-  const [userGeneratedImages, setUserGeneratedImages] = useState<string[]>([])
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
-
-  React.useEffect(()=>{
-    
-    const getUserImages = async (folderName: string | undefined): Promise<void> =>{
-      const folderRef: StorageReference = ref(storage, folderName);
-      const imageUrls: string[] = [];
-    
-      try {
-        const result: ListResult = await listAll(folderRef);
-    
-        const urlPromises: Promise<string>[] = result.items.map((itemRef: StorageReference) => {
-          return getDownloadURL(itemRef);
-        });
-    
-        const urls: string[] = await Promise.all(urlPromises);
-        imageUrls.push(...urls);
-      } catch (error) {
-        console.error("Error getting image URLs:", error);
-      }
-      
-      setUserGeneratedImages(imageUrls)
-    }
-
-    getUserImages(auth.currentUser?.uid)
-
-  },[])
-
 
   const generateImage = httpsCallable(functions, "generateImageCall");
 

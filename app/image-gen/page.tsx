@@ -5,19 +5,54 @@ import { onAuthStateChanged} from "firebase/auth";
 import { useState } from "react";
 import React from "react";
 import { ImageGeneration } from "@/components/image-generation";
-import { auth } from "../firebase";
+import { auth, storage } from "../firebase";
 import { TabbedSidebar } from "@/components/tabbed-sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ref, listAll, getDownloadURL, getMetadata, StorageReference, ListResult, FullMetadata } from "firebase/storage";
+
+interface UserImage{
+  url:string
+  date:string
+}
 
 export default function Home() {
 
   const [logIn, setLogIn] = useState(false);
+  const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
+
   onAuthStateChanged(auth, (user) => {
     if (user && !logIn) {
       setLogIn(true);
     }
   });
+
+  React.useEffect(()=>{
+    const getUserImages = async (folderName: string | undefined): Promise<void> => {
+      const folderRef: StorageReference = ref(storage, folderName);
+      const imageUrls: UserImage[] = [];
+    
+      try {
+        const result: ListResult = await listAll(folderRef);
+    
+        const urlPromises: Promise<UserImage>[] = result.items.map(async (itemRef: StorageReference) => {
+          const url = await getDownloadURL(itemRef);
+          const metadata: FullMetadata = await getMetadata(itemRef);
+          const date = metadata.timeCreated; // Assuming the metadata includes a 'timeCreated' property
+          return { url, date };
+        });
+    
+        const userImages: UserImage[] = await Promise.all(urlPromises);
+        imageUrls.push(...userImages);
+      } catch (error) {
+        console.error("Error getting image URLs:", error);
+      }
+      
+      setUserGeneratedImages(imageUrls);
+    };
+
+    getUserImages(auth.currentUser?.uid)
+  },[])
 
 
   if (!logIn) {
@@ -30,7 +65,7 @@ export default function Home() {
         <NavBar navLocation="images"/>
         <div className="flex flex-row h-[calc(100vh-90px)]">
           <TabbedSidebar noCard={true} tabs={[
-            {name: "Image History", content: // This content is only here as a reference for what this should look like once actually implemented
+            {name: "Image History", content: 
               <>
                 <div className="w-full px-4 pt-[30px]">
                   <p className="text-title-xl font-bold text-white">
@@ -38,83 +73,17 @@ export default function Home() {
                   </p>
                 </div>
                 <ScrollArea type="auto" className="max-h-[calc(100vh-348px)] w-full px-4">
-                  <div className="h-[92px] w-full border-b border-primary">
+                  {/* {userGeneratedImages.map((image,key)=>(
+                    <div className="mt-[30px] h-[92px] w-full border-b border-primary" key={key}>
                     <p className="text-[15px] text-primary">
-                      June 3
+                      {image.date}
                     </p>
                     <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
+                      <img className="object-contain" src={image.url}></img>
                       <Button variant="accent"></Button>
                     </div>
                   </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
-                  <div className="mt-[30px] h-[92px] w-full border-b border-primary">
-                    <p className="text-[15px] text-primary">
-                      June 3
-                    </p>
-                    <div className="flex flex-row py-[18px]">
-                      <p className="flex-1 text-lg text-white">
-                        Title of prompt created
-                      </p>
-                      <Button variant="accent"></Button>
-                    </div>
-                  </div>
+                  ))} */}
                 </ScrollArea>
               </>},
             ]} defaultValue="Image History" />
