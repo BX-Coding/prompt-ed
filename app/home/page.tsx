@@ -34,7 +34,7 @@ export default function Home() {
           {/* A <TabbedSidebar /> could be put here */}
           <div className="grid items-center justify-items-center justify-center content-center w-full h-full">
             <div className="text-black text-[40px] font-medium">
-              Let's Build Something Awesome!
+              Let&apos;s Build Something Awesome!
             </div>
             <div className="flex mt-2 text-black text-lg">
               Use these examples and templates to get started or create your own.
