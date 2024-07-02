@@ -218,7 +218,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
             </div>
             <Link
                 href="/password-reset"
-                className="underline underline-offset-4 hover:text-primary"
+                className="underline underline-offset-4"
               >
                 Forgot Password?
               </Link>{" "}
