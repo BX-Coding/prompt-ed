@@ -28,8 +28,8 @@ export default function Home() {
   let inDate: string = "";
   const [logIn, setLogIn] = useState(true);
   const [userID, setUserID] = useState(auth.currentUser?.uid);
-  // const [userChats, setUserChats] = useState<DocumentData[] | ChatArray[]>([])
   const [userChats, setUserChats] = useState<DocumentData[]>([])
+  const [loadedChat, setLoadedChat] = useState<ChatHistoryMessage[]>([])
 
   onAuthStateChanged(auth, (user) => {
     if (user && !logIn) {
@@ -96,7 +96,9 @@ export default function Home() {
                       <p className="flex-1 text-lg text-white">
                       {chat.chat[0].content}
                       </p>
-                      <Button variant="accent"></Button>
+                      <Button variant="accent" onClick={(()=>{
+                        setLoadedChat(chat.chat)
+                      })}></Button>
                     </div>
                   </div>
                   ))}
@@ -105,7 +107,7 @@ export default function Home() {
             ]} defaultValue="Chat History" />
           <div className="flex flex-col items-center w-full px-12 py-6">
             <Card className="w-full h-full">
-              {inDate === '' ? <Chat date={new Date().toString()}  updateUserMessages={updateUserMessages}/> : <div><Chat date={inDate} updateUserMessages={updateUserMessages}/></div>}
+              {inDate === '' ? <Chat date={new Date().toString()}  updateUserMessages={updateUserMessages} loadedChat={loadedChat}/> : <div><Chat date={inDate} updateUserMessages={updateUserMessages} loadedChat={loadedChat}/></div>}
             </Card>
           </div>
         </div>

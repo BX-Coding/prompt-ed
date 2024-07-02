@@ -1,13 +1,13 @@
 import { auth, db } from "@/app/firebase";
-import { Button } from "../ui/button";
 import { ChatBody } from "./chat-body";
 import React, { useEffect, useState } from "react";
-import { doc, setDoc, collection, getDocs, QuerySnapshot, DocumentData, CollectionReference, query } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 //chat ui elements from: https://github.com/jakobhoeg/shadcn-chat/tree/master under MIT License
 interface ChatProps {
   date: string
   updateUserMessages: (chat:UserChat) => void;
+  loadedChat : ChatHistoryMessage[]
 }
 
 interface UserChat {
@@ -20,8 +20,14 @@ interface ChatHistoryMessage {
   content: string;
 }
 
-export function Chat({ date, updateUserMessages }: ChatProps) {
+export function Chat({ date, updateUserMessages, loadedChat }: ChatProps) {
   const [messagesState, setMessages] = useState<ChatHistoryMessage[]>([]);
+
+  useEffect(()=>{
+    if(loadedChat.length>0){
+      setMessages(loadedChat)
+    }
+  },[loadedChat])
 
   const sendMessage = (newMessage: ChatHistoryMessage) => {
     setMessages((prevArray)=>[...prevArray, newMessage]);
