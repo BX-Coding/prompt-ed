@@ -33,6 +33,7 @@ interface UserImage{
 
 interface Props{
   updateUserGeneratedImages: (image: UserImage) => void;
+  loadedImage : UserImage | undefined
 }
 
 /**
@@ -45,12 +46,22 @@ interface Props{
  * In order to add neceassry AI capabilities: change firebaseFunctionUrl variable and uncomment
  * the const urls and setImageURL in the submitHandler function.
  */
-export const ImageGeneration = ({updateUserGeneratedImages}:Props) => {
+export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState<string>("");
   const [res, setRes] = useState<JSX.Element>(<></>);
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
+
+  React.useEffect(()=>{
+    if(loadedImage){
+      setImageURL(loadedImage.url);
+      setRes(<img src={loadedImage.url} className="rounded-lg w-full" />);
+      if(loadedImage.prompt){
+        setPrompt(loadedImage.prompt)
+      }
+    }
+  },[loadedImage])
 
   const generateImage = httpsCallable(functions, "generateImageCall");
 

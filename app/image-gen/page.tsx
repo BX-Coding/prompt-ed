@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ref, listAll, getDownloadURL, getMetadata, StorageReference, ListResult, FullMetadata } from "firebase/storage";
 
-interface UserImage{
+interface UserImage {
   url:string
   date:string
   prompt:string | undefined
@@ -21,6 +21,7 @@ export default function Home() {
 
   const [logIn, setLogIn] = useState(false);
   const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
+  const [loadedImage, setLoadedImage] = useState<UserImage>()
 
   const updateUserGeneratedImages = (image:UserImage) => {
     setUserGeneratedImages((oldArray)=>([...oldArray, image]))
@@ -35,7 +36,7 @@ export default function Home() {
   React.useEffect(()=>{
     const getUserImages = async (folderName: string | undefined): Promise<void> => {
       const folderRef: StorageReference = ref(storage, folderName);
-      const imageUrls: UserImage[] = [];
+      const savedUserImages: UserImage[] = [];
     
       try {
         const result: ListResult = await listAll(folderRef);
@@ -43,18 +44,18 @@ export default function Home() {
         const urlPromises: Promise<UserImage>[] = result.items.map(async (itemRef: StorageReference) => {
           const url = await getDownloadURL(itemRef);
           const metadata: FullMetadata = await getMetadata(itemRef);
-          const date = metadata.timeCreated; // Assuming the metadata includes a 'timeCreated' property
+          const date = metadata.timeCreated; 
           const prompt = metadata.customMetadata?.prompt
           return { url, date, prompt};
         });
     
         const userImages: UserImage[] = await Promise.all(urlPromises);
-        imageUrls.push(...userImages);
+        savedUserImages.push(...userImages);
       } catch (error) {
         console.error("Error getting image URLs:", error);
       }
       
-      setUserGeneratedImages(imageUrls);
+      setUserGeneratedImages(savedUserImages);
     };
 
     getUserImages(auth.currentUser?.uid)
@@ -87,7 +88,6 @@ export default function Home() {
     }
   }
 
-
   if (!logIn) {
     return (
       <p>Access Denied</p>
@@ -115,7 +115,11 @@ export default function Home() {
                       <p className="flex-1 text-lg text-white">
                         {image.prompt}
                       </p>
-                      <Button variant="accent">
+                      <Button
+                        onClick={()=>{
+                          setLoadedImage({url:image.url,date:image.date,prompt:image.prompt})
+                        }}
+                      variant="accent">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-circle" viewBox="0 0 16 16" style={{color:'black'}}>
                           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
                         </svg>
@@ -127,7 +131,7 @@ export default function Home() {
               </>},
             ]} defaultValue="Image History" />
           <div className="flex flex-col items-center w-full px-12 py-6">
-            <ImageGeneration updateUserGeneratedImages={updateUserGeneratedImages}/>
+            <ImageGeneration updateUserGeneratedImages={updateUserGeneratedImages} loadedImage={loadedImage}/>
           </div>
         </div>
       </div>
