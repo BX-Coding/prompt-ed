@@ -67,6 +67,32 @@ export default function Home() {
   const updateUserMessages = (chat:UserChat)=>{
     setUserChats((oldArray)=>([chat, ...oldArray, ]))
   }
+
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+  
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    };
+  
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    const day = date.getDate();
+    const suffix = getDaySuffix(day);
+
+    return formattedDate.replace(day.toString(), `${day}${suffix}`);
+  }
+  
+  function getDaySuffix(day: number): string {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  }
   
 
   if (!logIn) {
@@ -90,7 +116,7 @@ export default function Home() {
                   {userChats.map((chat,key)=>(
                     <div className="mt-[30px] h-[92px] w-full border-b border-primary" key={key}>
                     <p className="text-[15px] text-primary">
-                      {chat.date}
+                      {formatDate(chat.date)}
                     </p>
                     <div className="flex flex-row py-[18px]">
                       <p className="flex-1 text-lg text-white">
