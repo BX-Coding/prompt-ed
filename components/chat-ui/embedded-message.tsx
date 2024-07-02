@@ -49,7 +49,7 @@ const EmbeddedMessage: React.FC<Props> = ({ llmResponse, scratchBlocksReady }) =
   return (
     <>
       {nonCode.map((part, index) => (
-        <div key={index}>{part}</div>
+        <p className="text-chat text-text-p1" key={index}>{part}</p>
       ))}
     </>
   );

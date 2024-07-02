@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const inputText = ['13px', '15.23px'];
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -15,17 +18,38 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontSize: {
+      sm: ['11px', '20px'],
+      base: ['16px', '24px'],
+      tabs: ['17px', '26px'],
+      chat: ['18px', '25px'],
+      lg: ['20px', '28px'],
+      xl: ['24px', '32px'],
+      'title': ['26px', '30px'],
+      'title-xl': ['36px', '42px'],
+      'input': inputText,
+      'button-default-text': inputText,
+      'button-accent-text': inputText,
+      'button-destructive-text': inputText,
+      'nav-bar': ['18px', '30px'],
+    },
+    fontFamily: {
+      'roboto': ['Roboto', 'Helvetica', 'sans'],
+      'space-grotesk': ['Space Grotesk', 'Roboto', 'Helvetica', 'sans'],
+    },
     extend: {
       colors: {
         border: "var(--border)",
-        input: "var(--input)",
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {
           DEFAULT: "var(--primary)",
+          'hover-light': "var(--primary-hover-light)",
+          'hover-heavy': "var(--primary-hover-heavy)",
           foreground: "var(--primary-foreground)",
         },
+        'button-default-text': "var(--primary-foreground)",
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
@@ -34,6 +58,7 @@ module.exports = {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
         },
+        'button-destructive-text': "var(--destructive-foreground)",
         muted: {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
@@ -42,19 +67,27 @@ module.exports = {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
         },
+        'button-accent-text': "var(--accent-foreground)",
         popover: {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",
         },
         card: {
           DEFAULT: "var(--card)",
+          solid: "var(--card-solid)",
           foreground: "var(--card-foreground)",
+        },
+        text: {
+          't2': "var(--text-t2)",
+          'p1': "var(--text-p1)",
         },
       },
       borderRadius: {
+        xl: "calc(var(--radius) + 2px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xs: "calc(var(--radius) - 5px)",
       },
       keyframes: {
         "accordion-down": {
@@ -72,7 +105,19 @@ module.exports = {
       },
       maxHeight: {
         '128': '45rem',
-      }
+      },
+      width: {
+        'nav-bar-button': '131.5px',
+        'nav-bar-button-square': '48px',
+        '150': '37.5rem',
+        'input': '27px',
+        '13': '3.25rem',
+      },
+      height: {
+        'nav-bar-button': '48px',
+        'nav-bar': '90px',
+        'input': '27px',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
