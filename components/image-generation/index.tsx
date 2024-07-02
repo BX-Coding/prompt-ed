@@ -8,11 +8,8 @@ import { Button } from "../ui/button";
 import { storage, functions, auth } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref,uploadBytes, UploadMetadata } from "firebase/storage";
+import { ref, uploadBytes, UploadMetadata } from "firebase/storage";
 
-import Image from "next/image";
-
-import axios from "axios";
 import { Toggle } from "../ui/toggle";
 import { PromptBox } from "../prompt-box";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
