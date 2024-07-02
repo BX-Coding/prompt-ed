@@ -25,7 +25,7 @@ export default function Home() {
   const [userID, setUserID] = useState(auth.currentUser?.uid);
 
   const updateUserGeneratedImages = (image:UserImage) => {
-    setUserGeneratedImages((oldArray)=>([...oldArray, image]))
+    setUserGeneratedImages((oldArray)=>([image,...oldArray ]))
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -54,6 +54,7 @@ export default function Home() {
         });
     
         const userImages: UserImage[] = await Promise.all(urlPromises);
+        userImages.reverse()
         savedUserImages.push(...userImages);
       } catch (error) {
         console.error("Error getting image URLs:", error);
@@ -78,6 +79,10 @@ export default function Home() {
   
     const day = date.getDate();
     const suffix = getDaySuffix(day);
+
+    if(formattedDate.replace(day.toString(), `${day}${suffix}`)==="Invalid Date"){
+      return isoDateString
+    }
 
     return formattedDate.replace(day.toString(), `${day}${suffix}`);
   }
