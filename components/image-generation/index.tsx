@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { storage, functions, auth } from "../../app/firebase";
 import { httpsCallable } from "firebase/functions";
 import { Toaster } from "@/components/ui/toaster";
-import { ref, uploadBytes, UploadMetadata } from "firebase/storage";
+import { ref, uploadBytes, UploadMetadata, getDownloadURL } from "firebase/storage";
 
 import { Toggle } from "../ui/toggle";
 import { PromptBox } from "../prompt-box";
@@ -25,6 +25,16 @@ type GenerateImageResponse = {
   data: Uint8Array;
 };
 
+interface UserImage{
+  url:string
+  date:string
+  prompt:string | undefined
+}
+
+interface Props{
+  updateUserGeneratedImages: (image: UserImage) => void;
+}
+
 /**
  * WARNING: This file contains untested code - namely Firebase storage code and fetching
  * You will more than likely experience a CORS error with current fetching. next.config
@@ -35,7 +45,7 @@ type GenerateImageResponse = {
  * In order to add neceassry AI capabilities: change firebaseFunctionUrl variable and uncomment
  * the const urls and setImageURL in the submitHandler function.
  */
-export const ImageGeneration: React.FC = ({}) => {
+export const ImageGeneration = ({updateUserGeneratedImages}:Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -129,9 +139,11 @@ export const ImageGeneration: React.FC = ({}) => {
         'prompt': prompt,
       }
     };
-    uploadBytes(storageRef, blob, metadata).then(() => {
-      console.log("Uploaded a blob or file!");
-    });
+    await uploadBytes(storageRef, blob, metadata)
+
+    const imageUrl = await getDownloadURL(storageRef)
+
+    updateUserGeneratedImages({url:imageUrl,date:formatDate(today),prompt})
   }
 
   //This will save image to the local system and save to Firebase storage as a Blob - UNTESTED

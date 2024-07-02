@@ -17,14 +17,14 @@ interface UserImage{
   prompt:string | undefined
 }
 
-interface ImageMetaData extends FullMetadata{
-  prompt:string
-}
-
 export default function Home() {
 
   const [logIn, setLogIn] = useState(false);
   const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
+
+  const updateUserGeneratedImages = (image:UserImage) => {
+    setUserGeneratedImages((oldArray)=>([...oldArray, image]))
+  }
 
   onAuthStateChanged(auth, (user) => {
     if (user && !logIn) {
@@ -96,7 +96,7 @@ export default function Home() {
               </>},
             ]} defaultValue="Image History" />
           <div className="flex flex-col items-center w-full px-12 py-6">
-            <ImageGeneration />
+            <ImageGeneration updateUserGeneratedImages={updateUserGeneratedImages}/>
           </div>
         </div>
       </div>
