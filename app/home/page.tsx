@@ -3,7 +3,7 @@
 import { NavBar } from "@/components/navbar"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { MagicIcon, FileIcon, ChatBubbleIcon } from "@/components/icons/prompt-ed-icons";
 import Link from "next/link";
