@@ -62,7 +62,7 @@ export default function Home() {
 
     getUserChats(auth.currentUser?.uid)
 
-  },[])
+  },[userID])
 
   const updateUserMessages = (chat:UserChat)=>{
     setUserChats((oldArray)=>([chat, ...oldArray, ]))

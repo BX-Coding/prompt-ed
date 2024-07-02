@@ -22,6 +22,7 @@ export default function Home() {
   const [logIn, setLogIn] = useState(false);
   const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
   const [loadedImage, setLoadedImage] = useState<UserImage>()
+  const [userID, setUserID] = useState(auth.currentUser?.uid);
 
   const updateUserGeneratedImages = (image:UserImage) => {
     setUserGeneratedImages((oldArray)=>([...oldArray, image]))
@@ -30,6 +31,9 @@ export default function Home() {
   onAuthStateChanged(auth, (user) => {
     if (user && !logIn) {
       setLogIn(true);
+    }
+    if (user && typeof userID === 'undefined') {
+      setUserID(user.uid);
     }
   });
 
@@ -59,7 +63,7 @@ export default function Home() {
     };
 
     getUserImages(auth.currentUser?.uid)
-  },[])
+  },[userID])
 
   function formatISODate(isoDateString: string): string {
     const date = new Date(isoDateString);
