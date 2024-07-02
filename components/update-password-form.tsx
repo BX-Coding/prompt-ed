@@ -87,7 +87,7 @@ export const UpdatePassword: React.FC<UpdatePasswordProps> = ({className, onClos
             inputSize="lg"
           />
           
-          {password.length>0 || password2.length>0 ?(<p className={"text-[#EB4940] text-input" + (passwordsMatch ? " hidden" : "")}>Passwords don't match.</p>):(null)}
+          {password.length>0 || password2.length>0 ?(<p className={"text-[#EB4940] text-input" + (passwordsMatch ? " hidden" : "")}>Passwords do not match.</p>):(null)}
           <Button className="mt-1" size="lg" disabled={isLoading || !passwordsMatch}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
