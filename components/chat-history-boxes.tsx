@@ -45,7 +45,7 @@ export const ChatHistoryBox: FC = ({}) => {
     return (
         <div className="mb-5 h-full">
             {userChats.map((val,key)=>(
-                <div className="mb-5" key={key}><ChatHistory key={key} date={(val.date)}/></div>
+                <div className="mb-5" key={key}><ChatHistory key={key} prompt={val.chat[0].content} date={(val.date)}/></div>
             ))}
         </div>
     )

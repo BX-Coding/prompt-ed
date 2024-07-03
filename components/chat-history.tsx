@@ -17,9 +17,10 @@ import { AlertDialogFooter, AlertDialogHeader } from "./ui/alert-dialog";
 
 interface ChatHistoryProps {
     date: string
+    prompt:string
 }
 
-export function ChatHistory({date} : ChatHistoryProps) {
+export function ChatHistory({date, prompt} : ChatHistoryProps) {
     const [deleted, setDeleted] = useState(false);
     const router = useRouter();
     const onDelete = async () => {
@@ -65,9 +66,10 @@ export function ChatHistory({date} : ChatHistoryProps) {
                                     pathname: '/chat',
                                     query: {date: date}
                                 }}>
-                                <CardTitle>{formatDate(date)}</CardTitle>
+                                <CardTitle>{prompt}</CardTitle>
                             </Link>
-                            <div className="py-1"></div>
+                            <small>{formatDate(date)}</small>
+                            <div className="pt-1"></div>
                             <Button onClick={onDelete} variant={"destructive"}>Delete</Button>
                         </div>
                 </CardHeader>
