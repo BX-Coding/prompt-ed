@@ -30,7 +30,7 @@ export default function Home() {
             <Card className="w-full h-max">
             <CardHeader>
                 <CardTitle>Chat History</CardTitle>
-                <CardDescription>Click on a chat to reopen it</CardDescription>
+                <CardDescription>Reopen a chat in chat page or manage them here.</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChatHistoryBox/>
@@ -39,7 +39,7 @@ export default function Home() {
             <Card className="w-full h-max">
             <CardHeader>
                 <CardTitle>Image History</CardTitle>
-                <CardDescription>Click on an image to reopen it</CardDescription>
+                <CardDescription>Reopen an image in the image generation page or manage them here.</CardDescription>
             </CardHeader>
             <CardContent>
                 nothing

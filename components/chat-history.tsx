@@ -28,20 +28,48 @@ export function ChatHistory({date} : ChatHistoryProps) {
         setDeleted(true);
     }
 
+    function formatDate(dateString: string): string {
+        const date = new Date(dateString);
+      
+        const options: Intl.DateTimeFormatOptions = {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        };
+      
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        const day = date.getDate();
+        const suffix = getDaySuffix(day);
+    
+        return formattedDate.replace(day.toString(), `${day}${suffix}`);
+      }
+      
+      function getDaySuffix(day: number): string {
+        if (day > 3 && day < 21) return 'th';
+        switch (day % 10) {
+          case 1: return 'st';
+          case 2: return 'nd';
+          case 3: return 'rd';
+          default: return 'th';
+        }
+      }
+
+
     return (<>
         {deleted ? (<></>) : (
             <Card>
                 <CardHeader>
-                    <div className="flex">
-                    <Link
-                        href={{
-                            pathname: '/chat',
-                            query: {date: date} // the data
-                        }}>
-                        <CardTitle>{date}</CardTitle>
-                    </Link>
-                    <Button onClick={onDelete} variant={"destructive"}>Delete</Button>
-                    </div>
+                        <div>
+                            <Link
+                                href={{
+                                    pathname: '/chat',
+                                    query: {date: date}
+                                }}>
+                                <CardTitle>{formatDate(date)}</CardTitle>
+                            </Link>
+                            <div className="py-1"></div>
+                            <Button onClick={onDelete} variant={"destructive"}>Delete</Button>
+                        </div>
                 </CardHeader>
             </Card>)}
     </>

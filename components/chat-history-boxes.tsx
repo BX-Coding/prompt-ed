@@ -1,14 +1,14 @@
 import * as React from "react"
 
 import { FC, useEffect, useState } from 'react';
-import { collection, getDocs, query } from "firebase/firestore";
 import { auth, db } from "@/app/firebase";
 import { ChatHistory } from "./chat-history";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, collection, getDocs, QuerySnapshot, DocumentData, CollectionReference, query } from "firebase/firestore";
 
 export const ChatHistoryBox: FC = ({}) => {
-    const [dates, setDates] = React.useState<string[]>([]);
     const [userID, setUserID] = useState(auth.currentUser?.uid);
+    const [userChats, setUserChats] = useState<DocumentData[]>([])
 
     onAuthStateChanged(auth, (user) => {
         if (user && typeof userID === 'undefined') {
@@ -18,24 +18,35 @@ export const ChatHistoryBox: FC = ({}) => {
       });
 
 
-    const pathname = "users/" + userID +"/chats";
-    useEffect(() => {
-        const getDates = async () => {
-            if (typeof userID !== 'undefined') {
-                const querySnapshot = await getDocs(collection(db, pathname));
-                const newDates = querySnapshot.docs.map((doc) => doc.id);
-                setDates([...dates, ...newDates]);
-            }
-        }
-        getDates();
-    }, [userID]);
+    useEffect(()=>{
 
-    console.log(dates);
-    let dateEls = dates.map((date, index) => <div className="mb-5" key={index}><ChatHistory key={index} date={date}/></div>);
+        const getUserChats = async (userId: string | undefined): Promise<void> => {
+            const pathName = "users/" + userId + "/chats"
+            const collectionRef = query(collection(db, pathName));
+            const chats: DocumentData[] = [];
+        
+            try {
+            const querySnapshot: QuerySnapshot = await getDocs(collectionRef);
+        
+            querySnapshot.forEach((doc) => {
+                chats.unshift({ date: doc.id, chat : doc.data().messages.map((item:string) => JSON.parse(item))});
+            });
+            } catch (error) {
+            console.error("Error getting documents:", error);
+            }
+            console.log(chats)
+            setUserChats(chats)
+        }
+
+        getUserChats(auth.currentUser?.uid)
+
+    },[userID])
 
     return (
-        <div className="mb-5 h-full" key={dates.length}>
-            {dateEls}
+        <div className="mb-5 h-full">
+            {userChats.map((val,key)=>(
+                <div className="mb-5" key={key}><ChatHistory key={key} date={(val.date)}/></div>
+            ))}
         </div>
     )
 }
