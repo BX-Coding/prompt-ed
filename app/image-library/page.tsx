@@ -6,6 +6,7 @@ import { useState } from "react"
 import { auth } from "../firebase"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChatHistoryBox } from "@/components/chat-history-boxes"
+import { ImageHistoryBox } from "@/components/image-history-boxes"
 
 export default function Home() {
 
@@ -42,7 +43,7 @@ export default function Home() {
                 <CardDescription>Reopen an image in the image generation page or manage them here.</CardDescription>
             </CardHeader>
             <CardContent>
-                nothing
+               <ImageHistoryBox/>
             </CardContent>
             </Card>
             </div>
