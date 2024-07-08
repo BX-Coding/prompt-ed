@@ -39,13 +39,13 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
           ],
         }),
       )
-    }, [])
+    }, [setBuildables])
 
     const renderBuildable = useCallback(
       (buildableComponent: BuildableState, index: number) => {
         const value = buildableComponent.value
         return (
-          <BuildableContextMenu id={buildableComponent.id}>
+          <BuildableContextMenu key={buildableComponent.id} id={buildableComponent.id}>
             <Buildable
               key={buildableComponent.id}
               index={index}
@@ -64,7 +64,7 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
           </BuildableContextMenu>
         )
       },
-      [],
+      [moveBuildable, updateBuildable],
     )
 
     return (

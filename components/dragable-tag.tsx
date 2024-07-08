@@ -25,7 +25,7 @@ export const DragableTag: FC<DragableTagProps> = ({ onChange, initialValue, sele
 
     return <div className="flex flex-row items-center bg-secondary text-foreground p-1 rounded-md">
         <DragHandleDots2Icon className="cursor-move text-secondary-foreground h-5 w-5" width={size} height={size}/>
-        <Select defaultValue={initialValue} onValueChange={handleChange}>
+        <Select value={initialValue} onValueChange={handleChange}>
             <SelectTrigger className="focus:ring-inset">
                 <SelectValue />
             </SelectTrigger>
