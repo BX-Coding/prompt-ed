@@ -208,7 +208,7 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
             {saveLocalBttn}
           </div>
         </div>
-        <div className="p-4 w-full bg-card-solid rounded-card-contents">
+        <div className="p-4 mx-px w-[calc(100%-2px)] bg-card-solid rounded-card-contents shadow-[0_0_0_1px_rgba(0,0,0,0.05)]">
           <form className="w-full" onSubmit={submitHandler}>
             <div className="flex items-start h-full w-full flex-col space-y-2">
               <div className="flex flex-row w-full space-x-1">
