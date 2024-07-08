@@ -143,7 +143,9 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
 
   //This will save image to Firebase storage as a Blob - UNTESTED
   async function saveToFirebase(blob: Blob, today: Date, ) {
-    const userImagePath = auth.currentUser?.uid + "/" + formatDate(today) + ".png"
+    const formattedDate = formatDate(today).replace(",","").trim();
+
+    const userImagePath = auth.currentUser?.uid + "/" + formattedDate + ".png"
     const storageRef = ref(storage, userImagePath);
     const metadata: UploadMetadata = {
       customMetadata: {
@@ -154,7 +156,7 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
 
     const imageUrl = await getDownloadURL(storageRef)
 
-    updateUserGeneratedImages({url:imageUrl,date:formatDate(today),prompt})
+    updateUserGeneratedImages({url:imageUrl,date:formattedDate,prompt})
   }
 
   //This will save image to the local system and save to Firebase storage as a Blob - UNTESTED
