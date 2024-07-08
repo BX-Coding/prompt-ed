@@ -83,6 +83,7 @@ module.exports = {
         },
       },
       borderRadius: {
+        card: "calc(var(--radius) + 8px",
         xl: "calc(var(--radius) + 2px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
