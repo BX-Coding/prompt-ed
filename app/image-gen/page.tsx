@@ -10,11 +10,13 @@ import { TabbedSidebar } from "@/components/tabbed-sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ref, listAll, getDownloadURL, getMetadata, StorageReference, ListResult, FullMetadata } from "firebase/storage";
+import { BuildableState, usePromptEditorState } from "@/store/editorStore";
 
-interface UserImage {
+interface UserImage{
   url:string
   date:string
   prompt:string | undefined
+  buildables:BuildableState[]
 }
 
 export default function Home() {
@@ -23,6 +25,8 @@ export default function Home() {
   const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
   const [loadedImage, setLoadedImage] = useState<UserImage>()
   const [userID, setUserID] = useState(auth.currentUser?.uid);
+
+  const setBuildables = usePromptEditorState((state) => state.setBuildables);
 
   const updateUserGeneratedImages = (image:UserImage) => {
     setUserGeneratedImages((oldArray)=>([image,...oldArray ]))
@@ -50,7 +54,8 @@ export default function Home() {
           const metadata: FullMetadata = await getMetadata(itemRef);
           const date = metadata.timeCreated; 
           const prompt = metadata.customMetadata?.prompt
-          return { url, date, prompt};
+          const buildables = JSON.parse(metadata.customMetadata?.buildables || "{}") as BuildableState[]
+          return { url, date, prompt, buildables };
         });
     
         const userImages: UserImage[] = await Promise.all(urlPromises);
@@ -126,7 +131,8 @@ export default function Home() {
                       </p>
                       <Button
                         onClick={()=>{
-                          setLoadedImage({url:image.url,date:image.date,prompt:image.prompt})
+                          setLoadedImage({url:image.url,date:image.date,prompt:image.prompt,buildables:image.buildables});
+                          setBuildables((prev) => image.buildables);
                         }}
                       variant="accent">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-circle" viewBox="0 0 16 16" style={{color:'black'}}>

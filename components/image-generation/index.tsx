@@ -19,6 +19,8 @@ import { Card } from "../ui/card";
 import { RotateCcwIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { DownloadIcon, StarUnfilledIcon } from "../icons/prompt-ed-icons";
+import { BuildableState, usePromptEditorState } from "@/store/editorStore";
+import { useHasHydrated } from "@/hooks/useHasHydrated";
 
 type GenerateImageResponse = {
   created: Date;
@@ -29,6 +31,7 @@ interface UserImage{
   url:string
   date:string
   prompt:string | undefined
+  buildables:BuildableState[]
 }
 
 interface Props{
@@ -52,6 +55,9 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
   const [imageURL, setImageURL] = useState<string>("");
   const [res, setRes] = useState<JSX.Element>(<></>);
   const { constructPrompt, resetPrompt, addTextBlock } = usePrompt();
+
+  const buildablesZustand = usePromptEditorState((state) => state.buildables);
+  const buildables = useHasHydrated() ? buildablesZustand : [];
 
   React.useEffect(()=>{
     if(loadedImage){
@@ -148,13 +154,14 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
     const metadata: UploadMetadata = {
       customMetadata: {
         'prompt': prompt,
+        'buildables': JSON.stringify(buildables),
       }
     };
     await uploadBytes(storageRef, blob, metadata)
 
     const imageUrl = await getDownloadURL(storageRef)
 
-    updateUserGeneratedImages({url:imageUrl,date:formatDate(today),prompt})
+    updateUserGeneratedImages({url:imageUrl,date:formatDate(today),prompt,buildables})
   }
 
   //This will save image to the local system and save to Firebase storage as a Blob - UNTESTED
