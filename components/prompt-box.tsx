@@ -59,7 +59,7 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
               }} initialValue={value}/> : 
               <DragableTag onChange={(value: string) => {
                 updateBuildable(buildableComponent.id, value)
-              }} initialValue={buildableComponent.value} selectOptions={buildableComponent.options?.map(option => option.value) ?? []}/>}
+              }} selectOptions={buildableComponent.options?.map(option => option.value) ?? []} initialValue={value} />}
             </Buildable>
           </BuildableContextMenu>
         )
