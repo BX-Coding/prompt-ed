@@ -55,7 +55,7 @@ export function ChatBody({
 
   const messageContent = (message: ChatHistoryMessage) => (
     <>
-      {message.content.toLowerCase().includes("scratch") || chatHasScratch ? (
+      {message.content.toLowerCase().includes("scratch") || message.content.toLowerCase().includes("python") || chatHasScratch ? (
         <EmbeddedMessage llmResponse={message.content} scratchBlocksReady={scratchBlocksReady}/>
       ) : (
         <p className="text-chat text-text-p1">{message.content}</p>

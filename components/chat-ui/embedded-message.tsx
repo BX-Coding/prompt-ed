@@ -1,5 +1,6 @@
 import React from "react";
 import ScratchBlocks from "./scratch-blocks";
+import Code from "./code";
 
 interface Props {
   llmResponse: string;
@@ -31,7 +32,7 @@ const extractParts = (
     }
 
     const code = match[1].trim();
-    parts.push(<ScratchBlocks scratchBlocksReady={scratchBlocksReady} key={code} preHash={generatePreHash()} code={code} />);
+    parts.push(code.startsWith("scratch") ? <ScratchBlocks scratchBlocksReady={scratchBlocksReady} key={code} preHash={generatePreHash()} code={code} /> : <Code code={code} />);
 
     responseText = responseText.substring(match.index + match[0].length);
   }
