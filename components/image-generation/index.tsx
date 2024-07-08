@@ -202,7 +202,15 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
     );
   }
 
-  // console.log(userGeneratedImages)
+  async function clearHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
+
+    setRes(<></>);
+    setImageURL("");
+
+    resetPrompt();
+    addTextBlock("");
+  }
 
   return (
     <Card className="h-full w-full">
@@ -229,7 +237,7 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
                   ) : (<LightningBoltIcon className="h-[15px] w-[15px]" />)}
                   Generate
                 </Button>
-                <Button variant="outline" className="flex self-end" iconPosition="left" disabled={isLoading}>
+                <Button onClick={clearHandler} variant="outline" className="flex self-end" iconPosition="left" disabled={isLoading}>
                   <RotateCcwIcon className="h-[15px] w-[15px]" />
                   Reset
                 </Button>
