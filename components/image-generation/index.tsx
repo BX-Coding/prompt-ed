@@ -201,14 +201,14 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
     <Card className="h-full w-full">
       <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6">
         <div className="h-12 w-full" />
-        <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-lg pt-8 px-5 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
+        <div className={"flex flex-col items-center space-y-4 bg-primary-foreground rounded-card-contents pt-8 px-5 pb-4 mb-4" + (imageURL == "" ? " hidden" : "")}>
           {res}
           <div className="flex flex-row w-full justify-end space-x-2">
             {saveFirebaseBttn}
             {saveLocalBttn}
           </div>
         </div>
-        <div className="p-4 w-full bg-card-solid rounded-lg">
+        <div className="p-4 w-full bg-card-solid rounded-card-contents">
           <form className="w-full" onSubmit={submitHandler}>
             <div className="flex items-start h-full w-full flex-col space-y-2">
               <div className="flex flex-row w-full space-x-1">
