@@ -18,6 +18,7 @@ interface UserImage {
   url: string;
   date: string;
   prompt: string | undefined;
+  objectName : string
 }
 
 export const ImageHistoryBox = () => {
@@ -49,7 +50,9 @@ export const ImageHistoryBox = () => {
             const metadata: FullMetadata = await getMetadata(itemRef);
             const date = metadata.timeCreated;
             const prompt = metadata.customMetadata?.prompt;
-            return { url, date, prompt };
+            const objectName = itemRef.name
+            
+            return {objectName, url, date, prompt };
           }
         );
 
@@ -69,7 +72,7 @@ export const ImageHistoryBox = () => {
   return (
     <div className="mb-5 h-full">
         {userGeneratedImages.map((val,key)=>(
-            <div className="mb-5" key={key}><ImageHistory url={val.url} key={key} prompt={val.prompt} date={val.date}/></div>
+            <div className="mb-5" key={key}><ImageHistory url={val.url} key={key} prompt={val.prompt} date={val.date} objectName={val.objectName} userId = {userID}/></div>
         ))}
     </div>
     )

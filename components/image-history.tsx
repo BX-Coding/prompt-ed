@@ -9,28 +9,30 @@ import Link from "next/link";
 import { format } from "url";
 import { Button } from "./ui/button";
 import { deleteDoc, doc } from "firebase/firestore";
-import { auth, db } from "@/app/firebase";
-import path from "path";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogOverlay, AlertDialogTitle, AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
-import { AlertDialogFooter, AlertDialogHeader } from "./ui/alert-dialog";
+import { auth, db, storage } from "@/app/firebase";
+import { deleteObject, ref } from "firebase/storage";
 // import { AlertDelete } from "./delete-history-alert";
 
 interface ImageHistoryProps {
     date: string
     prompt: string | undefined
     url : string
+    objectName:string
+    userId:string | undefined
 }
 
-export function ImageHistory({date, prompt, url} : ImageHistoryProps) {
+export function ImageHistory({date, prompt, url, objectName, userId} : ImageHistoryProps) {
     const [deleted, setDeleted] = useState(false);
-    const router = useRouter();
     const onDelete = async () => {
-        const pathname = "users/" + auth.currentUser?.uid + "/chats";
-        await deleteDoc(doc(db, pathname, date));
+        const deleteRef = ref(storage, `${userId}/${objectName}`);
+        await deleteObject(deleteRef).catch(()=>{
+            console.log("Error deleting object")
+        })
         setDeleted(true);
     }
 
     function formatDate(dateString: string): string {
+        console.log(objectName)
         const date = new Date(dateString);
       
         const options: Intl.DateTimeFormatOptions = {
