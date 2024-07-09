@@ -10,11 +10,14 @@ import { TabbedSidebar } from "@/components/tabbed-sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ref, listAll, getDownloadURL, getMetadata, StorageReference, ListResult, FullMetadata } from "firebase/storage";
+import { BuildableState, usePromptEditorState } from "@/store/editorStore";
+import { EditIcon } from "@/components/icons/prompt-ed-icons";
 
-interface UserImage {
+interface UserImage{
   url:string
   date:string
   prompt:string | undefined
+  buildables:BuildableState[]
 }
 
 export default function Home() {
@@ -23,6 +26,8 @@ export default function Home() {
   const [userGeneratedImages, setUserGeneratedImages] = useState<UserImage[]>([])
   const [loadedImage, setLoadedImage] = useState<UserImage>()
   const [userID, setUserID] = useState(auth.currentUser?.uid);
+
+  const setBuildables = usePromptEditorState((state) => state.setBuildables);
 
   const updateUserGeneratedImages = (image:UserImage) => {
     setUserGeneratedImages((oldArray)=>([image,...oldArray ]))
@@ -50,7 +55,8 @@ export default function Home() {
           const metadata: FullMetadata = await getMetadata(itemRef);
           const date = metadata.timeCreated; 
           const prompt = metadata.customMetadata?.prompt
-          return { url, date, prompt};
+          const buildables = JSON.parse(metadata.customMetadata?.buildables || "{}") as BuildableState[]
+          return { url, date, prompt, buildables };
         });
     
         const userImages: UserImage[] = await Promise.all(urlPromises);
@@ -126,12 +132,11 @@ export default function Home() {
                       </p>
                       <Button
                         onClick={()=>{
-                          setLoadedImage({url:image.url,date:image.date,prompt:image.prompt})
+                          setLoadedImage({url:image.url,date:image.date,prompt:image.prompt,buildables:image.buildables});
+                          setBuildables((prev) => image.buildables);
                         }}
-                      variant="accent">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-circle" viewBox="0 0 16 16" style={{color:'black'}}>
-                          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
-                        </svg>
+                      variant="accent" iconPosition="full" className="w-[30px] h-[28px]">
+                        <EditIcon className="w-[16px] h-[16px] text-primary-foreground" />
                       </Button>
                     </div>
                   </div>

@@ -39,13 +39,13 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
           ],
         }),
       )
-    }, [])
+    }, [setBuildables])
 
     const renderBuildable = useCallback(
       (buildableComponent: BuildableState, index: number) => {
         const value = buildableComponent.value
         return (
-          <BuildableContextMenu id={buildableComponent.id}>
+          <BuildableContextMenu key={buildableComponent.id} id={buildableComponent.id}>
             <Buildable
               key={buildableComponent.id}
               index={index}
@@ -59,17 +59,17 @@ export const PromptBox: FC<PromptBoxProps> = ({ className, children }) => {
               }} initialValue={value}/> : 
               <DragableTag onChange={(value: string) => {
                 updateBuildable(buildableComponent.id, value)
-              }} initialValue={buildableComponent.value} selectOptions={buildableComponent.options?.map(option => option.value) ?? []}/>}
+              }} selectOptions={buildableComponent.options?.map(option => option.value) ?? []} initialValue={value} />}
             </Buildable>
           </BuildableContextMenu>
         )
       },
-      [],
+      [moveBuildable, updateBuildable],
     )
 
     return (
       <>
-        <div className={"flex flex-row flex-wrap items-start " + className}>{buildables.map((card, i) => renderBuildable(card, i))}</div>
+        <div className={"flex flex-row flex-wrap items-start " + className}>{buildables.length > 0 ? buildables.map((card, i) => renderBuildable(card, i)) : <></>}</div>
       </>
     )
 }
