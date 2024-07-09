@@ -3,11 +3,11 @@
 import * as React from "react";
 
 import { useState } from "react";
-import { Card, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { storage } from "@/app/firebase";
 import { deleteObject, ref } from "firebase/storage";
+import { EditIcon, XIcon } from "./icons/prompt-ed-icons";
 
 interface ImageHistoryProps {
   date: string;
@@ -69,27 +69,21 @@ export function ImageHistory({
       {deleted ? (
         <></>
       ) : (
-        <Card>
-          <CardHeader>
-            <div>
-              <Link
-                href={{
-                  pathname: "/image-gen",
-                  query: { date: date },
-                }}
-              >
-                <CardTitle>{prompt}</CardTitle>
-              </Link>
-              <small>{formatDate(date)}</small>
-              <div className="pt-1"></div>
-              <img src={url}></img>
-              <div className="pt-2"></div>
-              <Button onClick={onDelete} variant={"destructive"}>
-                Delete
+        <div className="min-w-64 grid space-y-2">
+          <img className="rounded-lg" src={url} height="auto" />
+          <div className="flex flex-row text-text-t2 text-chat gap-1">
+            {formatDate(date)}: {prompt}
+            <div className="flex-1" />
+            <Link href={{ pathname: "/image-gen", query: { date: date } }}>
+              <Button variant="accent" size="lg" className="h-[25px] w-[25px] rounded-lg p-1">
+                <EditIcon className="w-[21px] h-[21px] text-primary" />
               </Button>
-            </div>
-          </CardHeader>
-        </Card>
+            </Link>
+            <Button onClick={onDelete} variant="destructive" size="lg" className="h-[25px] w-[25px] rounded-lg p-[5px]">
+              <XIcon className="w-[13px] h-[13px] text-destructive-foreground" />
+            </Button>
+          </div>
+        </div>
       )}
     </>
   );

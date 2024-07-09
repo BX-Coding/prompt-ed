@@ -70,18 +70,16 @@ export const ImageHistoryBox = () => {
   }, [userID]);
 
   return (
-    <div className="mb-5 h-full">
+    <div className="columns-3xs gap-4 space-y-4">
       {userGeneratedImages.map((val, key) => (
-        <div className="mb-5" key={key}>
-          <ImageHistory
-            url={val.url}
-            key={key}
-            prompt={val.prompt}
-            date={val.date}
-            objectName={val.objectName}
-            userId={userID}
-          />
-        </div>
+        <ImageHistory
+          url={val.url}
+          key={key}
+          prompt={val.prompt}
+          date={val.date}
+          objectName={val.objectName}
+          userId={userID}
+        />
       ))}
     </div>
   );

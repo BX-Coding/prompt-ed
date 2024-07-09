@@ -82,20 +82,7 @@ export default function Home() {
                     <Card className="max-lg:w-full lg:w-4/5 h-full">
                         <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6">
                             <div className="h-12 w-full" />
-                            <div className="columns-3xs gap-4 space-y-4">
-                                {userGeneratedImages.map((image, key) => (
-                                    <div className="min-w-64 space-y-2" key={key}>
-                                        <img className="rounded-lg" src={image.url} height="auto" />
-                                        <div className="flex flex-row text-text-t2 text-chat">
-                                            {image.prompt}
-                                            <div className="flex-1" />
-                                            <Button variant="accent" size="lg" className="h-[25px] w-[25px] rounded-lg p-1">
-                                                <EditIcon className="w-[21px] h-[21px] text-primary" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                            <ImageHistoryBox />
                             <div className="h-12 w-full" />
                         </ScrollArea>
                     </Card>
