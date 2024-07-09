@@ -19,7 +19,7 @@ export const chatFunctions: ChatFunctions = {
     const openai = new OpenAI({ apiKey: apiKey });
     try {
       const completion = await openai.chat.completions.create({
-        messages: [{role: "system", content: "If the user asks you to code in python, use the Patch python library."}, {role: "user", content: "Here is the API for the Patch python library: " + patchAPIFormatted}, ...messages],
+        messages: [{role: "system", content: "If the user asks you to code in python, use the Patch python library. Please specify whether you are coding in python or scratch by saying \"python\" before python code and \"scratch\" before scratch code."}, {role: "user", content: "Here is the API for the Patch python library: " + patchAPIFormatted}, ...messages],
         model: "gpt-3.5-turbo-16k",
       });
 

@@ -31,8 +31,21 @@ const extractParts = (
       parts.push(nonCode);
     }
 
-    const code = match[1].trim();
-    parts.push(code.startsWith("scratch") ? <ScratchBlocks scratchBlocksReady={scratchBlocksReady} key={code} preHash={generatePreHash()} code={code} /> : <Code code={code} />);
+    var code = match[1].trim();
+    var isScratchCode = false;
+    if (code.startsWith("python")) {
+      code = code.substring(7);
+    } else if (code.startsWith("scratch")) {
+      isScratchCode = true;
+      code = code.substring(8);
+    }
+    if (parts[parts.length - 1] == "scratch") {
+      isScratchCode = true;
+      parts.pop();
+    } else if (parts[parts.length - 1] == "python") {
+      parts.pop();
+    }
+    parts.push(isScratchCode ? <ScratchBlocks scratchBlocksReady={scratchBlocksReady} key={code} preHash={generatePreHash()} code={code} /> : <Code code={code} />);
 
     responseText = responseText.substring(match.index + match[0].length);
   }
