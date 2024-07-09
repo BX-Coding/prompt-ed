@@ -17,6 +17,8 @@ interface UserImage {
     date:string
     prompt:string | undefined
 }
+import { ChatHistoryBox } from "@/components/chat-history-boxes"
+import { ImageHistoryBox } from "@/components/image-history-boxes"
 
 export default function Home() {
     const [logIn, setLogIn] = useState(false);
