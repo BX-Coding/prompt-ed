@@ -79,7 +79,7 @@ export default function Home() {
             <NavBar navLocation="image-library"/>
             <div className="flex flex-row h-[calc(100vh-90px)]">
                 <div className="flex flex-col items-center w-full px-12 py-6">
-                    <Card className="max-lg:w-full lg:w-4/5 h-full">
+                    <Card className="h-full w-full xl:w-4/5">
                         <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6">
                             <div className="h-12 w-full" />
                             <ImageHistoryBox />

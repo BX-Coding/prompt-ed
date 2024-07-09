@@ -83,7 +83,7 @@ export default function Home() {
           }
         });
 
-        router.replace('/image-gen', undefined, { shallow: true });
+        router.replace('/image-gen', undefined);
       }
     };
 
