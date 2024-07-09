@@ -44,10 +44,10 @@ export function ImageHistory({
         <div className="space-y-2 mb-4 content-start gap-0">
           <img className="rounded-lg" src={url} height="auto" />
           <div className="flex flex-row text-text-t2 text-chat gap-1">
-            <p className="text-wrap">{formattedDate}: {prompt}</p>
+            <p className="text-wrap"><p className="inline text-black font-md">{formattedDate}:</p> {prompt}</p>
             <div className="flex-1" />
             <Link href={{ pathname: "/image-gen", query: { date: date } }}>
-              <Button variant="accent" size="lg" className="flex flex-none h-[25px] w-[25px] rounded-lg p-1">
+              <Button variant="accent" size="lg" className="flex flex-none h-[31px] w-[31px] rounded-lg p-1">
                 <EditIcon className="w-[21px] h-[21px] text-primary" />
               </Button>
             </Link>

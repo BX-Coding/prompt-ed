@@ -80,7 +80,7 @@ export default function Home() {
             <div className="flex flex-row h-[calc(100vh-90px)]">
                 <div className="flex flex-col items-center w-full px-12 py-6">
                     <Card className="h-full w-full xl:w-4/5">
-                        <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6">
+                        <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-6 xl:px-[72px]">
                             <div className="h-12 w-full" />
                             <ImageHistoryBox />
                             <div className="h-12 w-full" />

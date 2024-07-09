@@ -18,7 +18,7 @@ export const ImageDeleteAlert: React.FC<{
 }> = ({ onConfirm, onDeny }) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="flex flex-none h-[25px] w-[25px] rounded-lg p-[7px] bg-destructive"><XIcon className="w-[11px] h-[11px] text-primary-foreground" /></AlertDialogTrigger>
+      <AlertDialogTrigger className="flex flex-none h-[31px] w-[31px] rounded-lg p-[9px] bg-destructive"><XIcon className="w-[13px] h-[13px] text-primary-foreground" /></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>

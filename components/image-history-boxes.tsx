@@ -130,7 +130,7 @@ export const ImageHistoryBox = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex self-end w-[400px] items-center gap-2 mb-8">
+      <div className="flex self-end w-[400px] items-center gap-2">
         <div className="relative -mr-2">
           <div className="absolute left-[18px] -bottom-[11.5px]">
             <SearchIcon className="w-[21px] h-[21px]" />
@@ -138,7 +138,7 @@ export const ImageHistoryBox = () => {
         </div>
         <Input onChange={(e) => setSearchText(e.target.value)} inputSize="search" className="bg-transparent border-2 border-secondary pl-[49px]" placeholder="Search Library" />
       </div>
-      <div className={"grid gap-4 min-[716px]:grid-cols-2 min-[1258px]:grid-cols-3 min-[1634px]:grid-cols-4 min-[2010px]:grid-cols-5"}>
+      <div className={"grid gap-4 min-[716px]:grid-cols-2 xl:grid-cols-3 min-[1680px]:grid-cols-4 min-[2100px]:grid-cols-5"}>
         {userGeneratedImages.map((val, key) => (
           <div key={key} hidden={!shouldDisplay(val.prompt || "", val.formattedDate)}>
             <ImageHistory
