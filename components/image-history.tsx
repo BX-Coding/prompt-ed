@@ -3,14 +3,16 @@
 import * as React from "react";
 
 import { useState } from "react";
-import { Card, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { storage } from "@/app/firebase";
 import { deleteObject, ref } from "firebase/storage";
+import { EditIcon, XIcon } from "./icons/prompt-ed-icons";
+import { ImageDeleteAlert } from "./image-delete-alert";
 
 interface ImageHistoryProps {
   date: string;
+  formattedDate: string;
   prompt: string | undefined;
   url: string;
   objectName: string;
@@ -19,6 +21,7 @@ interface ImageHistoryProps {
 
 export function ImageHistory({
   date,
+  formattedDate,
   prompt,
   url,
   objectName,
@@ -33,63 +36,24 @@ export function ImageHistory({
     setDeleted(true);
   };
 
-  function formatDate(dateString: string): string {
-    console.log(objectName);
-    const date = new Date(dateString);
-
-    const options: Intl.DateTimeFormatOptions = {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    };
-
-    const formattedDate = date.toLocaleDateString("en-US", options);
-    const day = date.getDate();
-    const suffix = getDaySuffix(day);
-
-    return formattedDate.replace(day.toString(), `${day}${suffix}`);
-  }
-
-  function getDaySuffix(day: number): string {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
   return (
     <>
       {deleted ? (
         <></>
       ) : (
-        <Card>
-          <CardHeader>
-            <div>
-              <Link
-                href={{
-                  pathname: "/image-gen",
-                  query: { date: date },
-                }}
-              >
-                <CardTitle>{prompt}</CardTitle>
-              </Link>
-              <small>{formatDate(date)}</small>
-              <div className="pt-1"></div>
-              <img src={url}></img>
-              <div className="pt-2"></div>
-              <Button onClick={onDelete} variant={"destructive"}>
-                Delete
+        <div className="space-y-2 mb-4 content-start gap-0">
+          <img className="rounded-lg" src={url} height="auto" />
+          <div className="flex flex-row text-text-t2 text-chat gap-1">
+            <p className="text-wrap"><p className="inline text-black font-md">{formattedDate}:</p> {prompt}</p>
+            <div className="flex-1" />
+            <Link href={{ pathname: "/image-gen", query: { date: date } }}>
+              <Button variant="accent" size="lg" className="flex flex-none h-[31px] w-[31px] rounded-lg p-1">
+                <EditIcon className="w-[21px] h-[21px] text-primary" />
               </Button>
-            </div>
-          </CardHeader>
-        </Card>
+            </Link>
+            <ImageDeleteAlert onConfirm={onDelete} onDeny={() => {}} />
+          </div>
+        </div>
       )}
     </>
   );
