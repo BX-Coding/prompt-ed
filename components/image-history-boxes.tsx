@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { FC, useEffect, useState } from "react";
+import { useState } from "react";
 import { auth, storage, db } from "@/app/firebase";
 import { ImageHistory } from "./image-history";
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,7 +18,7 @@ interface UserImage {
   url: string;
   date: string;
   prompt: string | undefined;
-  objectName : string
+  objectName: string;
 }
 
 export const ImageHistoryBox = () => {
@@ -50,9 +50,9 @@ export const ImageHistoryBox = () => {
             const metadata: FullMetadata = await getMetadata(itemRef);
             const date = metadata.timeCreated;
             const prompt = metadata.customMetadata?.prompt;
-            const objectName = itemRef.name
-            
-            return {objectName, url, date, prompt };
+            const objectName = itemRef.name;
+
+            return { objectName, url, date, prompt };
           }
         );
 
@@ -71,9 +71,18 @@ export const ImageHistoryBox = () => {
 
   return (
     <div className="mb-5 h-full">
-        {userGeneratedImages.map((val,key)=>(
-            <div className="mb-5" key={key}><ImageHistory url={val.url} key={key} prompt={val.prompt} date={val.date} objectName={val.objectName} userId = {userID}/></div>
-        ))}
+      {userGeneratedImages.map((val, key) => (
+        <div className="mb-5" key={key}>
+          <ImageHistory
+            url={val.url}
+            key={key}
+            prompt={val.prompt}
+            date={val.date}
+            objectName={val.objectName}
+            userId={userID}
+          />
+        </div>
+      ))}
     </div>
-    )
+  );
 };
