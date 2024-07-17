@@ -223,7 +223,7 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
             {saveLocalBttn}
           </div>
         </div>
-        <div className="p-4 w-full bg-card-solid rounded-lg">
+        {/* <div className="p-4 w-full bg-card-solid rounded-lg">
           <form className="w-full" onSubmit={submitHandler}>
             <div className="flex items-start h-full w-full flex-col space-y-2">
               <div className="flex flex-row w-full space-x-1">
@@ -245,7 +245,8 @@ export const ImageGeneration = ({updateUserGeneratedImages, loadedImage}:Props) 
             </div>
           </form>
           <Toaster />
-        </div>
+        </div> */}
+        <div>Image generation has been temporarily disabled.</div>
         <div className="h-12 w-full" />
       </ScrollArea>
     </Card>
