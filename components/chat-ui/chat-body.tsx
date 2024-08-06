@@ -33,34 +33,19 @@ export function ChatBody({
   onClear
 }: ChatBodyProps) {
   const [scratchBlocksReady, setScratchBlocksReady] = React.useState<boolean>(false)
-  const [chatHasScratch, setChatHasScratch] = React.useState<boolean>(false)
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight;
+      // Scroll to bottom of messages box so the new message can be seen
+      messagesContainerRef.current.parentElement?.parentElement?.scrollTo({ top: messagesContainerRef.current.scrollHeight, left: 0, behavior: "smooth" })
     }
     console.log(messages);
-
-    // Check if chat has a history of scratch, if true will render out code that it sees in scratch.
-    if(!chatHasScratch && messages.length>0){
-      if(messages[messages.length-1].content.toLowerCase().includes("scratch")){
-        setChatHasScratch(true)
-      }
-    }
-    console.log("Conversation has Scratch mentioned", chatHasScratch)
 
   }, [messages]);
 
   const messageContent = (message: ChatHistoryMessage) => (
-    <>
-      {message.content.toLowerCase().includes("scratch") || chatHasScratch ? (
-        <EmbeddedMessage llmResponse={message.content} scratchBlocksReady={scratchBlocksReady}/>
-      ) : (
-        <p className="text-chat text-text-p1">{message.content}</p>
-      )}
-    </>
+    <EmbeddedMessage llmResponse={message.content} scratchBlocksReady={scratchBlocksReady}/>
   )
 
   const handleCopy = (message: ChatHistoryMessage) => {
@@ -76,10 +61,7 @@ export function ChatBody({
         />
       <ScrollArea colorScheme="blue" type="auto" className="h-full w-full px-[18px] pb-2">
         <div className="h-9" />
-        <div
-          ref={messagesContainerRef}
-          className="w-full overflow-y-hidden overflow-x-hidden h-full flex flex-1 flex-col"
-        >
+        <div ref={messagesContainerRef} className="w-full overflow-y-hidden overflow-x-hidden h-full flex flex-1 flex-col">
           <AnimatePresence>
             {messages?.map((message, index) => (
               <motion.div
